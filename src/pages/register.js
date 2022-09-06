@@ -4,7 +4,7 @@ import useHandleForm from "lib/hooks/useHandleForm";
 import Router from "next/router";
 import { StyledFrom } from "styles/components";
 import FormError from "components/molecules/FormError/FormError";
-import { emptyRegisterForm } from "lib/consts";
+import { emptyRegisterForm } from "lib/consts/consts";
 import axios from "axios";
 
 const Register = () => {

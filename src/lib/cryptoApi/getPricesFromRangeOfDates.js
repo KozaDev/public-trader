@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getBestInterval, isTooEarly } from "lib/utils";
-import { errorMessages } from "lib/consts";
+import { getBestInterval, isTooEarly } from "lib/utils/utils";
+import { errorMessages } from "lib/consts/consts";
 
 async function getPricesFromRangeOfDates(
   start,

@@ -1,8 +1,19 @@
+import { errorMessages } from "../consts/consts";
+
 export const errorFactory = (error) => {
   console.error(error);
-  if (error?.config?.url.includes("https://data.messari.io/api")) {
+  if (error?.config?.url.includes(process.env.MESSARI_API)) {
     return {
-      message: "Can not fetch data from external API",
+      message: errorMessages.externalAPIError,
+      status: error?.response?.status || null,
+      name: null,
+      details: null,
+    };
+  }
+
+  if (error?.config?.url.includes(process.env.NEXT_PUBLIC_STRAPI_URL)) {
+    return {
+      message: errorMessages.serverError,
       status: error?.response?.status || null,
       name: null,
       details: null,
@@ -20,7 +31,7 @@ export const errorFactory = (error) => {
 
   if (!error.response || !error?.response?.data?.error) {
     return {
-      message: error.message,
+      message: error.message || errorMessages.somethingWentWrong,
       status: null,
       name: null,
       details: null,

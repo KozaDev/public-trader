@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getJWTFromServerCookie } from "lib/cookies";
-import { updateAssets } from "lib/utils";
+import { getJWTFromServerCookie } from "lib/cookies/cookies";
+import { updateAssets } from "lib/utils/utils";
 //import { getCurrentPrice } from "../../lib/cryptoApiRequests";
 
 export default async function handler(req, res) {
@@ -14,7 +14,6 @@ export default async function handler(req, res) {
         amountOfCoin,
         priceOnEntry,
       } = req.body;
-
       const authorization = getJWTFromServerCookie(req);
 
       if (!authorization)
@@ -91,6 +90,7 @@ export default async function handler(req, res) {
           },
         },
       });
+
       return res.status(201).send({
         assets: updatedAssets,
         coin,

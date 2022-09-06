@@ -77,8 +77,11 @@ export const emptyLoginForm = {
 };
 
 export const errorMessages = {
-  tooEearly: "Too early to get realaiable data from API",
+  tooEearly: "Too early to get data from API",
   noData: "No data",
   notFound: "Not found",
   noPrice: "Can not display current price",
+  somethingWentWrong: "Something went wrong",
+  externalAPIError: "Can not fetch data from external API",
+  serverError: "Can not connect to server",
 };

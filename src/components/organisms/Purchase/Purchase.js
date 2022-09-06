@@ -1,6 +1,6 @@
-import { errorMessages } from "lib/consts";
+import { errorMessages } from "lib/consts/consts";
 import { usePricesState } from "lib/contexts/pricesProvider";
-import { isNumberInputValid } from "lib/utils";
+import { isNumberInputValid } from "lib/utils/utils";
 import { useEffect, useState } from "react";
 import { StyledCard } from "styles/components";
 import PageError from "../../templates/PageError/PageError";
@@ -9,10 +9,9 @@ import NumberFormat from "react-number-format";
 import useHandleForm from "lib/hooks/useHandleForm";
 import axios from "axios";
 import FormError from "../../molecules/FormError/FormError";
-import { decimalPlaces } from "lib/consts";
+import { decimalPlaces } from "lib/consts/consts";
 
-const Purchase = ({ coin, user }) => {
-  const { data: coinsPrices, error } = usePricesState();
+const Purchase = ({ coin, coinPrice, user, coinsPrices }) => {
   const {
     execute,
     pending,
@@ -38,17 +37,18 @@ const Purchase = ({ coin, user }) => {
 
   function sendData() {
     return axios({
+      url: `http://localhost:3000/api/buy-currency`,
+      method: "post",
       data: {
         userId: user.id,
         walletId: user.wallet.id,
         coin: coin.key,
         amountOfCoin: formData.amountOfCoin,
-        priceOnEntry: coinsPrices[coin.key],
+        priceOnEntry: coinPrice,
         description: "my position",
       },
     });
   }
-  let coinPrice = coinsPrices?.[coin.key];
 
   const updateAmountOfCoin = (state) => ({
     ...state,
@@ -64,16 +64,14 @@ const Purchase = ({ coin, user }) => {
   });
 
   useEffect(() => {
-    if (coinsPrices) {
-      coinPrice = coinsPrices[coin.key];
-
+    if (coinPrice) {
       setFormData(
         formData.lastUpdatedField === "amountOfCoin"
           ? updateExpenseInDollars
           : updateAmountOfCoin
       );
     }
-  }, [coinsPrices]);
+  }, [coinPrice]);
 
   const handleChange = (e) => {
     unsetErrors();
@@ -111,10 +109,6 @@ const Purchase = ({ coin, user }) => {
     }
   };
   const displayComponent = () => {
-    if (error.isError)
-      return <PageError error={{ message: errorMessages.noPrice }} />;
-    if (!coinsPrices) return <>{"Loading..."}</>;
-
     const currentCoinPrice = (
       <h2>
         Current {coin.currency} price:{" "}

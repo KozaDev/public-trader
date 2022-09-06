@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { errorFactory } from "src/lib/errorHandlers";
+import { errorFactory } from "lib/utils/errorHandlers";
 
 const useFetchData = (asyncFunction, immediate = true) => {
   const [data, setData] = useState(null);

@@ -1,4 +1,4 @@
-import { errorFactory } from "lib/errorHandlers";
+import { errorFactory } from "lib/utils/errorHandlers";
 import { useState } from "react";
 import useSWR from "swr";
 import axios from "axios";
@@ -30,6 +30,8 @@ export async function getServerSideProps() {
 }
 
 const TradersList = ({ traders, error }) => {
+  if (error.isError) return <PageError error={error.error} />;
+
   const [pageIndex, setPageIndex] = useState(0);
 
   const fetcher = (url) => axios.get(url).then((res) => res.data);
@@ -41,35 +43,24 @@ const TradersList = ({ traders, error }) => {
     fetcher,
     { fallbackData: traders }
   );
-  const displayTraders = () => {
-    if (error.isError) return <PageError error={error.error} />;
-    if (swrError) return <PageError error={errorFactory(swrError)} />;
-    return (
-      <>
-        {data.length > 0 ? (
-          <>
-            <Link href={"/users/top/10"}>See top 10 traders</Link>
-            <div>
-              {data.map(({ username, id }) => {
-                return (
-                  <Link key={id} href={`users/${id}`}>
-                    <StyledCard>{username}</StyledCard>
-                  </Link>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          <h2>Currently list of traders is empty</h2>
-        )}
-      </>
-    );
-  };
+
+  if (swrError) return <PageError error={errorFactory(swrError)} />;
+
+  if (!data.length) return <h2>Currently list of traders is empty</h2>;
+
   return (
     <>
       <h1>Traders</h1>
-      {displayTraders()}
-      {/* <button onClick={setPageIndex((state) => state++)}>Next page</button> */}
+      <Link href={"/users/top/10"}>See top 10 traders</Link>
+      <div>
+        {data.map(({ username, id }) => {
+          return (
+            <Link key={id} href={`users/${id}`}>
+              <StyledCard>{username}</StyledCard>
+            </Link>
+          );
+        })}
+      </div>
     </>
   );
 };

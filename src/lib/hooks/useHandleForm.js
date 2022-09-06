@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { errorFactory } from "src/lib/errorHandlers";
+import { errorFactory } from "lib/utils/errorHandlers";
 
 const useHandleForm = (asyncFunction, onSuccess) => {
   const [pending, setPending] = useState(false);

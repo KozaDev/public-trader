@@ -1,5 +1,5 @@
 import NumberFormat from "react-number-format";
-import { decimalPlaces } from "lib/consts";
+import { decimalPlaces } from "lib/consts/consts";
 
 const Wallet = ({ assets }) => {
   const activeAssets = assets.reduce((acc, item) => {

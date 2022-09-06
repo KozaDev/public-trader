@@ -3,68 +3,51 @@ import getBestTraders from "lib/cryptoApi/getBestTraders";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { StyledCard } from "styles/components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PageError from "components/templates/PageError/PageError";
 import NumberFormat from "react-number-format";
-import { errorMessages } from "lib/consts";
+import { errorMessages } from "lib/consts/consts";
 
 const TopTraders = () => {
   const router = useRouter();
-  const { users: amountOfTraders } = router.query;
-
-  const {
-    execute,
-    data: traders,
-    error,
-    pending,
-  } = useFetchData(getBestTraders.bind(null, Number(amountOfTraders)), false);
+  const { users } = router.query;
+  const [isUsersUndefined, setUsersState] = useState(true);
+  const { execute, data, error, pending } = useFetchData(null, false);
 
   useEffect(() => {
-    if (amountOfTraders !== undefined) {
-      if (Number(amountOfTraders) > 0) execute();
+    if (users !== undefined) {
+      if (Number(users) > 0) execute(getBestTraders.bind(null, users));
       else execute(() => Promise.reject({ message: errorMessages.notFound }));
+      setUsersState(false);
     }
-  }, [amountOfTraders]);
+  }, [users]);
 
-  const displayTraders = () => {
-    if (error.isError) return <PageError error={error.error} />;
-    if (pending) return "loading";
-    if (traders)
-      return (
-        <>
-          {traders.length > 0 ? (
-            <>
-              {amountOfTraders == 1 ? (
-                <h1>Best trader</h1>
-              ) : (
-                <h1>Top {amountOfTraders} traders</h1>
-              )}
-              <div>
-                {traders.map(({ username, id, allAssetsInDollars }) => {
-                  return (
-                    <Link key={id} href={`/users/${id}`}>
-                      <StyledCard>
-                        {username}, wallet:{" "}
-                        <NumberFormat
-                          value={allAssetsInDollars}
-                          displayType={"text"}
-                          thousandSeparator={true}
-                          prefix={"$"}
-                        />
-                      </StyledCard>
-                    </Link>
-                  );
-                })}
-              </div>
-            </>
-          ) : (
-            <h2>Currently list of traders is empty</h2>
-          )}
-        </>
-      );
-  };
-
-  return <>{displayTraders()}</>;
+  if (error.isError) return <PageError error={error.error} />;
+  if (pending || isUsersUndefined) return "loading";
+  if (!data.length) return <h2>Currently list of traders is empty</h2>;
+  if (data.length)
+    return (
+      <>
+        {users == 1 ? <h1>Best trader</h1> : <h1>Top {users} traders</h1>}
+        <div>
+          {data.map(({ username, id, allAssetsInDollars }) => {
+            return (
+              <Link key={id} href={`/users/${id}`}>
+                <StyledCard>
+                  {username}, wallet:{" "}
+                  <NumberFormat
+                    value={allAssetsInDollars}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  />
+                </StyledCard>
+              </Link>
+            );
+          })}
+        </div>
+      </>
+    );
 };
 
 export default TopTraders;

@@ -1,4 +1,4 @@
-import { time } from "./consts";
+import { time } from "../consts/consts";
 
 export function getBestInterval(startDate, endDate, maxSizeOfReturnedArray) {
   const intervals = [

@@ -2,9 +2,9 @@ const Select = ({ options, handleChange }) => {
   return (
     <>
       <select onChange={handleChange}>
-        {options.map(({ title, key, attributes }) => {
+        {options.map(({ title, value, attributes }) => {
           return (
-            <option {...attributes} value={key}>
+            <option {...attributes} value={value}>
               {title}
             </option>
           );

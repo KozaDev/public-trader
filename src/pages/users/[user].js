@@ -3,9 +3,10 @@ import axios from "axios";
 import Wallet from "components/molecules/Wallet/Wallet";
 import useSWR from "swr";
 import { useState } from "react";
-import { errorFactory } from "lib/errorHandlers";
+import { errorFactory } from "lib/utils/errorHandlers";
 import PageError from "components/templates/PageError/PageError";
-import { walletSchema } from "lib/consts";
+import { walletSchema } from "lib/consts/consts";
+import PageNav from "components/molecules/PageNav/PageNav";
 
 export async function getServerSideProps({ params }) {
   const { user: id } = params;
@@ -49,7 +50,7 @@ export async function getServerSideProps({ params }) {
     error.isError = true;
     error.error = errorFactory(error);
   }
-
+  console.log(error);
   return {
     props: {
       user,
@@ -60,6 +61,8 @@ export async function getServerSideProps({ params }) {
 }
 
 const User = ({ user, positions, error }) => {
+  if (error.isError) return <PageError error={error.error} />;
+
   const { username, wallet, id } = user;
   const [pageIndex, setPageIndex] = useState(1);
 
@@ -70,38 +73,32 @@ const User = ({ user, positions, error }) => {
     fetcher,
     { fallbackData: positions }
   );
+
+  const usersInfo = (
+    <>
+      <h1>{username}</h1>
+      <Wallet assets={wallet.assets} />
+    </>
+  );
+
+  if (swrError)
+    return (
+      <>
+        <div>{usersInfo}</div>
+        <PageError error={errorFactory(swrError)} />
+      </>
+    );
+
   return (
     <>
-      {error.isError ? (
-        <PageError error={error.error} />
-      ) : (
-        <>
-          <h1>{username}</h1>
-          <Wallet assets={wallet.assets} />
-          {swrError ? (
-            <PageError error={errorFactory(swrError)} />
-          ) : (
-            <Positions positions={data} walletId={wallet.id} />
-          )}
-          <div>
-            <button
-              disabled={pageIndex === 1}
-              onClick={() => setPageIndex((state) => state - 1)}
-            >
-              Previous
-            </button>
-            <button
-              disabled={pageIndex === (data && data.meta.pagination.pageCount)}
-              onClick={() => setPageIndex((state) => state + 1)}
-            >
-              Next
-            </button>
-            <span>{`${pageIndex} of ${
-              data && data.meta.pagination.pageCount
-            }`}</span>
-          </div>
-        </>
-      )}
+      <div>{usersInfo}</div>
+      <Positions positions={data} walletId={wallet.id} />
+      <PageNav
+        currentPage={pageIndex}
+        goToNext={setPageIndex.bind(null, (state) => state + 1)}
+        goToPrevious={setPageIndex.bind(null, (state) => state - 1)}
+        allPages={data.meta.pagination.pageCount}
+      />
     </>
   );
 };

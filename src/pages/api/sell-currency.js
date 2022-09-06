@@ -1,7 +1,10 @@
 import axios from "axios";
-import { decimalPlaces } from "lib/consts";
-import { getJWTFromServerCookie, getIdFromServerCookie } from "lib/cookies";
-import { updateAssets } from "lib/utils";
+import { decimalPlaces } from "lib/consts/consts";
+import {
+  getJWTFromServerCookie,
+  getIdFromServerCookie,
+} from "lib/cookies/cookies";
+import { updateAssets } from "lib/utils/utils";
 
 export default async function handler(req, res) {
   if (req.method === "PUT") {

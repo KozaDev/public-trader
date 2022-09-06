@@ -3,7 +3,7 @@ import {
   getAproximatedPeriod,
   getDaysFromISODate,
   getMinutesFromISODate,
-} from "lib/utils";
+} from "lib/utils/utils";
 import {
   Chart as ChartJS,
   CategoryScale,

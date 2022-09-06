@@ -1,5 +1,5 @@
 import getCurrentPrice from "./getCurrentPrice";
-import { walletSchema } from "lib/consts";
+import { walletSchema } from "lib/consts/consts";
 
 async function getAllPrices() {
   const pricesResponse = await Promise.all(

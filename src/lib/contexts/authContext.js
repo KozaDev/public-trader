@@ -4,7 +4,7 @@ import {
   setUserInCookies,
   removeUserFromCookies,
   getUserFromCookies,
-} from "../cookies";
+} from "../cookies/cookies";
 
 const authContext = createContext();
 
