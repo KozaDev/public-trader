@@ -1,4 +1,5 @@
 import axios from "axios";
+import { decimalPlaces } from "lib/consts/consts";
 import { getJWTFromServerCookie } from "lib/cookies/cookies";
 import { updateAssets } from "lib/utils/utils";
 //import { getCurrentPrice } from "../../lib/cryptoApiRequests";
@@ -17,18 +18,23 @@ export default async function handler(req, res) {
       const authorization = getJWTFromServerCookie(req);
 
       if (!authorization)
-        res.status(401).send({ message: "User unauthorized" });
+        return res.status(401).send({ message: "User unauthorized" });
 
-      if (amountOfCoin <= 0)
-        res.status(403).send({
+      const requierdDollars = amountOfCoin * priceOnEntry;
+
+      if (
+        amountOfCoin <= 0 ||
+        requierdDollars.toFixed(decimalPlaces["usd"]) <= 0
+      )
+        return res.status(403).send({
           message:
             "You have to choose amount of coin or increase amount of coin",
         });
 
       // const currentPrice = await getCurrentPrice(coin);
       // const isPriceFromUserAccurate =
-      //   currentPrice.price * 1.05 > priceOnEntry &&
-      //   currentPrice.price * 0.95 < priceOnEntry;
+      //   currentPrice.price * 1.02 > priceOnEntry &&
+      //   currentPrice.price * 0.98 < priceOnEntry;
 
       const isPriceFromUserAccurate = true;
 
@@ -42,8 +48,6 @@ export default async function handler(req, res) {
       );
 
       const wallet = walletRes.data.data.attributes;
-
-      const requierdDollars = amountOfCoin * priceOnEntry;
 
       const dollarsInWallet = wallet.assets.find(
         (item) => item.key === "usd"
@@ -92,10 +96,11 @@ export default async function handler(req, res) {
       });
 
       return res.status(201).send({
-        assets: updatedAssets,
         coin,
-        differenceInDollars: -requierdDollars,
-        differnceInCoin: amountOfCoin,
+        differenceInDollars: -Number(requierdDollars).toFixed(
+          decimalPlaces["usd"]
+        ),
+        differnceInCoin: Number(amountOfCoin).toFixed(decimalPlaces[coin]),
       });
     } catch (e) {
       console.log(e);

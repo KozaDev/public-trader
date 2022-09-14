@@ -1,21 +1,22 @@
+import { useCartContext } from "lib/contexts/cartContext";
 import { StyledFrom } from "styles/components";
+import FormError from "../FormError/FormError";
 
-const PurchaseForm = ({ formData, handleChange, buyCurrency }) => {
-  const exceptThisSymbols = ["e", "E", "+", "-"];
+const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
+  const { pending, error, action, isAuthenticated } = useCartContext();
+
   return (
-    <StyledFrom onSubmit={buyCurrency}>
+    <StyledFrom onSubmit={action}>
       <div>
         <h3>Amount of coin</h3>
         <input
           type={"number"}
           name={"amountOfCoin"}
           value={formData.amountOfCoin}
-          onKeyDown={(e) =>
-            exceptThisSymbols.includes(e.key) && e.preventDefault()
-          }
+          onKeyDown={preventKeyDown}
           onChange={handleChange}
           autoComplete="off"
-          required
+          required={isAuthenticated}
         ></input>
       </div>
       <div>
@@ -24,12 +25,10 @@ const PurchaseForm = ({ formData, handleChange, buyCurrency }) => {
           type={"number"}
           name={"expenseInDollars"}
           value={formData.expenseInDollars}
-          onKeyDown={(e) =>
-            exceptThisSymbols.includes(e.key) && e.preventDefault()
-          }
+          onKeyDown={preventKeyDown}
           onChange={handleChange}
           autoComplete="off"
-          required
+          required={isAuthenticated}
         ></input>
       </div>
       <div>
@@ -40,11 +39,16 @@ const PurchaseForm = ({ formData, handleChange, buyCurrency }) => {
           value={formData.description}
           onChange={handleChange}
           autoComplete="off"
-          required
+          required={isAuthenticated}
         ></input>
       </div>
       <br />
-      <input type={"submit"} value={"Buy"} />
+      {error.isError && <FormError error={error.error} />}
+      <input
+        type={"submit"}
+        disabled={pending}
+        value={isAuthenticated ? "Buy" : "Register"}
+      />
     </StyledFrom>
   );
 };

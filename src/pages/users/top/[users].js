@@ -1,53 +1,41 @@
 import useFetchData from "lib/hooks/useFetchData";
-import getBestTraders from "lib/cryptoApi/getBestTraders";
-import Link from "next/link";
+import getBestTraders from "lib/messariApi/getBestTraders";
 import { useRouter } from "next/router";
-import { StyledCard } from "styles/components";
 import { useEffect, useState } from "react";
 import PageError from "components/templates/PageError/PageError";
-import NumberFormat from "react-number-format";
 import { errorMessages } from "lib/consts/consts";
+import List from "components/organisms/List/List";
+import TopTradersLabel from "components/atoms/TopTradersLabel/TopTradersLabel";
+import { prepareTemplate } from "lib/utils/utils";
 
 const TopTraders = () => {
   const router = useRouter();
   const { users } = router.query;
-  const [isUsersUndefined, setUsersState] = useState(true);
+  const [isQueryUndefined, setQuery] = useState(true);
   const { execute, data, error, pending } = useFetchData(null, false);
 
   useEffect(() => {
     if (users !== undefined) {
       if (Number(users) > 0) execute(getBestTraders.bind(null, users));
-      else execute(() => Promise.reject({ message: errorMessages.notFound }));
-      setUsersState(false);
+      else execute(() => Promise.reject(new Error(errorMessages.notFound)));
+      setQuery(false);
     }
   }, [users]);
 
+  const title = users == 1 ? "Best trader" : `Top ${users} traders`;
+
   if (error.isError) return <PageError error={error.error} />;
-  if (pending || isUsersUndefined) return "loading";
-  if (!data.length) return <h2>Currently list of traders is empty</h2>;
-  if (data.length)
-    return (
-      <>
-        {users == 1 ? <h1>Best trader</h1> : <h1>Top {users} traders</h1>}
-        <div>
-          {data.map(({ username, id, allAssetsInDollars }) => {
-            return (
-              <Link key={id} href={`/users/${id}`}>
-                <StyledCard>
-                  {username}, wallet:{" "}
-                  <NumberFormat
-                    value={allAssetsInDollars}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                  />
-                </StyledCard>
-              </Link>
-            );
-          })}
-        </div>
-      </>
-    );
+  if (pending || isQueryUndefined) return "loading";
+
+  return (
+    <List
+      Component={TopTradersLabel}
+      data={data}
+      listTitle={title}
+      emptyInfo={"Currently list of traders is empty"}
+      linkEachTo={prepareTemplate`/users/${"id"}`}
+    />
+  );
 };
 
 export default TopTraders;

@@ -1,9 +1,11 @@
 import StyledModal, { Overlay } from "./StyledModal";
 
-const Modal = ({ children }) => {
+const Modal = ({ children, ignoreDefaultSize }) => {
   return (
     <>
-      <StyledModal>{children}</StyledModal>
+      <StyledModal ignoreDefaultSize={ignoreDefaultSize}>
+        {children}
+      </StyledModal>
       <Overlay />
     </>
   );

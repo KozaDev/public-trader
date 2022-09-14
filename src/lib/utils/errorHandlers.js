@@ -1,19 +1,9 @@
 import { errorMessages } from "../consts/consts";
 
 export const errorFactory = (error) => {
-  console.error(error);
   if (error?.config?.url.includes(process.env.MESSARI_API)) {
     return {
       message: errorMessages.externalAPIError,
-      status: error?.response?.status || null,
-      name: null,
-      details: null,
-    };
-  }
-
-  if (error?.config?.url.includes(process.env.NEXT_PUBLIC_STRAPI_URL)) {
-    return {
-      message: errorMessages.serverError,
       status: error?.response?.status || null,
       name: null,
       details: null,
@@ -28,7 +18,6 @@ export const errorFactory = (error) => {
       details: null,
     };
   }
-
   if (!error.response || !error?.response?.data?.error) {
     return {
       message: error.message || errorMessages.somethingWentWrong,
@@ -45,9 +34,9 @@ export const errorFactory = (error) => {
   } = error.response.data;
 
   return {
-    message,
-    status,
-    name,
-    details: details == undefined ? null : details,
+    message: message || null,
+    status: status || null,
+    name: name || null,
+    details: details || null,
   };
 };

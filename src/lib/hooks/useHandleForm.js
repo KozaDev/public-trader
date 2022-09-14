@@ -44,7 +44,6 @@ const useHandleForm = (asyncFunction, onSuccess) => {
         setPending(false);
       })
       .catch((e) => {
-        console.error(e);
         catchErrors(e);
         setPending(false);
       });

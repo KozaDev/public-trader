@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect } from "react";
 import useFetchData from "lib/hooks/useFetchData";
-import getAllPrices from "lib/cryptoApi/getAllPrices";
+import getAllPrices from "lib/messariApi/getAllPrices";
 
 const PricesContext = createContext(null);
 

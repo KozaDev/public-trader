@@ -18,7 +18,6 @@ const useFetchData = (asyncFunction, immediate = true) => {
           setPending(false);
         })
         .catch((e) => {
-          console.error(e);
           setError({ isError: true, error: errorFactory(e) });
           setPending(false);
         });

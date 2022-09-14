@@ -1,5 +1,6 @@
 import axios from "axios";
 import getAllPrices from "./getAllPrices";
+import { allAssetsToDollars } from "lib/utils/utils";
 
 async function getBestTraders(size) {
   const usersResponse = await axios.get(
@@ -13,9 +14,7 @@ async function getBestTraders(size) {
   const usersWithWallets = usersResponse.data.filter(({ wallet }) => wallet);
 
   const usersWithAssets = usersWithWallets.map(({ id, username, wallet }) => {
-    const allAssetsInDollars = wallet.assets
-      .reduce((acc, item) => pricesObject[item.key] * item.amount + acc, 0)
-      .toFixed(2);
+    const allAssetsInDollars = allAssetsToDollars(wallet.assets, pricesObject);
 
     return {
       id,

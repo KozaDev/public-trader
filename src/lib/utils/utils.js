@@ -1,4 +1,4 @@
-import { time } from "../consts/consts";
+import { decimalPlaces, time } from "../consts/consts";
 
 export function getBestInterval(startDate, endDate, maxSizeOfReturnedArray) {
   const intervals = [
@@ -60,6 +60,8 @@ export const getAproximatedPeriod = (start, end) => {
   const aproximatedPeriod = likeArrayTimeObject.reduce(
     (acc, item) => {
       const difference = Math.abs(item[1] - exactPeriod);
+      if (acc.difference > time["1d"] * 1.5 && acc.time === "1d")
+        return { difference, time: "1w" };
       if (acc.difference > difference) return { difference, time: item };
       return acc;
     },
@@ -74,18 +76,18 @@ export const capitalizeFirstLetter = (word) => {
 };
 
 export const isNumberInputValid = (input, decimalPlace) => {
-  const amountAsArray = input.toString().split("");
-  const lastElementOfInput = amountAsArray[amountAsArray.length - 1];
+  const inputAsArray = input.toString().split("");
+  const lastElementOfInput = inputAsArray[inputAsArray.length - 1];
 
   if (lastElementOfInput === undefined) return true;
 
   if (Number.isNaN(Number(lastElementOfInput))) return false;
   if (Number(input) < 0) return false;
 
-  const dotIndex = amountAsArray.findIndex((item) => item === ".");
+  const dotIndex = inputAsArray.findIndex((item) => item === ".");
   if (dotIndex === -1) return true;
 
-  const decimalPartAsArray = amountAsArray.slice(dotIndex + 1);
+  const decimalPartAsArray = inputAsArray.slice(dotIndex + 1);
 
   if (decimalPartAsArray.length > decimalPlace) return false;
   return true;
@@ -102,14 +104,33 @@ export const updateAssets = (
     if (item.key === removedAsset)
       return {
         ...item,
-        amount: Number(item.amount) - Number(amountOfRemoved),
+        amount: (Number(item.amount) - Number(amountOfRemoved)).toFixed(
+          decimalPlaces[item.key]
+        ),
       };
     if (item.key === addedAsset)
       return {
         ...item,
-        amount: Number(item.amount) + Number(amountOfAdded),
+        amount: (Number(item.amount) + Number(amountOfAdded)).toFixed(
+          decimalPlaces[item.key]
+        ),
       };
 
     return item;
   });
+};
+
+export const allAssetsToDollars = (assets, pricesObject) => {
+  return assets
+    .reduce((acc, item) => pricesObject[item.key] * item.amount + acc, 0)
+    .toFixed(2);
+};
+
+export const prepareTemplate = (strings, ...keys) => {
+  return (dataObject) => {
+    return strings.reduce((acc, string, index) => {
+      if (index === strings.length - 1) return acc + string;
+      return acc + string + dataObject[keys[index]];
+    }, "");
+  };
 };

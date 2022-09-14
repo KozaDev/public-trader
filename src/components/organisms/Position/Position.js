@@ -1,14 +1,15 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { StyledCard, StyledButton } from "styles/components";
 import Modal from "../../templates/Modal/Modal";
 import styled from "styled-components";
 import Moment from "react-moment";
 import { usePricesState } from "lib/contexts/pricesProvider";
-import Chart from "../Chart";
+import Chart from "components/organisms/Chart/index";
 import useFetchData from "lib/hooks/useFetchData";
 import { useAuth } from "lib/contexts/authContext";
 import PageError from "../../templates/PageError/PageError";
 import axios from "axios";
+import Router from "next/router";
 
 const StyledPosition = styled(StyledCard)`
   .red {
@@ -38,12 +39,35 @@ const Position = ({ details }) => {
     description,
     amountOfCoin,
   } = details;
+
   const { data, error } = usePricesState();
   const { user } = useAuth();
   const [isModalActive, toggleModal] = useState(false);
 
   const openModal = () => toggleModal(true);
   const closeModal = () => toggleModal(false);
+
+  const [displayConfirm, setDisplayConfirm] = useState(false);
+  const [confirmed, setConfirm] = useState(false);
+
+  useEffect(() => {
+    if (confirmed) {
+      execute(() =>
+        axios({
+          method: "put",
+          url: `http://localhost:3000/api/sell-currency`,
+          data: {
+            positionId,
+            walletId,
+            priceOnEntry,
+            priceOnExit: data[coin],
+            coin,
+            amountOfCoin,
+          },
+        })
+      );
+    }
+  }, [confirmed]);
 
   const isPositionOpen = updatedAt === createdAt;
 
@@ -62,28 +86,23 @@ const Position = ({ details }) => {
   });
 
   const {
-    data: response,
+    data: closePositionData,
     execute,
     error: closePositionError,
     pending,
   } = useFetchData(null, false);
 
   const closePosition = () => {
-    execute(() =>
-      axios({
-        method: "put",
-        url: `http://localhost:3000/api/sell-currency`,
-        data: {
-          positionId,
-          walletId,
-          priceOnEntry,
-          priceOnExit: data[coin],
-          coin,
-          amountOfCoin,
-        },
-      })
-    );
+    setDisplayConfirm(true);
+    closeModal();
   };
+
+  if (!closePositionError.isError && closePositionData) {
+    Router.push({
+      pathname: "/success",
+      query: { details: btoa(JSON.stringify(closePositionData.data)) },
+    });
+  }
 
   return (
     <StyledPosition>
@@ -103,8 +122,18 @@ const Position = ({ details }) => {
 
       <StyledButton onClick={openModal}>See more</StyledButton>
 
+      {displayConfirm && (
+        <Modal ignoreDefaultSize={true}>
+          <p>
+            <>{`Do you want to close this position`}</>
+            <button onClick={() => setConfirm(true)}>ok</button>
+            <button onClick={() => setDisplayConfirm(false)}>no</button>
+          </p>
+        </Modal>
+      )}
+
       {isModalActive && (
-        <Modal>
+        <Modal width={"40%"}>
           <Chart
             startDate={createdAt}
             exitDate={isPositionOpen ? null : updatedAt}
@@ -116,6 +145,7 @@ const Position = ({ details }) => {
           <h5>
             entry date: <Moment date={createdAt} format="YYYY-MM-DD hh:mm:ss" />
           </h5>
+
           {isPositionOpen ? (
             <h5>Position open</h5>
           ) : (

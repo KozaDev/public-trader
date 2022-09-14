@@ -2,17 +2,27 @@ import { useEffect, useState } from "react";
 import useWindowSize from "lib/hooks/useWindowSize";
 import useFetchData from "lib/hooks/useFetchData";
 import PageError from "components/templates/PageError/PageError";
-import getPricesFromRangeOfDates from "lib/cryptoApi/getPricesFromRangeOfDates";
+import getPricesFromRangeOfDates from "lib/messariApi/getPricesFromRangeOfDates";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
+import Select from "components/molecules/Select/Select";
+
 const LineChart = dynamic(() => import("./LineChart"), {
   suspense: true,
 });
 
+const granulation = [
+  { title: "More detailes", value: 2016 },
+  { title: "Normal", value: 300 },
+  { title: "Less detailes", value: 120 },
+];
+
+const defaultGranulation = 300;
+
 const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
   const { width } = useWindowSize();
 
-  const [dataGranulation, setGranulation] = useState(300);
+  const [dataGranulation, setGranulation] = useState(defaultGranulation);
 
   const { data, error, pending, execute } = useFetchData(
     getPricesFromRangeOfDates.bind(
@@ -22,7 +32,6 @@ const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
       coin,
       dataGranulation
     ),
-    true,
     true
   );
 
@@ -38,48 +47,37 @@ const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
     );
   }, [startDate, exitDate, coin, dataGranulation]);
 
+  const granulationOptions = granulation.map(({ title, value }) => ({
+    title,
+    value,
+    attributes: { selected: value === dataGranulation },
+  }));
+  const handleGranulationChange = ({ target: { value } }) => {
+    setGranulation(value);
+  };
+
   const displayChart = () => {
     if (error.isError) return <PageError error={error.error} />;
-    if (!data) return "...loading";
+    if (pending) return "Loading...";
     return (
-      <>
-        <Suspense fallback={`Loading...`}>
-          <LineChart data={data} width={width} />
-        </Suspense>
-        {changeGranulation && (
-          <>
-            <h5>Set data granulation</h5>
-            {isChartUpdating()}
-            <button
-              disabled={dataGranulation === 2016}
-              onClick={() => setGranulation(2016)}
-            >
-              More details
-            </button>
-            <button
-              disabled={dataGranulation === 300}
-              onClick={() => setGranulation(300)}
-            >
-              Normal
-            </button>
-            <button
-              disabled={dataGranulation === 120}
-              onClick={() => setGranulation(120)}
-            >
-              Less details
-            </button>
-          </>
-        )}
-      </>
+      <Suspense fallback={`Loading...`}>
+        <LineChart data={data} width={width} />
+      </Suspense>
     );
   };
 
-  const isChartUpdating = () => <>{pending ? <>{"...loading"}</> : null}</>;
-
   return (
     <>
-      {isChartUpdating()}
-      {displayChart()}
+      <>{displayChart()}</>
+      {changeGranulation && (
+        <>
+          <h5>{"Change data granulation"}</h5>
+          <Select
+            options={granulationOptions}
+            handleChange={handleGranulationChange}
+          />
+        </>
+      )}
     </>
   );
 };

@@ -90,7 +90,6 @@ export default async function handler(req, res) {
       });
 
       return res.status(201).send({
-        assets: updatedAssets,
         coin,
         differenceInDollars: dollarsToAdd,
         differnceInCoin: -amountOfCoin,

@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { usePricesState } from "lib/contexts/pricesProvider";
 import { errorMessages, pastDates, walletSchema } from "lib/consts/consts";
 import { capitalizeFirstLetter } from "lib/utils/utils";
 import { getIdFromServerCookie } from "lib/cookies/cookies";
-import Chart from "components/molecules/Chart";
-import Purchase from "components/organisms/Purchase/Purchase";
+import Chart from "components/organisms/Chart";
 import PageError from "components/templates/PageError/PageError";
 import { errorFactory } from "lib/utils/errorHandlers";
 import axios from "axios";
 import Select from "components/molecules/Select/Select";
+import MarketDetails from "components/organisms/MarketDetails/MarketDetails";
 
 export async function getServerSideProps({ req, params: { market } }) {
   const error = { isError: false, error: null };
@@ -47,8 +46,6 @@ export async function getServerSideProps({ req, params: { market } }) {
 export default function Market({ user, market, error }) {
   if (error.isError) return <PageError error={error.error} />;
 
-  const { data: coinsPrices, error: coinsError } = usePricesState();
-
   const weekAgo = pastDates[2].date;
   const weekAgoAsString = pastDates[2].name;
 
@@ -80,14 +77,6 @@ export default function Market({ user, market, error }) {
     setStart({ date: value, name });
   };
 
-  const displayPurchaseComponent = () => {
-    if (coinsError.isError) return <PageError error={coinsError.error} />;
-    if (coinsPrices)
-      return (
-        <Purchase coin={coin} coinPrice={coinsPrices[coin.key]} user={user} />
-      );
-  };
-
   return (
     <>
       <>{header}</>
@@ -97,7 +86,7 @@ export default function Market({ user, market, error }) {
         coin={coin.key}
         changeGranulation={true}
       />
-      {displayPurchaseComponent()}
+      <MarketDetails coin={coin} user={user} />
     </>
   );
 }

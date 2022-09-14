@@ -6,18 +6,17 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-height: 600px;
-  width: 65%;
   background-color: ${({ theme }) => theme.colors.whiteSmoke};
   padding: 20px 50px 20px 20px;
   border-radius: 20px;
   overflow: auto;
+  width: ${({ ignoreDefaultSize }) => (ignoreDefaultSize ? null : "55%")};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.extraLarge}) {
-    width: 75%;
+    width: ${({ ignoreDefaultSize }) => (ignoreDefaultSize ? null : "75%")};
   }
   @media (max-width: ${({ theme }) => theme.breakpoints.large}) {
-    width: 85%;
+    width: ${({ ignoreDefaultSize }) => (ignoreDefaultSize ? null : "85%")};
   }
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;

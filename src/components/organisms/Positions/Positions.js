@@ -1,20 +1,27 @@
-import Position from "../../molecules/Position/Position";
+import Position from "../Position/Position";
+import StyledPositions from "./StyledPosition";
+import Link from "next/link";
 
-const Positions = ({ positions: { data }, walletId }) => {
+const Positions = ({ positions: { data }, userId }) => {
   return (
-    <div>
+    <StyledPositions>
       {data.length > 0 ? (
-        <ul>
-          {data.map(({ id, attributes }) => (
-            <li key={id}>
-              <Position details={{ positionId: id, walletId, ...attributes }} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <h2>Positions</h2>
+          <ul>
+            {data.map(({ id, attributes }) => (
+              <li key={id}>
+                <Link href={`/users/${userId}/position/${id}`}>
+                  See position
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
       ) : (
         <h2>This user dosen't have any positions</h2>
       )}
-    </div>
+    </StyledPositions>
   );
 };
 

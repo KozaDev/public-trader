@@ -4,7 +4,9 @@ import useSWR from "swr";
 import axios from "axios";
 import Link from "next/link";
 import PageError from "components/templates/PageError/PageError";
-import { StyledCard } from "styles/components";
+import List from "components/organisms/List/List";
+import UsersLabel from "components/atoms/UsersLabel/UsersLabel";
+import { prepareTemplate } from "lib/utils/utils";
 
 export async function getServerSideProps() {
   let traders = [];
@@ -18,7 +20,7 @@ export async function getServerSideProps() {
     traders = tradersRes.data;
   } catch (e) {
     error.isError = true;
-    error.error = errorFactory(error);
+    error.error = errorFactory(e);
   }
 
   return {
@@ -52,15 +54,12 @@ const TradersList = ({ traders, error }) => {
     <>
       <h1>Traders</h1>
       <Link href={"/users/top/10"}>See top 10 traders</Link>
-      <div>
-        {data.map(({ username, id }) => {
-          return (
-            <Link key={id} href={`users/${id}`}>
-              <StyledCard>{username}</StyledCard>
-            </Link>
-          );
-        })}
-      </div>
+      <List
+        data={data}
+        Component={UsersLabel}
+        emptyInfo={"List of traders is empty"}
+        linkEachTo={prepareTemplate`users/${"id"}`}
+      />
     </>
   );
 };

@@ -29,7 +29,7 @@ export const getUserFromCookies = () => {
 };
 
 export const getIdFromServerCookie = (req) => {
-  if (!req.headers.cookie || "") {
+  if (!req.headers?.cookie || "") {
     return undefined;
   }
   const idCookie = req.headers.cookie
