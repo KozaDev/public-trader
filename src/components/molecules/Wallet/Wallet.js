@@ -1,5 +1,4 @@
 import StyledWallet from "./StyledWallet";
-import NumberFormat from "react-number-format";
 import { decimalPlaces } from "lib/consts/consts";
 import { allAssetsToDollars, capitalizeFirstLetter } from "lib/utils/utils";
 import { usePricesState } from "lib/contexts/pricesProvider";
@@ -9,10 +8,22 @@ import Coin from "components/atoms/Coin/Coin";
 const Wallet = ({ assets, update }) => {
   const { data, error } = usePricesState();
 
-  const displayNumber = (amount, currency) => {
+  const displayAsset = (amount, currency, displayPrefix) => {
     const isItDollar = currency === "usd";
-    if (isItDollar) return <Dollar amount={amount} />;
-    return <Coin amount={amount} coin={currency} />;
+    return (
+      <>
+        {isItDollar ? (
+          <Dollar amount={amount} displayPrefix={!!displayPrefix} />
+        ) : (
+          <Coin
+            amount={amount}
+            coin={currency}
+            displayPrefix={!!displayPrefix}
+            layPrefix
+          />
+        )}
+      </>
+    );
   };
 
   const displayWalletValue = () => {
@@ -20,9 +31,9 @@ const Wallet = ({ assets, update }) => {
     if (!data) return "...";
     const value = allAssetsToDollars(assets, data);
     return (
-      <>
-        <h2>All assets: {displayNumber(value, "usd")}</h2>
-      </>
+      <h2>
+        Wallet value <Dollar amount={value} />
+      </h2>
     );
   };
 
@@ -45,14 +56,12 @@ const Wallet = ({ assets, update }) => {
 
         acc.push(
           <li key={currencyName}>
-            {capitalizeFirstLetter(currencyName)}
-            {" - "}
-            {displayNumber(amountBeforeUpdate, item.key)}
+            {displayAsset(amountBeforeUpdate, item.key, true)}
 
             {"   "}
             <span className={`label ${isDiffPositive ? "green" : "red"}`}>
               {isDiffPositive && "+"}
-              {displayNumber(difference, item.key)}
+              {displayAsset(difference, item.key)}
             </span>
           </li>
         );
@@ -61,9 +70,7 @@ const Wallet = ({ assets, update }) => {
       if (!currencyToUpdate && item.amount > 0) {
         acc.push(
           <li key={currencyName}>
-            {capitalizeFirstLetter(currencyName)}
-            {" - "}
-            {displayNumber(item.amount, item.key)}
+            {displayAsset(item.amount, item.key, true)}
           </li>
         );
       }
@@ -91,11 +98,7 @@ const Wallet = ({ assets, update }) => {
       const amount = Number(item.amount).toFixed(decimalPlaces[item.key]);
       const currencyName = item.currency;
       acc.push(
-        <li key={currencyName}>
-          {capitalizeFirstLetter(currencyName)}
-          {" - "}
-          {displayNumber(amount, item.key)}
-        </li>
+        <li key={currencyName}>{displayAsset(amount, item.key, true)}</li>
       );
     }
     return acc;

@@ -4,6 +4,7 @@ import { CartContextProvider } from "lib/contexts/cartContext";
 import Cart from "components/organisms/Cart/Cart";
 import { usePricesState } from "lib/contexts/pricesProvider";
 import PageError from "components/templates/PageError/PageError";
+import { StyledCard } from "styles/components";
 
 const MarketDetails = ({ coin, user }) => {
   const { data: coinPrices, error: coinError } = usePricesState();
@@ -35,7 +36,7 @@ const MarketDetails = ({ coin, user }) => {
   };
 
   return (
-    <>
+    <StyledCard>
       <h2>
         Current {coin.currency} price:{" "}
         <NumberFormat
@@ -54,7 +55,7 @@ const MarketDetails = ({ coin, user }) => {
         <Cart />
       </CartContextProvider>
       {displayUsersDollars()}
-    </>
+    </StyledCard>
   );
 };
 

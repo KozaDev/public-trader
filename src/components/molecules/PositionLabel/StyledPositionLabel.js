@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const StyledPositionLabel = styled.div`
+  margin: 10px 0;
+  padding: 15px;
   width: 100%;
   height: 100%;
 
@@ -14,3 +16,5 @@ const StyledPositionLabel = styled.div`
 `;
 
 export default StyledPositionLabel;
+
+3614;

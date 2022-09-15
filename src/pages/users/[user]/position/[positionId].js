@@ -4,6 +4,8 @@ import axios from "axios";
 import PageError from "components/templates/PageError/PageError";
 import Chart from "components/organisms/Chart";
 import PositionDetails from "components/organisms/PositionDetails/PositionDetails";
+import PositionClose from "components/molecules/PositionClose/PositionClose";
+import { StyledCard } from "styles/components";
 import { useAuth } from "lib/contexts/authContext";
 
 export async function getServerSideProps({ params }) {
@@ -15,7 +17,7 @@ export async function getServerSideProps({ params }) {
 
   try {
     const userResponse = await axios.get(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/${id}?populate=positions`
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/${id}?populate=positions,wallet`
     );
 
     if (!userResponse.data) throw new Error(errorMessages.notFound);
@@ -47,7 +49,13 @@ const Position = ({ user, position, error }) => {
   if (error.isError) return <PageError error={error.error} />;
 
   const { user: authUser } = useAuth();
-  const { coin, createdAt, updatedAt } = position;
+
+  const { coin, createdAt, updatedAt, amountOfCoin, id } = position;
+  console.log(user);
+  const {
+    wallet: { id: walletId },
+  } = user;
+
   const isPositionOpen = createdAt === updatedAt;
   return (
     <div>
@@ -58,7 +66,17 @@ const Position = ({ user, position, error }) => {
         coin={coin}
         changeGranulation={true}
       />
-      <PositionDetails {...position} owner={user} />
+      <StyledCard>
+        <PositionDetails {...position} owner={user} />
+        {isPositionOpen && authUser?.id == user.id ? (
+          <PositionClose
+            coin={coin}
+            amountOfCoin={amountOfCoin}
+            positionId={id}
+            walletId={walletId}
+          />
+        ) : null}
+      </StyledCard>
     </div>
   );
 };

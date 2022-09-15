@@ -1,8 +1,9 @@
 import NumberFormat from "react-number-format";
+import { ListElement } from "styles/components";
 
-const UserLabel = ({ username, allAssetsInDollars }) => {
+const TopTradersLabel = ({ username, allAssetsInDollars }) => {
   return (
-    <div>
+    <ListElement>
       {username}{" "}
       <NumberFormat
         value={allAssetsInDollars}
@@ -10,8 +11,8 @@ const UserLabel = ({ username, allAssetsInDollars }) => {
         thousandSeparator={true}
         prefix={"$"}
       />
-    </div>
+    </ListElement>
   );
 };
 
-export default UserLabel;
+export default TopTradersLabel;

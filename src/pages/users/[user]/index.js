@@ -69,6 +69,7 @@ export async function getServerSideProps({ params }) {
 
 const User = ({ user, positions, error }) => {
   if (error.isError) return <PageError error={error.error} />;
+
   const { username, wallet, id } = user;
   const [pageIndex, setPageIndex] = useState(1);
 
@@ -82,7 +83,7 @@ const User = ({ user, positions, error }) => {
     { fallbackData: positions }
   );
 
-  const usersInfo = (
+  const userDetails = (
     <>
       <h1>{username}</h1>
       <Wallet assets={wallet.assets} />
@@ -92,14 +93,14 @@ const User = ({ user, positions, error }) => {
   if (swrError)
     return (
       <>
-        <div>{usersInfo}</div>
+        <div>{userDetails}</div>
         <PageError error={errorFactory(swrError)} />
       </>
     );
 
   return (
     <>
-      <div>{usersInfo}</div>
+      <div>{userDetails}</div>
       <List
         Component={PositionLabel}
         data={data.data}

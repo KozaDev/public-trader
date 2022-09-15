@@ -1,5 +1,7 @@
+import { ListElement } from "styles/components";
+
 const UserLabel = ({ username }) => {
-  return <div>{username}</div>;
+  return <ListElement>{username}</ListElement>;
 };
 
 export default UserLabel;

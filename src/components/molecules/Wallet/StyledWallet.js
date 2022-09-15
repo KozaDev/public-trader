@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { StyledCard } from "styles/components";
 
 const StyledWallet = styled(StyledCard)`
+  padding: 20px;
+  margin: 20px 0;
   ul li {
     font-size: ${({ theme }) => theme.fontSize.xl};
     margin: 5px 0;

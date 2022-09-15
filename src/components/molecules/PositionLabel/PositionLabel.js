@@ -2,6 +2,7 @@ import StyledPositionLabel from "./StyledPositionLabel";
 import Moment from "react-moment";
 import PositionReturn from "../../atoms/PositionReturn/PositionReturn";
 import PositionValue from "components/atoms/PositionValue/PositionValue";
+import Coin from "components/atoms/Coin/Coin";
 
 const PositionLabel = ({ attributes }) => {
   const {
@@ -24,17 +25,23 @@ const PositionLabel = ({ attributes }) => {
   return (
     <StyledPositionLabel>
       <div className="flex-wrapper">
-        <h3>
-          {coin.toUpperCase()}
-          {" - USD "}
-          <PositionReturn
-            updatedAt={updatedAt}
-            createdAt={createdAt}
-            priceOnEntry={priceOnEntry}
-            priceOnExit={priceOnExit}
-            coin={coin}
-          />
-        </h3>
+        <div>
+          <h3>
+            <Coin amount={amountOfCoin} coin={coin} displayPrefix={true} />{" "}
+          </h3>
+
+          <h5>
+            {"Return "}
+            <PositionReturn
+              updatedAt={updatedAt}
+              createdAt={createdAt}
+              priceOnEntry={priceOnEntry}
+              priceOnExit={priceOnExit}
+              coin={coin}
+            />
+          </h5>
+        </div>
+
         <h3>
           <Moment date={createdAt} format="YYYY-MM-DD" /> - {exitDate}
         </h3>

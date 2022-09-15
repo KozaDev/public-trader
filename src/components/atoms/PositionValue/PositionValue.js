@@ -12,6 +12,7 @@ const PositionValue = ({
 
   if (error.isError) return "?";
   if (!data) return "...";
+
   const isPositionOpen = updatedAt === createdAt;
   const ultimatePrice = isPositionOpen ? data[coin] : priceOnExit;
 

@@ -12,6 +12,7 @@ const PositionReturn = ({
 
   if (error.isError) return "?";
   if (!data) return "...";
+
   const isPositionOpen = updatedAt === createdAt;
   const ultimatePrice = isPositionOpen ? data[coin] : priceOnExit;
   const currentReturn = ((ultimatePrice / priceOnEntry) * 100 - 100).toFixed(1);

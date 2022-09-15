@@ -1,13 +1,16 @@
 import NumberFormat from "react-number-format";
 
-const Dollar = ({ amount }) => {
+const Dollar = ({ amount, displayPrefix }) => {
   return (
-    <NumberFormat
-      value={Number(amount).toFixed(2)}
-      displayType={"text"}
-      thousandSeparator={true}
-      prefix={"$"}
-    />
+    <>
+      {displayPrefix && <>{"USD "}</>}
+      <NumberFormat
+        value={Number(amount).toFixed(2)}
+        displayType={"text"}
+        thousandSeparator={true}
+        prefix={!displayPrefix && "$"}
+      />
+    </>
   );
 };
 

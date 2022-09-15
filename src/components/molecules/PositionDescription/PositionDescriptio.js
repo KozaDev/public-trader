@@ -4,11 +4,11 @@ const PositionDescription = ({ description, ownerName, ownerId }) => {
   return (
     <p>
       {description}
-      <h5>
+      <h4>
         <Link href={`/users/${ownerId}`}>
           <a>{ownerName}</a>
         </Link>
-      </h5>
+      </h4>
     </p>
   );
 };

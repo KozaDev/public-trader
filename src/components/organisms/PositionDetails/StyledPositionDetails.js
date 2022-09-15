@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { StyledCard } from "styles/components";
 
-const StyledPositionDetails = styled(StyledCard)``;
+const StyledPositionDetails = styled.div`
+  padding: 20px;
+`;
 
 export default StyledPositionDetails;

@@ -4,6 +4,7 @@ import PositionReturn from "components/atoms/PositionReturn/PositionReturn";
 import PositionValue from "components/atoms/PositionValue/PositionValue";
 import PositionExitPrice from "components/atoms/PositionExitPrice/PositionExitPrice";
 import PositionDescription from "components/molecules/PositionDescription/PositionDescriptio";
+import Coin from "components/atoms/Coin/Coin";
 
 const PositionDetails = ({
   coin,
@@ -22,33 +23,20 @@ const PositionDetails = ({
 
   return (
     <StyledPositionDetails>
+      <h2>{"Description"}</h2>
       <PositionDescription
         description={description}
         ownerName={owner.username}
         ownerId={owner.id}
       />
 
-      <h5>
-        {"Price on entry: "}
-        <Dollar amount={priceOnEntry} />
-      </h5>
-      <h5>
-        {priceOnExitLabel}
-        <PositionExitPrice priceOnExit={priceOnExit} coin={coin} />
-      </h5>
+      <h2>{"Details"}</h2>
 
-      <h5>
-        {"Return: "}
-        <PositionReturn
-          createdAt={createdAt}
-          updatedAt={updatedAt}
-          priceOnEntry={priceOnEntry}
-          priceOnExit={priceOnExit}
-          coin={coin}
-        />
-      </h5>
+      <h4>
+        <Coin amount={amountOfCoin} coin={coin} displayPrefix={true} />
+      </h4>
 
-      <h5>
+      <h4>
         {"Value: "}
         <PositionValue
           createdAt={createdAt}
@@ -57,7 +45,27 @@ const PositionDetails = ({
           amountOfCoin={amountOfCoin}
           coin={coin}
         />
-      </h5>
+      </h4>
+
+      <h4>
+        {"Return: "}
+        <PositionReturn
+          createdAt={createdAt}
+          updatedAt={updatedAt}
+          priceOnEntry={priceOnEntry}
+          priceOnExit={priceOnExit}
+          coin={coin}
+        />
+      </h4>
+
+      <h4>
+        {"Price on entry: "}
+        <Dollar amount={priceOnEntry} />
+      </h4>
+      <h4>
+        {priceOnExitLabel}
+        <PositionExitPrice priceOnExit={priceOnExit} coin={coin} />
+      </h4>
     </StyledPositionDetails>
   );
 };

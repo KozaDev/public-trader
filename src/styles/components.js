@@ -11,9 +11,8 @@ export const StyledButton = styled.button`
 
 export const StyledCard = styled.div`
   border-radius: ${({ theme }) => theme.variables.borderRadious};
-  padding: 10px;
-  margin: 10px 0;
   background-color: ${({ theme }) => theme.colors.whiteSmoke};
+  box-shadow: 1px 1px 12px 0px rgba(0, 0, 0, 0.15);
 `;
 
 export const StyledFrom = styled.form`
@@ -63,4 +62,9 @@ export const StyledFrom = styled.form`
     margin: 0;
     background-color: inherit;
   } ;
+`;
+
+export const ListElement = styled.div`
+  padding: 10px;
+  margin: 10px 0;
 `;
