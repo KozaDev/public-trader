@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StyledLayout = styled.div`
   padding: 20px;
   max-width: 968px;
-  min-height: 1200px;
+  min-height: 1500px;
   margin: auto;
 
   main {

@@ -55,6 +55,7 @@ export const StyledLinkList = styled.ul`
 export const StyledNav = styled.nav`
   width: 100%;
   height: 55px;
+  background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 2px solid #f1f1f1;
   display: flex;
   justify-content: space-between;

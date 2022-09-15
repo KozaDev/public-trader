@@ -1,15 +1,14 @@
 import Link from "next/link";
+import StyledPositionDescription from "./StyledPositionDescription";
 
 const PositionDescription = ({ description, ownerName, ownerId }) => {
   return (
-    <p>
-      {description}
-      <h4>
-        <Link href={`/users/${ownerId}`}>
-          <a>{ownerName}</a>
-        </Link>
-      </h4>
-    </p>
+    <StyledPositionDescription>
+      <p>{description}</p>
+      <Link href={`/users/${ownerId}`}>
+        <a>{ownerName}</a>
+      </Link>
+    </StyledPositionDescription>
   );
 };
 

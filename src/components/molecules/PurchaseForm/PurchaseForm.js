@@ -1,13 +1,20 @@
+import Dollar from "components/atoms/Dollar/Dollar";
+import { errorMessages } from "lib/consts/consts";
 import { useCartContext } from "lib/contexts/cartContext";
 import FormError from "../FormError/FormError";
+import StyledPurchaseForm from "./StyledPurchaseForm";
 
 const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
-  const { pending, error, action, isAuthenticated } = useCartContext();
+  const { pending, error, action, isAuthenticated, usersDollars } =
+    useCartContext();
+
+  const hasUserEnoughMoney =
+    Number(usersDollars) >= Number(formData.expenseInDollars);
 
   return (
-    <form onSubmit={action}>
+    <StyledPurchaseForm onSubmit={action}>
       <div>
-        <h3>Amount of coin</h3>
+        <label for={"amountOfCoin"}>Amount of coin</label>
         <input
           type={"number"}
           name={"amountOfCoin"}
@@ -19,7 +26,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
         ></input>
       </div>
       <div>
-        <h3>Expense in dolars</h3>
+        <label for={"expenseInDollars"}>Expense in dolars</label>
         <input
           type={"number"}
           name={"expenseInDollars"}
@@ -30,8 +37,20 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
           required={isAuthenticated}
         ></input>
       </div>
+
+      {isAuthenticated && (
+        <div>
+          <label>
+            {"Your dollars: "}{" "}
+            <span className={!hasUserEnoughMoney ? "error" : null}>
+              <Dollar amount={usersDollars} />
+            </span>
+          </label>
+        </div>
+      )}
+
       <div>
-        <h3>Description</h3>
+        <label for={"description"}>Description</label>
         <textarea
           type={"text"}
           name={"description"}
@@ -43,14 +62,20 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
           cols="33"
         ></textarea>
       </div>
-      <br />
-      {error.isError && <FormError error={error.error} />}
+
+      <div>
+        {error.isError && <FormError error={error.error} />}
+        {!hasUserEnoughMoney && !error.isError ? (
+          <FormError error={new Error(errorMessages.noMoney)} />
+        ) : null}
+      </div>
+
       <input
         type={"submit"}
-        disabled={pending}
-        value={isAuthenticated ? "Buy" : "Register"}
+        disabled={pending || !hasUserEnoughMoney}
+        value={isAuthenticated ? "Buy" : "Register to buy"}
       />
-    </form>
+    </StyledPurchaseForm>
   );
 };
 

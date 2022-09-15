@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 import { useAuth } from "lib/contexts/authContext";
 import useHandleForm from "lib/hooks/useHandleForm";
 import Router from "next/router";
-import { StyledFrom } from "styles/components";
 import FormError from "components/molecules/FormError/FormError";
+import { StyledCard, StyledFrom } from "styles/components";
 import { emptyRegisterForm } from "lib/consts/consts";
 import axios from "axios";
+import styled from "styled-components";
+
+const StyledRegister = styled(StyledCard)`
+  padding: 20px 20px 200px;
+  display: flex;
+  justify-content: center;
+`;
 
 const Register = () => {
   const [formData, setFormData] = useState(emptyRegisterForm);
@@ -53,44 +60,46 @@ const Register = () => {
   };
 
   return (
-    <StyledFrom onSubmit={submit}>
-      <h1>Register</h1>
-      <div>
-        <h3>Name</h3>
-        <input
-          type={"text"}
-          name={"username"}
-          value={formData.username}
-          onChange={handleChange}
-          autoComplete="off"
-        ></input>
-      </div>
+    <StyledRegister>
+      <StyledFrom onSubmit={submit}>
+        <h1>Register</h1>
+        <div>
+          <label for={"username"}>Name</label>
+          <input
+            type={"text"}
+            name={"username"}
+            value={formData.username}
+            onChange={handleChange}
+            autoComplete="off"
+          ></input>
+        </div>
 
-      <div>
-        <h3>Email</h3>
-        <input
-          type={"email"}
-          name={"email"}
-          value={formData.email}
-          onChange={handleChange}
-          autoComplete="off"
-        ></input>
-      </div>
+        <div>
+          <label for={"email"}>Email</label>
+          <input
+            type={"email"}
+            name={"email"}
+            value={formData.email}
+            onChange={handleChange}
+            autoComplete="off"
+          ></input>
+        </div>
 
-      <div>
-        <h3>Password</h3>
-        <input
-          type={"password"}
-          name={"password"}
-          value={formData.password}
-          onChange={handleChange}
-          autoComplete="off"
-        ></input>
-      </div>
+        <div>
+          <label for={"password"}>Password</label>
+          <input
+            type={"password"}
+            name={"password"}
+            value={formData.password}
+            onChange={handleChange}
+            autoComplete="off"
+          ></input>
+        </div>
 
-      {error.isError && <FormError error={error.error} />}
-      <input type={"submit"} value={"Register"} disabled={pending}></input>
-    </StyledFrom>
+        {error.isError && <FormError error={error.error} />}
+        <input type={"submit"} value={"Register"} disabled={pending}></input>
+      </StyledFrom>
+    </StyledRegister>
   );
 };
 

@@ -16,52 +16,53 @@ export const StyledCard = styled.div`
 `;
 
 export const StyledFrom = styled.form`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 400px;
-  margin: 50px auto;
-  padding: 40px;
-  background-color: whitesmoke;
-  border-radius: ${({ theme }) => theme.variables.borderRadious};
-
-  & > div {
-    margin: 30px 0 0 0;
+  div {
+    margin: 10px 0;
   }
 
-  input {
-    all: initial;
-    font-family: inherit;
-    font-size: inherit;
+  label {
+    display: block;
+    font-weight: 700;
   }
 
+  input[type="number"],
   input[type="text"],
-  input[type="email"],
   input[type="password"],
-  input[type="number"] {
-    outline: 1px solid black;
-    border-radius: 10px;
-    padding: 3px;
+  input[type="email"],
+  textarea {
+    all: initial;
+    box-sizing: border-box;
+    font-family: inherit;
+    background-color: ${({ theme }) => theme.colors.white};
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 8px;
+    min-width: 400px;
+    width: 50%;
   }
 
   input[type="submit"] {
-    margin: 20px 0;
-    padding: 8px;
-    border-radius: 10px;
+    all: initial;
+    background-color: ${({ theme }) => theme.colors.primaryBlue};
+    font-family: inherit;
+    font-size: inherit;
     color: ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors.darkGrey};
+    border-radius: 8px;
+    padding: 5px 15px;
   }
 
-  input[type="submit"]:hover {
-    cursor: pointer;
+  input:focus-within,
+  textarea:focus-within {
+    outline: 1px solid ${({ theme }) => theme.colors.primaryBlue};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
-    width: 100%;
-    margin: 0;
-    background-color: inherit;
-  } ;
+    input[type="number"],
+    textarea {
+      min-width: 200px;
+      width: 100%;
+    }
+  }
 `;
 
 export const ListElement = styled.div`

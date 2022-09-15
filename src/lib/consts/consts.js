@@ -84,4 +84,5 @@ export const errorMessages = {
   somethingWentWrong: "Something went wrong",
   externalAPIError: "Can not fetch data from external API",
   serverError: "Can not connect to server",
+  noMoney: "You don't have enough money",
 };

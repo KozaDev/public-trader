@@ -4,7 +4,8 @@ import { CartContextProvider } from "lib/contexts/cartContext";
 import Cart from "components/organisms/Cart/Cart";
 import { usePricesState } from "lib/contexts/pricesProvider";
 import PageError from "components/templates/PageError/PageError";
-import { StyledCard } from "styles/components";
+import Dollar from "components/atoms/Dollar/Dollar";
+import StyledMarketDetails from "./StyledMarketDetails";
 
 const MarketDetails = ({ coin, user }) => {
   const { data: coinPrices, error: coinError } = usePricesState();
@@ -17,45 +18,28 @@ const MarketDetails = ({ coin, user }) => {
   const walletId = user?.wallet?.id;
   const userId = user?.id;
 
-  const displayUsersDollars = () => {
+  const usersDollars = () => {
     if (user) {
-      const usersDollars = user.wallet.assets.reduce((acc, item) => {
-        if (item.key === "usd") return item.amount;
-        return acc;
-      }, 0);
-      return (
-        <NumberFormat
-          value={Number(usersDollars).toFixed(decimalPlaces["usd"])}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"$"}
-        />
-      );
+      return user.wallet.assets.find(({ key }) => key === "usd")?.amount;
     }
     return null;
   };
 
   return (
-    <StyledCard>
+    <StyledMarketDetails>
       <h2>
-        Current {coin.currency} price:{" "}
-        <NumberFormat
-          value={Number(coinPrice).toFixed(decimalPlaces["usd"])}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"$"}
-        />
+        Current {coin.currency} price: <Dollar amount={coinPrice} />
       </h2>
       <CartContextProvider
         userId={userId}
         walletId={walletId}
         coin={coin}
         coinPrice={coinPrice}
+        usersDollars={usersDollars()}
       >
         <Cart />
       </CartContextProvider>
-      {displayUsersDollars()}
-    </StyledCard>
+    </StyledMarketDetails>
   );
 };
 

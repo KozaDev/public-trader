@@ -8,6 +8,7 @@ const useCustomConfirm = ({ Component, onConfirm, accept, refuse }) => {
   useEffect(() => {
     if (confirmed) {
       onConfirm();
+      setConfirm(false);
     }
   }, [confirmed]);
 

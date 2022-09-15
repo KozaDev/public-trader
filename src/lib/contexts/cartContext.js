@@ -15,6 +15,7 @@ export const CartContextProvider = ({
   walletId,
   coin,
   coinPrice,
+  usersDollars,
 }) => {
   const { execute, pending, error, unsetErrors } = useHandleForm(
     sendData,
@@ -91,6 +92,7 @@ export const CartContextProvider = ({
         pending,
         error,
         unsetErrors,
+        usersDollars,
       }}
     >
       {children}
