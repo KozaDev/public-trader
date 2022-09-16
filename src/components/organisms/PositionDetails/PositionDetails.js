@@ -5,6 +5,7 @@ import PositionValue from "components/atoms/PositionValue/PositionValue";
 import PositionExitPrice from "components/atoms/PositionExitPrice/PositionExitPrice";
 import PositionDescription from "components/molecules/PositionDescription/PositionDescriptio";
 import Coin from "components/atoms/Coin/Coin";
+import Moment from "react-moment";
 
 const PositionDetails = ({
   coin,
@@ -17,9 +18,6 @@ const PositionDetails = ({
   owner,
 }) => {
   const isPositionOpen = createdAt === updatedAt;
-  const priceOnExitLabel = isPositionOpen
-    ? "Current price: "
-    : "Price on exit: ";
 
   return (
     <StyledPositionDetails>
@@ -59,12 +57,26 @@ const PositionDetails = ({
       </h4>
 
       <h4>
-        {"Price on entry: "}
+        {"Purchased at "}
+        <Moment date={createdAt} format="YYYY-MM-DD hh:mm:ss A" />
+        {" in price "}
         <Dollar amount={priceOnEntry} />
       </h4>
       <h4>
-        {priceOnExitLabel}
-        <PositionExitPrice priceOnExit={priceOnExit} coin={coin} />
+        {isPositionOpen ? (
+          <>
+            {"Current price - "}
+            <PositionExitPrice priceOnExit={priceOnExit} coin={coin} />
+          </>
+        ) : (
+          <>
+            {"Sold at "}
+            <Moment date={updatedAt} format="YYYY-MM-DD hh:mm:ss A" />
+            {" in price "}
+            <PositionExitPrice priceOnExit={priceOnExit} coin={coin} />
+          </>
+        )}
+        ;
       </h4>
     </StyledPositionDetails>
   );

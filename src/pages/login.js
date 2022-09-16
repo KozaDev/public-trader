@@ -2,18 +2,10 @@ import { useEffect, useState } from "react";
 import { useAuth } from "lib/contexts/authContext";
 import useHandleForm from "lib/hooks/useHandleForm";
 import Router from "next/router";
-import { StyledCard, StyledFrom } from "styles/components";
+import { StyledResponsiveTemplate, StyledFrom } from "styles/components";
 import FormError from "components/molecules/FormError/FormError";
 import { emptyLoginForm } from "lib/consts/consts";
 import axios from "axios";
-import styled from "styled-components";
-
-const StyledLogin = styled(StyledCard)`
-  padding: 20px 20px 200px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-`;
 
 const Login = () => {
   const [formData, setFormData] = useState(emptyLoginForm);
@@ -60,36 +52,38 @@ const Login = () => {
   };
 
   return (
-    <StyledLogin>
-      <h1>Login</h1>
-      <StyledFrom onSubmit={submit}>
-        <div>
-          <label for={"text"}>Name/email</label>
-          <input
-            type={"text"}
-            name={"identifier"}
-            value={formData.identifier}
-            onChange={handleChange}
-            autoComplete="off"
-          ></input>
-        </div>
+    <StyledResponsiveTemplate>
+      <div className="flex-wrapper">
+        <h1>Login</h1>
+        <StyledFrom onSubmit={submit}>
+          <div>
+            <label for={"text"}>Name/email</label>
+            <input
+              type={"text"}
+              name={"identifier"}
+              value={formData.identifier}
+              onChange={handleChange}
+              autoComplete="off"
+            ></input>
+          </div>
 
-        <div>
-          <label for={"password"}>Password</label>
-          <input
-            type={"password"}
-            name={"password"}
-            value={formData.password}
-            onChange={handleChange}
-            autoComplete="off"
-          ></input>
-        </div>
+          <div>
+            <label for={"password"}>Password</label>
+            <input
+              type={"password"}
+              name={"password"}
+              value={formData.password}
+              onChange={handleChange}
+              autoComplete="off"
+            ></input>
+          </div>
 
-        {error.isError && <FormError error={error.error} />}
+          {error.isError && <FormError error={error.error} />}
 
-        <input type={"submit"} value={"Login"} disabled={pending}></input>
-      </StyledFrom>
-    </StyledLogin>
+          <input type={"submit"} value={"Login"} disabled={pending}></input>
+        </StyledFrom>
+      </div>
+    </StyledResponsiveTemplate>
   );
 };
 

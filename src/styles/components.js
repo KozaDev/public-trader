@@ -13,7 +13,29 @@ export const StyledCard = styled.div`
   box-shadow: 1px 1px 12px 0px rgba(0, 0, 0, 0.15);
 `;
 
+export const StyledResponsiveTemplate = styled(StyledCard)`
+  padding: 50px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > * {
+    width: 60%;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    padding: 20px;
+
+    & > * {
+      width: 100%;
+    }
+  } ;
+`;
+
 export const StyledFrom = styled.form`
+  width: 100%;
   div {
     margin: 10px 0;
   }
@@ -35,8 +57,7 @@ export const StyledFrom = styled.form`
     margin: 5px 0;
     padding: 8px;
     border-radius: 8px;
-    min-width: 400px;
-    width: 50%;
+    width: 100%;
   }
 
   input[type="submit"] {
@@ -52,14 +73,6 @@ export const StyledFrom = styled.form`
   input:focus-within,
   textarea:focus-within {
     outline: 1px solid ${({ theme }) => theme.colors.primaryBlue};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
-    input[type="number"],
-    textarea {
-      min-width: 200px;
-      width: 100%;
-    }
   }
 `;
 

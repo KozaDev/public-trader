@@ -3,24 +3,9 @@ import { useAuth } from "lib/contexts/authContext";
 import useHandleForm from "lib/hooks/useHandleForm";
 import Router from "next/router";
 import FormError from "components/molecules/FormError/FormError";
-import { StyledCard, StyledFrom } from "styles/components";
 import { emptyRegisterForm } from "lib/consts/consts";
 import axios from "axios";
-import styled from "styled-components";
-
-const StyledRegister = styled(StyledCard)`
-  padding: 20px 20px 200px;
-  display: flex;
-  justify-content: center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
-    input[type="number"],
-    textarea {
-      min-width: 200px;
-      width: 100%;
-    }
-  }
-`;
+import { StyledResponsiveTemplate, StyledFrom } from "styles/components";
 
 const Register = () => {
   const [formData, setFormData] = useState(emptyRegisterForm);
@@ -68,46 +53,48 @@ const Register = () => {
   };
 
   return (
-    <StyledRegister>
-      <StyledFrom onSubmit={submit}>
+    <StyledResponsiveTemplate>
+      <div className="flex-wrapper">
         <h1>Register</h1>
-        <div>
-          <label for={"username"}>Name</label>
-          <input
-            type={"text"}
-            name={"username"}
-            value={formData.username}
-            onChange={handleChange}
-            autoComplete="off"
-          ></input>
-        </div>
+        <StyledFrom onSubmit={submit}>
+          <div>
+            <label for={"username"}>Name</label>
+            <input
+              type={"text"}
+              name={"username"}
+              value={formData.username}
+              onChange={handleChange}
+              autoComplete="off"
+            ></input>
+          </div>
 
-        <div>
-          <label for={"email"}>Email</label>
-          <input
-            type={"email"}
-            name={"email"}
-            value={formData.email}
-            onChange={handleChange}
-            autoComplete="off"
-          ></input>
-        </div>
+          <div>
+            <label for={"email"}>Email</label>
+            <input
+              type={"email"}
+              name={"email"}
+              value={formData.email}
+              onChange={handleChange}
+              autoComplete="off"
+            ></input>
+          </div>
 
-        <div>
-          <label for={"password"}>Password</label>
-          <input
-            type={"password"}
-            name={"password"}
-            value={formData.password}
-            onChange={handleChange}
-            autoComplete="off"
-          ></input>
-        </div>
+          <div>
+            <label for={"password"}>Password</label>
+            <input
+              type={"password"}
+              name={"password"}
+              value={formData.password}
+              onChange={handleChange}
+              autoComplete="off"
+            ></input>
+          </div>
 
-        {error.isError && <FormError error={error.error} />}
-        <input type={"submit"} value={"Register"} disabled={pending}></input>
-      </StyledFrom>
-    </StyledRegister>
+          {error.isError && <FormError error={error.error} />}
+          <input type={"submit"} value={"Register"} disabled={pending}></input>
+        </StyledFrom>
+      </div>
+    </StyledResponsiveTemplate>
   );
 };
 
