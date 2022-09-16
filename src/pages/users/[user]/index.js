@@ -51,7 +51,7 @@ export async function getServerSideProps({ params, query }) {
 
     const paginationPage = pageFromQuery || 1;
 
-    if (Number.isNaN(Number(paginationPage)) || paginationPage <= 0)
+    if (Number.isNaN(Number(paginationPage)))
       throw new Error(errorMessages.notFound);
 
     const positionsResponse = await axios.get(
@@ -60,7 +60,15 @@ export async function getServerSideProps({ params, query }) {
       )}&${filterById(id)}&${paginate(paginationPage)}`
     );
 
-    if (!positionsResponse.data.data.length)
+    const {
+      data: {
+        meta: {
+          pagination: { pageCount },
+        },
+      },
+    } = positionsResponse;
+
+    if (Number(pageFromQuery) > pageCount || paginationPage < 1)
       throw new Error(errorMessages.notFound);
 
     positions = positionsResponse.data;
@@ -144,12 +152,14 @@ const User = ({ user, positions, error }) => {
         emptyInfo={"This user dosen't have any positions"}
         linkEachTo={prepareTemplate`/users/${"userId"}/position/${"id"}`}
       />
-      <PageNav
-        currentPage={pageIndex}
-        goToNext={increasePage}
-        goToPrevious={decreasePage}
-        allPages={paginationData.pageCount}
-      />
+      {paginationData.pageCount > 1 && (
+        <PageNav
+          currentPage={pageIndex}
+          goToNext={increasePage}
+          goToPrevious={decreasePage}
+          allPages={paginationData.pageCount}
+        />
+      )}
     </>
   );
 };
