@@ -5,8 +5,6 @@ export const StyledButton = styled.button`
   font-family: inherit;
   font-weight: 600;
   border-bottom: ${({ theme }) => theme.colors.black} solid 2px;
-  /* background-color: ${({ theme }) => theme.colors.darkGrey};
-  border-radius: ${({ theme }) => theme.variables.borderRadious}; */
 `;
 
 export const StyledCard = styled.div`

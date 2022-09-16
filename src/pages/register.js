@@ -12,6 +12,14 @@ const StyledRegister = styled(StyledCard)`
   padding: 20px 20px 200px;
   display: flex;
   justify-content: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    input[type="number"],
+    textarea {
+      min-width: 200px;
+      width: 100%;
+    }
+  }
 `;
 
 const Register = () => {

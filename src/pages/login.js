@@ -12,6 +12,7 @@ const StyledLogin = styled(StyledCard)`
   padding: 20px 20px 200px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 `;
 
 const Login = () => {
@@ -60,8 +61,8 @@ const Login = () => {
 
   return (
     <StyledLogin>
+      <h1>Login</h1>
       <StyledFrom onSubmit={submit}>
-        <h1>Login</h1>
         <div>
           <label for={"text"}>Name/email</label>
           <input

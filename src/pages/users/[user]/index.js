@@ -1,7 +1,7 @@
 import axios from "axios";
 import Wallet from "components/molecules/Wallet/Wallet";
 import useSWR from "swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { errorFactory } from "lib/utils/errorHandlers";
 import PageError from "components/templates/PageError/PageError";
 import { errorMessages, walletSchema } from "lib/consts/consts";
@@ -9,17 +9,18 @@ import PageNav from "components/molecules/PageNav/PageNav";
 import List from "components/organisms/List/List";
 import PositionLabel from "components/molecules/PositionLabel/PositionLabel";
 import { prepareTemplate } from "lib/utils/utils";
+import { useRouter } from "next/router";
 
 const sort = (order) => `sort=createdAt:${order}`;
 const filterById = (id) => `filters[user][id][$eq]=${id}`;
 const paginate = (pageIndex) =>
   `pagination[page]=${pageIndex}&pagination[pageSize]=5`;
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, query }) {
   const { user: id } = params;
+  const { page: pageFromQuery } = query;
   let user = null;
   let positions = null;
-
   const error = { isError: false, error: null };
 
   try {
@@ -48,11 +49,20 @@ export async function getServerSideProps({ params }) {
       user.wallet = createWalletResponse.data.data.attributes;
     }
 
+    const paginationPage = pageFromQuery || 1;
+
+    if (Number.isNaN(Number(paginationPage)) || paginationPage <= 0)
+      throw new Error(errorMessages.notFound);
+
     const positionsResponse = await axios.get(
       `${process.env.NEXT_PUBLIC_STRAPI_URL}/entry-positions?${sort(
         "desc"
-      )}&${filterById(id)}&${paginate(1)}`
+      )}&${filterById(id)}&${paginate(paginationPage)}`
     );
+
+    if (!positionsResponse.data.data.length)
+      throw new Error(errorMessages.notFound);
+
     positions = positionsResponse.data;
   } catch (e) {
     error.isError = true;
@@ -70,8 +80,33 @@ export async function getServerSideProps({ params }) {
 const User = ({ user, positions, error }) => {
   if (error.isError) return <PageError error={error.error} />;
 
+  const router = useRouter();
+
+  const pageFromRouter = router.query?.page || 1;
+  const paginationData = positions.meta.pagination;
+
   const { username, wallet, id } = user;
-  const [pageIndex, setPageIndex] = useState(1);
+  const [pageIndex, setPageIndex] = useState(Number(pageFromRouter));
+
+  useEffect(() => {
+    setPageIndex(Number(pageFromRouter));
+  }, [pageFromRouter]);
+
+  const decreasePage = () => {
+    const prevPage = pageIndex - 1;
+    if (prevPage < 1) return;
+    router.push({ query: { user: user.id, page: prevPage } }, undefined, {
+      shallow: true,
+    });
+  };
+
+  const increasePage = () => {
+    const nextPage = pageIndex + 1;
+    if (nextPage > paginationData.pageCount) return;
+    router.push({ query: { user: user.id, page: nextPage } }, undefined, {
+      shallow: true,
+    });
+  };
 
   const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -111,9 +146,9 @@ const User = ({ user, positions, error }) => {
       />
       <PageNav
         currentPage={pageIndex}
-        goToNext={setPageIndex.bind(null, (state) => state + 1)}
-        goToPrevious={setPageIndex.bind(null, (state) => state - 1)}
-        allPages={data.meta.pagination.pageCount}
+        goToNext={increasePage}
+        goToPrevious={decreasePage}
+        allPages={paginationData.pageCount}
       />
     </>
   );

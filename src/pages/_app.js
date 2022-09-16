@@ -12,8 +12,8 @@ function MyApp({ Component, pageProps }) {
       <NavStateProvider>
         <PricesStateProvider>
           <ThemeProvider theme={theme}>
+            <GlobalStyle />
             <Layout>
-              <GlobalStyle />
               <Component {...pageProps} />
             </Layout>
           </ThemeProvider>
