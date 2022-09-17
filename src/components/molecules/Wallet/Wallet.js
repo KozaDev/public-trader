@@ -60,8 +60,9 @@ const Wallet = ({ assets, update }) => {
 
             {"   "}
             <span className={`label ${isDiffPositive ? "green" : "red"}`}>
-              {isDiffPositive && "+"}
+              {isDiffPositive ? "(+" : "("}
               {displayAsset(difference, item.key)}
+              {")"}
             </span>
           </li>
         );

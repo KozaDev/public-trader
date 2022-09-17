@@ -15,7 +15,7 @@ import {
   Legend,
 } from "chart.js";
 import { theme } from "styles/theme";
-
+import moment from "moment";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -43,21 +43,21 @@ const LineChart = ({ data, width }) => {
 
     const dateFormater =
       period === "1d" || period === "1h"
-        ? getMinutesFromISODate
-        : getDaysFromISODate;
+        ? (date) => moment(date).format("hh:mm A")
+        : (date) => moment(date).format("DD MMM, YY");
 
-    return charData.map((item, i) => {
-      if (dataLength < datesOnAxis) return dateFormater(item[0]);
-      if (i % divider === 0) return dateFormater(item[0]);
-      return "";
-    });
+    return charData.reduce((acc, item, i) => {
+      if (dataLength < datesOnAxis) return [...acc, dateFormater(item[0])];
+      if (i % divider === 0) return [...acc, dateFormater(item[0])];
+      return [...acc, ""];
+    }, []);
   };
 
   const chartData = {
     labels:
       width < smallMobileWidth
         ? prepareTimeLabels(data, period, 3)
-        : prepareTimeLabels(data, period, 5),
+        : prepareTimeLabels(data, period, 6),
     datasets: [
       {
         label: "Price in USD",
@@ -75,8 +75,12 @@ const LineChart = ({ data, width }) => {
       data={chartData}
       options={{
         scales: {
-          xAxis: {
-            ticks: { autoSkip: false },
+          x: {
+            ticks: {
+              autoSkip: false,
+              padding: 0,
+              maxRotation: 0,
+            },
           },
         },
       }}

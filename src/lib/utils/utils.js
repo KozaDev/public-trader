@@ -60,15 +60,13 @@ export const getAproximatedPeriod = (start, end) => {
   const aproximatedPeriod = likeArrayTimeObject.reduce(
     (acc, item) => {
       const difference = Math.abs(item[1] - exactPeriod);
-      if (exactPeriod > time["1d"] * 1.5 && acc.time === "1d")
-        return { difference, time: "1w" };
+      if (exactPeriod > myTiem["1d"] && acc.time[0] === "1d")
+        return { difference, time: ["1w", time["1w"]] };
       if (acc.difference > difference) return { difference, time: item };
       return acc;
     },
-    { difference: time["3y"] }
+    { difference: myTiem["3y"], time: ["3y", myTiem["3y"]] }
   );
-
-  console.log(aproximatedPeriod);
   return aproximatedPeriod.time[0];
 };
 

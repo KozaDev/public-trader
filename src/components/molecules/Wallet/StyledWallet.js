@@ -15,11 +15,11 @@ const StyledWallet = styled(StyledCard)`
   }
 
   .red {
-    background-color: ${({ theme }) => theme.colors.error};
+    color: ${({ theme }) => theme.colors.error};
   }
 
   .green {
-    background-color: ${({ theme }) => theme.colors.success};
+    color: ${({ theme }) => theme.colors.success};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {

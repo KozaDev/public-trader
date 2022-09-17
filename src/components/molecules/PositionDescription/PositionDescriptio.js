@@ -4,10 +4,10 @@ import StyledPositionDescription from "./StyledPositionDescription";
 const PositionDescription = ({ description, ownerName, ownerId }) => {
   return (
     <StyledPositionDescription>
-      <p>{description}</p>
       <Link href={`/users/${ownerId}`}>
-        <a>{ownerName}</a>
+        <h4>{ownerName}</h4>
       </Link>
+      <p>{description}</p>
     </StyledPositionDescription>
   );
 };

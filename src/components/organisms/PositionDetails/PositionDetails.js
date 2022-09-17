@@ -65,7 +65,7 @@ const PositionDetails = ({
       <h4>
         {isPositionOpen ? (
           <>
-            {"Current price - "}
+            {"Current price "}
             <PositionExitPrice priceOnExit={priceOnExit} coin={coin} />
           </>
         ) : (
