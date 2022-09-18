@@ -19,7 +19,7 @@ const PositionLabel = ({ attributes }) => {
   const exitDate = isPositionOpen ? (
     "now"
   ) : (
-    <Moment date={updatedAt} format="YYYY-MM-DD" />
+    <Moment date={updatedAt} format="DD MMM, YY" />
   );
 
   return (
@@ -42,9 +42,9 @@ const PositionLabel = ({ attributes }) => {
           </h5>
         </div>
 
-        <h3>
-          <Moment date={createdAt} format="YYYY-MM-DD" /> - {exitDate}
-        </h3>
+        <h5>
+          <Moment date={createdAt} format="DD MMM, YY" /> - {exitDate}
+        </h5>
       </div>
       <h5>
         {isPositionOpen ? "Current value: " : "Value on exit: "}

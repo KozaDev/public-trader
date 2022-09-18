@@ -1,9 +1,5 @@
 import { Line } from "react-chartjs-2";
-import {
-  getAproximatedPeriod,
-  getDaysFromISODate,
-  getMinutesFromISODate,
-} from "lib/utils/utils";
+import { getAproximatedPeriod, getDateFormatForRange } from "lib/utils/utils";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,7 +11,9 @@ import {
   Legend,
 } from "chart.js";
 import { theme } from "styles/theme";
+import { arbitraryLine, pluginsConfig } from "./chartConfig";
 import moment from "moment";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,7 +21,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  arbitraryLine
 );
 
 const LineChart = ({ data, width }) => {
@@ -32,32 +31,34 @@ const LineChart = ({ data, width }) => {
   // ]
 
   const coinPrices = data.map((item) => item[1]);
+  const timeLabels = data.map((item) => item[0]);
+
   const startDate = data[0][0];
   const endDate = data[data.length - 1][0];
-  const smallMobileWidth = Number(theme.breakpoints.smallMobile.slice(0, 3));
   const period = getAproximatedPeriod(startDate, endDate);
 
-  const prepareTimeLabels = (charData, period, datesOnAxis) => {
-    const dataLength = charData.length;
-    const divider = Math.floor(dataLength / datesOnAxis);
+  const smallMobileWidth = Number(theme.breakpoints.smallMobile.slice(0, 3));
+  const mobileWidth = Number(theme.breakpoints.mobile.slice(0, 3));
 
-    const dateFormater =
-      period === "1d" || period === "1h"
-        ? (date) => moment(date).format("hh:mm A")
-        : (date) => moment(date).format("DD MMM, YY");
+  const visibleLabels = (() => {
+    if (width < smallMobileWidth) return 2;
+    if (width < mobileWidth) return 4;
+    return 6;
+  })();
 
-    return charData.reduce((acc, item, i) => {
-      if (dataLength < datesOnAxis) return [...acc, dateFormater(item[0])];
-      if (i % divider === 0) return [...acc, dateFormater(item[0])];
-      return [...acc, ""];
-    }, []);
+  const defineVisibleLabels = (value, index) => {
+    const divider =
+      timeLabels.length < visibleLabels
+        ? 1
+        : Math.ceil(data.length / visibleLabels);
+    const dateFormat = getDateFormatForRange(startDate, endDate, period);
+    if (index % divider === 0)
+      return moment(timeLabels[value]).format(dateFormat);
+    return "";
   };
 
   const chartData = {
-    labels:
-      width < smallMobileWidth
-        ? prepareTimeLabels(data, period, 3)
-        : prepareTimeLabels(data, period, 6),
+    labels: timeLabels,
     datasets: [
       {
         label: "Price in USD",
@@ -74,15 +75,28 @@ const LineChart = ({ data, width }) => {
     <Line
       data={chartData}
       options={{
+        interaction: {
+          intersect: false,
+          mode: "index",
+        },
         scales: {
           x: {
             ticks: {
               autoSkip: false,
-              padding: 0,
+              padding: 4,
               maxRotation: 0,
+              align: "center",
+              font: 3,
+
+              callback: defineVisibleLabels,
+            },
+            grid: {
+              display: false,
             },
           },
         },
+
+        plugins: pluginsConfig,
       }}
     />
   );

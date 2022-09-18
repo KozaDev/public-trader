@@ -1,4 +1,5 @@
 import { decimalPlaces, time } from "../consts/consts";
+import moment from "moment";
 
 export function getBestInterval(startDate, endDate, maxSizeOfReturnedArray) {
   const intervals = [
@@ -132,4 +133,23 @@ export const prepareTemplate = (strings, ...keys) => {
       return acc + string + dataObject[keys[index]];
     }, "");
   };
+};
+
+export const getDateFormatForRange = (start, end, aproximatedPeriod) => {
+  console.log(aproximatedPeriod);
+  const isPeriodDayOrLess =
+    aproximatedPeriod === "1h" || aproximatedPeriod === "1d";
+  const isPeriodOneWeek = aproximatedPeriod === "1w";
+  const oneDay = time["1d"];
+  const oneDayAgo = new Date().getTime() - oneDay * 3;
+  const startTime = new Date(start).getTime();
+  const endTime = new Date(end).getTime();
+  const exactPeriod = endTime - startTime;
+
+  const isItMoreThanDayAgo = endTime - oneDayAgo < 0;
+
+  if (isPeriodOneWeek && exactPeriod < 6.8 * oneDay) return "D/MM/YY hh:mmA";
+  if (isItMoreThanDayAgo && isPeriodDayOrLess) return "D/MM/YY hh:mmA";
+  if (isPeriodDayOrLess) return "hh:mm A";
+  return "D MMM, YY";
 };

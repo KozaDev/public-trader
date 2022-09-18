@@ -6,6 +6,7 @@ import getPricesFromRangeOfDates from "lib/messariApi/getPricesFromRangeOfDates"
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Select from "components/molecules/Select/Select";
+import StyledChart from "./StyledChart";
 
 const LineChart = dynamic(() => import("./LineChart"), {
   suspense: true,
@@ -52,33 +53,29 @@ const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
     value,
     attributes: { selected: value === dataGranulation },
   }));
+
   const handleGranulationChange = ({ target: { value } }) => {
     setGranulation(value);
   };
 
-  const displayChart = () => {
-    if (error.isError) return <PageError error={error.error} />;
-    if (pending) return "Loading...";
-    return (
+  if (error.isError) return <PageError error={error.error} />;
+  if (pending) return "Loading...";
+
+  return (
+    <StyledChart>
       <Suspense fallback={`Loading...`}>
         <LineChart data={data} width={width} />
       </Suspense>
-    );
-  };
-
-  return (
-    <>
-      <>{displayChart()}</>
       {changeGranulation && (
-        <>
+        <div className="drop-down">
           <h5>{"Change data granulation"}</h5>
           <Select
             options={granulationOptions}
             handleChange={handleGranulationChange}
           />
-        </>
+        </div>
       )}
-    </>
+    </StyledChart>
   );
 };
 
