@@ -1,5 +1,5 @@
+import TradingTable from "components/organisms/TradingTable/TradingTable";
 import Head from "next/head";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,10 +10,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Welcome to PublicTrader</h1>
-      <h4>
-        <Link href="/users">get to know us</Link>
-      </h4>
+      <h1>Today's Cryptocurrency Prices</h1>
+      <TradingTable />
 
       <footer>
         <a

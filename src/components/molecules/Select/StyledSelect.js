@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { rgba, darken } from "polished";
+import { darken } from "polished";
 
 const StyledSelect = styled.select`
   font-size: inherit;

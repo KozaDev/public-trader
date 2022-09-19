@@ -153,3 +153,30 @@ export const getDateFormatForRange = (start, end, aproximatedPeriod) => {
   if (isPeriodDayOrLess) return "hh:mm A";
   return "D MMM, YY";
 };
+
+export const getPriceNearestToDate = (prices, wantedDate) => {
+  const nearestPriceObject = prices.reduce(
+    (acc, item) => {
+      const price = item[1];
+      const date = new Date(item[0]).getTime();
+      const currentDiff = Math.abs(date - wantedDate);
+      if (currentDiff < acc.diff) return { price, diff: currentDiff };
+      return acc;
+    },
+    { price: null, diff: time["3y"] }
+  );
+  return nearestPriceObject.price;
+};
+
+export const getIndexesNearestToDate = (prices, wantedDate) => {
+  const nearestIndexObject = prices.reduce(
+    (acc, item, index) => {
+      const date = new Date(item[0]).getTime();
+      const currentDiff = Math.abs(date - wantedDate);
+      if (currentDiff < acc.diff) return { index, diff: currentDiff };
+      return acc;
+    },
+    { index: null, diff: time["3y"] }
+  );
+  return nearestIndexObject.index;
+};
