@@ -56,8 +56,6 @@ export default function Market({ user, market, error }) {
 
   const coin = walletSchema.find(({ key }) => key === market);
 
-  const header = <h1>{capitalizeFirstLetter(coin.currency)}</h1>;
-
   const dateOptions = pastDates.map(({ date, name }) => {
     if (name === "1w")
       return {
@@ -77,9 +75,12 @@ export default function Market({ user, market, error }) {
     setStart({ date: value, name });
   };
 
+  const header = <h1>{capitalizeFirstLetter(coin.currency)}</h1>;
+
   return (
     <>
       <>{header}</>
+
       <Select options={dateOptions} handleChange={handleSelectChange} />
       <Chart
         startDate={chartStart.date}

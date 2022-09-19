@@ -3,7 +3,7 @@ export const walletSchema = [
   { key: "btc", currency: "bitcoin", amount: 0 },
   { key: "eth", currency: "etherum", amount: 0 },
   { key: "doge", currency: "dogecoin", amount: 0 },
-  { key: "bnb", currency: "binance coin", amount: 0 },
+  { key: "bnb", currency: "binance", amount: 0 },
   { key: "xrp", currency: "ripple", amount: 0 },
   { key: "ada", currency: "cardano", amount: 0 },
   { key: "sol", currency: "solana", amount: 0 },

@@ -5,6 +5,10 @@ const StyledChart = styled.div`
 
   .drop-down {
     margin: 20px 0 0 0;
+
+    select {
+      margin: 5px 0;
+    }
   }
 `;
 export default StyledChart;

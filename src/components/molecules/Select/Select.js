@@ -1,7 +1,9 @@
+import StyledSelect from "./StyledSelect";
+
 const Select = ({ options, handleChange }) => {
   return (
     <>
-      <select onChange={handleChange}>
+      <StyledSelect onChange={handleChange}>
         {options.map(({ title, value, attributes }) => {
           return (
             <option {...attributes} value={value}>
@@ -9,7 +11,7 @@ const Select = ({ options, handleChange }) => {
             </option>
           );
         })}
-      </select>
+      </StyledSelect>
     </>
   );
 };
