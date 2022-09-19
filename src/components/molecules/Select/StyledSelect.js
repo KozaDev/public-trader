@@ -9,7 +9,7 @@ const StyledSelect = styled.select`
   padding: 3px;
   color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
-
+  box-shadow: 0;
   &:hover {
     cursor: pointer;
   }

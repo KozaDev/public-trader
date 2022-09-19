@@ -70,6 +70,14 @@ export const StyledFrom = styled.form`
     padding: 5px 15px;
   }
 
+  input[type="submit"]:hover {
+    cursor: pointer;
+  }
+
+  input[type="submit"]:disabled {
+    cursor: default;
+  }
+
   input:focus-within,
   textarea:focus-within {
     outline: 1px solid ${({ theme }) => theme.colors.primaryBlue};

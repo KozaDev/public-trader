@@ -6,6 +6,7 @@ import { StyledResponsiveTemplate, StyledFrom } from "styles/components";
 import FormError from "components/molecules/FormError/FormError";
 import { emptyLoginForm } from "lib/consts/consts";
 import axios from "axios";
+import InputSubmit from "components/atoms/InputSubmit/InputSubmit";
 
 const Login = () => {
   const [formData, setFormData] = useState(emptyLoginForm);
@@ -80,7 +81,7 @@ const Login = () => {
 
           {error.isError && <FormError error={error.error} />}
 
-          <input type={"submit"} value={"Login"} disabled={pending}></input>
+          <InputSubmit type={"submit"} value={"Login"} disabled={pending} />
         </StyledFrom>
       </div>
     </StyledResponsiveTemplate>

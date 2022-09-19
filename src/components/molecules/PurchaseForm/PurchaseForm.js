@@ -1,4 +1,5 @@
 import Dollar from "components/atoms/Dollar/Dollar";
+import InputSubmit from "components/atoms/InputSubmit/InputSubmit";
 import { errorMessages } from "lib/consts/consts";
 import { useCartContext } from "lib/contexts/cartContext";
 import FormError from "../FormError/FormError";
@@ -69,8 +70,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
         ) : null}
       </div>
 
-      <input
-        type={"submit"}
+      <InputSubmit
         disabled={pending}
         value={isAuthenticated ? "Buy" : "Register to buy"}
       />

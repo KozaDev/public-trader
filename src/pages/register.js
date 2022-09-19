@@ -3,6 +3,7 @@ import { useAuth } from "lib/contexts/authContext";
 import useHandleForm from "lib/hooks/useHandleForm";
 import Router from "next/router";
 import FormError from "components/molecules/FormError/FormError";
+import InputSubmit from "components/atoms/InputSubmit/InputSubmit";
 import { emptyRegisterForm } from "lib/consts/consts";
 import axios from "axios";
 import { StyledResponsiveTemplate, StyledFrom } from "styles/components";
@@ -91,7 +92,7 @@ const Register = () => {
           </div>
 
           {error.isError && <FormError error={error.error} />}
-          <input type={"submit"} value={"Register"} disabled={pending}></input>
+          <InputSubmit value={"Register"} disabled={pending} />
         </StyledFrom>
       </div>
     </StyledResponsiveTemplate>
