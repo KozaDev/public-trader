@@ -1,10 +1,10 @@
 import Dollar from "components/atoms/Dollar/Dollar";
-import PageError from "components/templates/PageError/PageError";
 import { walletSchema } from "lib/consts/consts";
 import { usePricesState } from "lib/contexts/pricesProvider";
 import useTradingTableData from "lib/hooks/useTradingTableData";
 import StyledTable from "./StyledTable";
 import Link from "next/link";
+import ComponentError from "../ComponentError/ComponentError";
 
 const TradingTable = () => {
   const currency = walletSchema.reduce((acc, item) => {
@@ -21,9 +21,9 @@ const TradingTable = () => {
     useTradingTableData(periods, currency);
 
   if (tradingTableError.isError)
-    return <PageError error={tradingTableError.error} />;
+    return <ComponentError error={tradingTableError.error} />;
   if (currentPricesError.isError)
-    return <PageError error={currentPricesError.error} />;
+    return <ComponentError error={currentPricesError.error} />;
 
   if (tradingTablePending || !currentPricesData) return "Loading...";
 

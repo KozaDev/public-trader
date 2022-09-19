@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import useWindowSize from "lib/hooks/useWindowSize";
 import useFetchData from "lib/hooks/useFetchData";
-import PageError from "components/templates/PageError/PageError";
 import getPricesFromRangeOfDates from "lib/messariApi/getPricesFromRangeOfDates";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Select from "components/molecules/Select/Select";
 import StyledChart from "./StyledChart";
+import ComponentError from "../ComponentError/ComponentError";
 
 const LineChart = dynamic(() => import("./LineChart"), {
   suspense: true,
@@ -58,7 +58,7 @@ const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
     setGranulation(value);
   };
 
-  if (error.isError) return <PageError error={error.error} />;
+  if (error.isError) return <ComponentError error={error.error} />;
   if (pending) return "Loading...";
 
   return (

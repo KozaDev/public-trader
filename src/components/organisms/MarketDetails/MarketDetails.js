@@ -1,14 +1,14 @@
 import { CartContextProvider } from "lib/contexts/cartContext";
 import Cart from "components/organisms/Cart/Cart";
 import { usePricesState } from "lib/contexts/pricesProvider";
-import PageError from "components/templates/PageError/PageError";
 import Dollar from "components/atoms/Dollar/Dollar";
 import { StyledResponsiveTemplate } from "styles/components";
+import ComponentError from "../ComponentError/ComponentError";
 
 const MarketDetails = ({ coin, user }) => {
   const { data: coinPrices, error: coinError } = usePricesState();
 
-  if (coinError.isError) return <PageError error={coinError.error} />;
+  if (coinError.isError) return <ComponentError error={coinError.error} />;
   if (!coinPrices) return "Loading...";
 
   const coinPrice = coinPrices[coin.key];
