@@ -10,7 +10,6 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
 
   const hasUserEnoughMoney =
     Number(usersDollars) >= Number(formData.expenseInDollars);
-
   return (
     <StyledPurchaseForm onSubmit={action}>
       <div>
@@ -65,14 +64,14 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
 
       <div>
         {error.isError && <FormError error={error.error} />}
-        {!hasUserEnoughMoney && !error.isError ? (
+        {!hasUserEnoughMoney && !error.isError && isAuthenticated ? (
           <FormError error={new Error(errorMessages.noMoney)} />
         ) : null}
       </div>
 
       <input
         type={"submit"}
-        disabled={pending || !hasUserEnoughMoney}
+        disabled={pending}
         value={isAuthenticated ? "Buy" : "Register to buy"}
       />
     </StyledPurchaseForm>
