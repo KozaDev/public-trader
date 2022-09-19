@@ -60,6 +60,7 @@ const Login = () => {
           <div>
             <label for={"text"}>Name/email</label>
             <input
+              id={"text"}
               type={"text"}
               name={"identifier"}
               value={formData.identifier}
@@ -71,6 +72,7 @@ const Login = () => {
           <div>
             <label for={"password"}>Password</label>
             <input
+              id={"password"}
               type={"password"}
               name={"password"}
               value={formData.password}
@@ -81,7 +83,15 @@ const Login = () => {
 
           {error.isError && <FormError error={error.error} />}
 
-          <InputSubmit type={"submit"} value={"Login"} disabled={pending} />
+          <div>
+            <label for={"button"} />
+            <InputSubmit
+              id={"button"}
+              type={"submit"}
+              value={"Login"}
+              disabled={pending}
+            />
+          </div>
         </StyledFrom>
       </div>
     </StyledResponsiveTemplate>

@@ -16,6 +16,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
       <div>
         <label for={"amountOfCoin"}>Amount of coin</label>
         <input
+          id={"amountOfCoin"}
           type={"number"}
           name={"amountOfCoin"}
           value={formData.amountOfCoin}
@@ -28,6 +29,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
       <div>
         <label for={"expenseInDollars"}>Expense in dolars</label>
         <input
+          id={"expenseInDollars"}
           type={"number"}
           name={"expenseInDollars"}
           value={formData.expenseInDollars}
@@ -52,6 +54,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
       <div>
         <label for={"description"}>Description</label>
         <textarea
+          id={"description"}
           type={"text"}
           name={"description"}
           value={formData.description}
@@ -69,11 +72,14 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
           <FormError error={new Error(errorMessages.noMoney)} />
         ) : null}
       </div>
-
-      <InputSubmit
-        disabled={pending}
-        value={isAuthenticated ? "Buy" : "Register to buy"}
-      />
+      <div>
+        <label for={"button"} />
+        <InputSubmit
+          id={"button"}
+          disabled={pending}
+          value={isAuthenticated ? "Buy" : "Register to buy"}
+        />
+      </div>
     </StyledPurchaseForm>
   );
 };

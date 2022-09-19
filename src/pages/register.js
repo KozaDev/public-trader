@@ -61,6 +61,7 @@ const Register = () => {
           <div>
             <label for={"username"}>Name</label>
             <input
+              id={"username"}
               type={"text"}
               name={"username"}
               value={formData.username}
@@ -72,6 +73,7 @@ const Register = () => {
           <div>
             <label for={"email"}>Email</label>
             <input
+              id={"email"}
               type={"email"}
               name={"email"}
               value={formData.email}
@@ -83,6 +85,7 @@ const Register = () => {
           <div>
             <label for={"password"}>Password</label>
             <input
+              id={"password"}
               type={"password"}
               name={"password"}
               value={formData.password}
@@ -92,7 +95,10 @@ const Register = () => {
           </div>
 
           {error.isError && <FormError error={error.error} />}
-          <InputSubmit value={"Register"} disabled={pending} />
+          <div>
+            <label for={"button"} />
+            <InputSubmit id={"button"} value={"Register"} disabled={pending} />
+          </div>
         </StyledFrom>
       </div>
     </StyledResponsiveTemplate>
