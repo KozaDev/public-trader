@@ -79,4 +79,8 @@ export const ListElement = styled.div`
 
 export const StyledButton = styled.button`
   ${baseButton}
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
