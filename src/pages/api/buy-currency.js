@@ -1,21 +1,18 @@
 import axios from "axios";
 import { decimalPlaces } from "lib/consts/consts";
-import { getJWTFromServerCookie } from "lib/cookies/cookies";
+import {
+  getIdFromServerCookie,
+  getJWTFromServerCookie,
+} from "lib/cookies/cookies";
 import { updateAssets } from "lib/utils/utils";
-//import { getCurrentPrice } from "../../lib/cryptoApiRequests";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      const {
-        userId,
-        walletId,
-        description,
-        coin,
-        amountOfCoin,
-        priceOnEntry,
-      } = req.body;
+      const { walletId, description, coin, amountOfCoin, priceOnEntry } =
+        req.body;
       const authorization = getJWTFromServerCookie(req);
+      const userId = getIdFromServerCookie(req);
 
       if (!authorization)
         return res.status(401).send({ message: "User unauthorized" });

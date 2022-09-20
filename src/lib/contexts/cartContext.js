@@ -10,8 +10,8 @@ const CartContext = createContext(null);
 export const useCartContext = () => useContext(CartContext);
 
 export const CartContextProvider = ({
-  children,
   userId,
+  children,
   walletId,
   coin,
   coinPrice,
@@ -34,7 +34,6 @@ export const CartContextProvider = ({
       url: `http://localhost:3000/api/buy-currency`,
       method: "post",
       data: {
-        userId,
         walletId,
         coin: coin.key,
         amountOfCoin: formData.amountOfCoin,

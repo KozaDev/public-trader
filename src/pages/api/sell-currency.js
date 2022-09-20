@@ -11,18 +11,10 @@ export default async function handler(req, res) {
     try {
       const { positionId, walletId, priceOnExit, coin, amountOfCoin } =
         req.body;
-
-      console.log("positionId:", positionId);
-      console.log("walletId: ", walletId);
-      console.log("priceOnExit: ", priceOnExit);
-      console.log("coin: ", coin);
-      console.log("amountOfCoin: ", amountOfCoin);
       const authorization = getJWTFromServerCookie(req);
       const userId = getIdFromServerCookie(req);
 
-      console.log("authorization: ", authorization);
-      console.log("userId: ", userId);
-      if (!authorization)
+      if (!authorization || !userId)
         res.status(401).send({ message: "User unauthorized" });
 
       const positionRes = await axios.get(
@@ -37,7 +29,7 @@ export default async function handler(req, res) {
       } = positionRes;
 
       const isPositionOpen = createdAt === updatedAt;
-      console.log("isPositionOpen: ", isPositionOpen);
+
       if (!isPositionOpen)
         return res
           .status(403)
@@ -48,11 +40,9 @@ export default async function handler(req, res) {
       );
 
       const wallet = walletRes.data.data.attributes;
-      console.log("wallet: ", wallet);
       const dollarsToAdd = (amountOfCoin * priceOnExit).toFixed(
         decimalPlaces["usd"]
       );
-      console.log("salesDollars: ", dollarsToAdd);
       const updatedAssets = updateAssets(
         wallet.assets,
         coin,
@@ -60,7 +50,6 @@ export default async function handler(req, res) {
         amountOfCoin,
         dollarsToAdd
       );
-      console.log("walletAfterupdate:", updatedAssets);
 
       const updatePositionRes = await axios({
         method: "put",
@@ -70,6 +59,7 @@ export default async function handler(req, res) {
         },
         data: {
           data: {
+            user: userId,
             priceOnExit,
           },
         },
