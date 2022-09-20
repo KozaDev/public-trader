@@ -1,11 +1,5 @@
 import styled from "styled-components";
-
-export const StyledButton = styled.button`
-  all: initial;
-  font-family: inherit;
-  font-weight: 600;
-  border-bottom: ${({ theme }) => theme.colors.black} solid 2px;
-`;
+import { baseButton } from "./declarations";
 
 export const StyledCard = styled.div`
   border-radius: ${({ theme }) => theme.variables.borderRadious};
@@ -61,13 +55,7 @@ export const StyledFrom = styled.form`
   }
 
   input[type="submit"] {
-    all: initial;
-    background-color: ${({ theme }) => theme.colors.primaryBlue};
-    font-family: inherit;
-    font-size: inherit;
-    color: ${({ theme }) => theme.colors.white};
-    border-radius: 8px;
-    padding: 5px 15px;
+    ${baseButton}
   }
 
   input[type="submit"]:hover {
@@ -87,4 +75,8 @@ export const StyledFrom = styled.form`
 export const ListElement = styled.div`
   padding: 10px;
   margin: 10px 0;
+`;
+
+export const StyledButton = styled.button`
+  ${baseButton}
 `;

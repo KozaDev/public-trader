@@ -7,6 +7,7 @@ import StyledPositionClose from "./StyledPositionClose";
 import axios from "axios";
 import FormError from "../FormError/FormError";
 import Router from "next/router";
+import { StyledButton } from "styles/components";
 
 const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
   const { data: coinData, error: coinError } = usePricesState();
@@ -60,7 +61,7 @@ const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
 
   return (
     <StyledPositionClose>
-      <button onClick={sellCurrency}>Close position</button>
+      <StyledButton onClick={sellCurrency}>Close position</StyledButton>
       {error.isError && <FormError error={error.error} />}
       {attachCustomConfirm()}
     </StyledPositionClose>
