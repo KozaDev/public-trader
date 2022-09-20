@@ -1,4 +1,5 @@
 import axios from "axios";
+import UpdatedWallet from "components/molecules/UpdatedWallet/UpdatedWallet";
 import Wallet from "components/molecules/Wallet/Wallet";
 import PageError from "components/templates/PageError/PageError";
 import { errorMessages } from "lib/consts/consts";
@@ -41,7 +42,7 @@ const Success = ({ walletAssets, transactionDetails, error }) => {
   return (
     <>
       <h2>Your wallet after transaction: </h2>
-      <Wallet assets={walletAssets} update={transactionDetails} />
+      <UpdatedWallet assets={walletAssets} update={transactionDetails} />
     </>
   );
 };
