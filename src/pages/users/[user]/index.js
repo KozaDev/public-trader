@@ -149,7 +149,11 @@ const User = ({ user, positions, error }) => {
         data={data.data}
         params={{ userId: id }}
         listTitle={"Users positions"}
-        emptyInfo={"This user dosen't have any positions"}
+        emptyInfo={
+          id
+            ? "You don't have any positions"
+            : "This user dosen't have any positions"
+        }
         linkEachTo={prepareTemplate`/users/${"userId"}/position/${"id"}`}
       />
       {paginationData.pageCount > 1 && (
