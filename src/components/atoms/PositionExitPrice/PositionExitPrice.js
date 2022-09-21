@@ -13,7 +13,7 @@ const PositionExitPrice = ({ priceOnExit, coin }) => {
   return <Dollar amount={data[coin]} />;
 };
 
-PositionExitPrice.prototype = {
+PositionExitPrice.propTypes = {
   priceOnExit: PropTypes.number.isRequired,
   coin: PropTypes.string.isRequired,
 };

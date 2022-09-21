@@ -12,16 +12,6 @@ export default function Home() {
 
       <h1>Today's Cryptocurrency Prices</h1>
       <TradingTable />
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Public Trader
-        </a>
-      </footer>
     </>
   );
 }

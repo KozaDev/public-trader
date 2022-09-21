@@ -20,7 +20,7 @@ const DisplayCurrency = ({ amount, coin, displayPrefix }) => {
   );
 };
 
-DisplayCurrency.prototype = {
+DisplayCurrency.propTypes = {
   amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   coin: PropTypes.string.isRequired,
   displayPrefix: PropTypes.bool,

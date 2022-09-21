@@ -1,10 +1,10 @@
 import { confirmLabelsProps } from "lib/proptypes/proptypes";
 
 const ConfirmPurchaseLabel = ({ amountOfCoin, coinName, coinPrice }) => (
-  <p>
+  <div>
     <>{`Do you want buy ${amountOfCoin} of ${coinName} for 
     ${(coinPrice * amountOfCoin).toFixed(2)}`}</>
-  </p>
+  </div>
 );
 
 ConfirmPurchaseLabel.prototype = confirmLabelsProps;

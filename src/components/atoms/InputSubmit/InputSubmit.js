@@ -5,7 +5,7 @@ const InputSubmit = (props) => {
   return <input type={"submit"} {...props} />;
 };
 
-InputSubmit.prototype = {
+InputSubmit.propTypes = {
   disabled: PropTypes.bool,
 };
 

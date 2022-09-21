@@ -15,7 +15,7 @@ const Dollar = ({ amount, displayPrefix }) => {
   );
 };
 
-Dollar.prototype = {
+Dollar.propTypes = {
   amount: PropTypes.number.isRequired,
   displayPrefix: PropTypes.bool,
 };
