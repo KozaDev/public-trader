@@ -2,6 +2,7 @@ import { decimalPlaces } from "lib/consts/consts";
 import DisplayCurrency from "components/atoms/DisplayCurrency/DisplayCurrency";
 import StyledWallet from "../Wallet/StyledWallet";
 import WalletValue from "components/atoms/WalletValue/WalletValue";
+import { assetsShape, transactionDetailsShape } from "lib/proptypes/proptypes";
 
 const UpdatedWallet = ({ assets, update }) => {
   const { coin, differnceInCoin, differenceInDollars } = update;
@@ -69,6 +70,11 @@ const UpdatedWallet = ({ assets, update }) => {
       </ul>
     </StyledWallet>
   );
+};
+
+UpdatedWallet.propTypes = {
+  assets: assetsShape.isRequired,
+  update: transactionDetailsShape.isRequired,
 };
 
 export default UpdatedWallet;

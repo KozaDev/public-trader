@@ -7,6 +7,8 @@ import PositionDetails from "components/organisms/PositionDetails/PositionDetail
 import PositionClose from "components/molecules/PositionClose/PositionClose";
 import { StyledCard } from "styles/components";
 import { useAuth } from "lib/contexts/authContext";
+import PropTypes from "prop-types";
+import { positionShape, userShape } from "lib/proptypes/proptypes";
 
 export async function getServerSideProps({ params }) {
   const { user: id, positionId } = params;
@@ -51,7 +53,6 @@ const Position = ({ user, position, error }) => {
   const { user: authUser } = useAuth();
 
   const { coin, createdAt, updatedAt, amountOfCoin, id } = position;
-  console.log(user);
   const {
     wallet: { id: walletId },
   } = user;
@@ -79,6 +80,15 @@ const Position = ({ user, position, error }) => {
       </StyledCard>
     </div>
   );
+};
+
+Position.propTypes = {
+  user: userShape,
+  position: positionShape,
+  error: PropTypes.shape({
+    isError: PropTypes.bool.isRequired,
+    error: errorShape,
+  }),
 };
 
 export default Position;

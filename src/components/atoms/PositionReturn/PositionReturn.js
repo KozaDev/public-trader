@@ -1,6 +1,6 @@
 import { usePricesState } from "lib/contexts/pricesProvider";
 import StyledPositionReturn from "./StyledPositionReturn";
-
+import PropTypes from "prop-types";
 const PositionReturn = ({
   updatedAt,
   createdAt,
@@ -26,6 +26,14 @@ const PositionReturn = ({
       )}
     </StyledPositionReturn>
   );
+};
+
+PositionReturn.propTypes = {
+  updatedAt: PropTypes.string,
+  createdAt: PropTypes.string.isRequired,
+  priceOnEntry: PropTypes.number.isRequired,
+  priceOnExit: PropTypes.number,
+  coin: PropTypes.string,
 };
 
 export default PositionReturn;

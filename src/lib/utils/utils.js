@@ -136,7 +136,6 @@ export const prepareTemplate = (strings, ...keys) => {
 };
 
 export const getDateFormatForRange = (start, end, aproximatedPeriod) => {
-  console.log(aproximatedPeriod);
   const isPeriodDayOrLess =
     aproximatedPeriod === "1h" || aproximatedPeriod === "1d";
   const isPeriodOneWeek = aproximatedPeriod === "1w";

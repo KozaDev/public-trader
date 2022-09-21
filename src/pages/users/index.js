@@ -7,6 +7,8 @@ import PageError from "components/templates/PageError/PageError";
 import List from "components/organisms/List/List";
 import UsersLabel from "components/atoms/UsersLabel/UsersLabel";
 import { prepareTemplate } from "lib/utils/utils";
+import PropTypes from "prop-types";
+import { errorShape, userShape } from "lib/proptypes/proptypes";
 
 export async function getServerSideProps() {
   let traders = [];
@@ -62,6 +64,14 @@ const TradersList = ({ traders, error }) => {
       />
     </>
   );
+};
+
+TradersList.propTypes = {
+  traders: PropTypes.arrayOf(userShape),
+  error: PropTypes.shape({
+    isError: PropTypes.bool.isRequired,
+    error: errorShape,
+  }),
 };
 
 export default TradersList;

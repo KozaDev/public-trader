@@ -1,4 +1,5 @@
 import NumberFormat from "react-number-format";
+import PropTypes from "prop-types";
 
 const Dollar = ({ amount, displayPrefix }) => {
   return (
@@ -12,6 +13,11 @@ const Dollar = ({ amount, displayPrefix }) => {
       />
     </>
   );
+};
+
+Dollar.prototype = {
+  amount: PropTypes.number.isRequired,
+  displayPrefix: PropTypes.bool,
 };
 
 export default Dollar;

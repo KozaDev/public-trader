@@ -5,10 +5,11 @@ import Dollar from "components/atoms/Dollar/Dollar";
 import { StyledResponsiveTemplate } from "styles/components";
 import ComponentError from "../ComponentError/ComponentError";
 import Spinner from "components/templates/Spinner/Spinner";
+import PropTypes from "prop-types";
+import { userShape } from "lib/proptypes/proptypes";
 
 const MarketDetails = ({ coin, user }) => {
   const { data: coinPrices, error: coinError } = usePricesState();
-
   if (coinError.isError) return <ComponentError error={coinError.error} />;
   if (!coinPrices) return <Spinner margin={"300px 0"} />;
 
@@ -42,6 +43,14 @@ const MarketDetails = ({ coin, user }) => {
       </div>
     </StyledResponsiveTemplate>
   );
+};
+
+MarketDetails.propTypes = {
+  coin: PropTypes.shape({
+    key: PropTypes.string,
+    currency: PropTypes.string,
+  }),
+  user: userShape,
 };
 
 export default MarketDetails;

@@ -1,5 +1,6 @@
 import Dollar from "../Dollar/Dollar";
 import Coin from "../Coin/Coin";
+import PropTypes from "prop-types";
 
 const DisplayCurrency = ({ amount, coin, displayPrefix }) => {
   const isItDollar = coin === "usd";
@@ -17,6 +18,12 @@ const DisplayCurrency = ({ amount, coin, displayPrefix }) => {
       )}
     </>
   );
+};
+
+DisplayCurrency.prototype = {
+  amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  coin: PropTypes.string.isRequired,
+  displayPrefix: PropTypes.bool,
 };
 
 export default DisplayCurrency;

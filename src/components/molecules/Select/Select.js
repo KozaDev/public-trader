@@ -1,5 +1,5 @@
 import StyledSelect from "./StyledSelect";
-
+import PropTypes from "prop-types";
 const Select = ({ options, handleChange }) => {
   return (
     <>
@@ -14,6 +14,10 @@ const Select = ({ options, handleChange }) => {
       </StyledSelect>
     </>
   );
+};
+
+Select.propTypes = {
+  options: PropTypes.array.isRequired,
 };
 
 export default Select;

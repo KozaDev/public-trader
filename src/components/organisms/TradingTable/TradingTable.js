@@ -5,7 +5,6 @@ import useTradingTableData from "lib/hooks/useTradingTableData";
 import StyledTable from "./StyledTable";
 import Link from "next/link";
 import ComponentError from "../ComponentError/ComponentError";
-import { TailSpin } from "react-loader-spinner";
 import Spinner from "components/templates/Spinner/Spinner";
 
 const TradingTable = () => {

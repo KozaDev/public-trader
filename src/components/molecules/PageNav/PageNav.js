@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyledButton } from "styles/components";
 import StyledPageNav from "./StyledPageNav";
+import PropTypes from "prop-types";
 
 const PageNav = ({
   currentPage,
@@ -66,6 +67,14 @@ const PageNav = ({
       </StyledButton>
     </StyledPageNav>
   );
+};
+
+PageNav.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  goToNext: PropTypes.func.isRequired,
+  goToPrevious: PropTypes.func.isRequired,
+  allPages: PropTypes.number.isRequired,
+  visibleRange: PropTypes.number.isRequired,
 };
 
 export default PageNav;

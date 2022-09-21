@@ -1,3 +1,4 @@
+import { errorShape } from "lib/proptypes/proptypes";
 import StyledComponentError from "./StyledComponentError";
 
 const ComponentError = ({ error }) => {
@@ -7,6 +8,10 @@ const ComponentError = ({ error }) => {
       <h4>{error.status && <>{`Status code: ${error.status}`}</>}</h4>
     </StyledComponentError>
   );
+};
+
+ComponentError.propTypes = {
+  error: errorShape,
 };
 
 export default ComponentError;

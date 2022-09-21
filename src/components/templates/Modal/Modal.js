@@ -1,3 +1,4 @@
+import { nodeChild } from "lib/proptypes/proptypes";
 import StyledModal, { Overlay } from "./StyledModal";
 
 const Modal = ({ children, ignoreDefaultSize }) => {
@@ -9,6 +10,10 @@ const Modal = ({ children, ignoreDefaultSize }) => {
       <Overlay />
     </>
   );
+};
+
+Modal.propTypes = {
+  children: nodeChild,
 };
 
 export default Modal;

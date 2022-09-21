@@ -3,6 +3,8 @@ import Moment from "react-moment";
 import PositionReturn from "../../atoms/PositionReturn/PositionReturn";
 import PositionValue from "components/atoms/PositionValue/PositionValue";
 import Coin from "components/atoms/Coin/Coin";
+import PropTypes from "prop-types";
+import { stringOrNumber } from "lib/proptypes/proptypes";
 
 const PositionLabel = ({ attributes }) => {
   const {
@@ -59,6 +61,17 @@ const PositionLabel = ({ attributes }) => {
       <h5>See all details</h5>
     </StyledPositionLabel>
   );
+};
+
+PositionLabel.propTypes = {
+  attributes: PropTypes.shape({
+    coin: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string,
+    priceOnEntry: PropTypes.number.isRequired,
+    priceOnExit: PropTypes.number,
+    amountOfCoin: stringOrNumber,
+  }),
 };
 
 export default PositionLabel;

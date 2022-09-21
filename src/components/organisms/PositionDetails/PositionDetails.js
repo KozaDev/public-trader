@@ -6,6 +6,7 @@ import PositionExitPrice from "components/atoms/PositionExitPrice/PositionExitPr
 import PositionDescription from "components/molecules/PositionDescription/PositionDescriptio";
 import Coin from "components/atoms/Coin/Coin";
 import Moment from "react-moment";
+import { positionShape } from "lib/proptypes/proptypes";
 
 const PositionDetails = ({
   coin,
@@ -19,6 +20,16 @@ const PositionDetails = ({
 }) => {
   const isPositionOpen = createdAt === updatedAt;
 
+  console.log({
+    coin,
+    createdAt,
+    updatedAt,
+    priceOnEntry,
+    priceOnExit,
+    amountOfCoin,
+    description,
+    owner,
+  });
   return (
     <StyledPositionDetails>
       <PositionDescription
@@ -80,5 +91,7 @@ const PositionDetails = ({
     </StyledPositionDetails>
   );
 };
+
+PositionDetails.propTypes = positionShape;
 
 export default PositionDetails;

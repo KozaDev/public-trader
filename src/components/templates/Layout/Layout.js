@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Nav from "../../organisms/Nav/Nav";
 import StyledLayout from "./StyledLayout";
+import { nodeChild } from "lib/proptypes/proptypes";
 
 const Layout = ({ children }) => {
   return (
@@ -14,6 +15,10 @@ const Layout = ({ children }) => {
       </StyledLayout>
     </>
   );
+};
+
+Layout.propTypes = {
+  children: nodeChild,
 };
 
 export default Layout;

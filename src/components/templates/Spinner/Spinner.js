@@ -1,5 +1,6 @@
-const { TailSpin } = require("react-loader-spinner");
-const { theme } = require("styles/theme");
+import { TailSpin } from "react-loader-spinner";
+import { theme } from "styles/theme";
+import PropTypes from "prop-types";
 
 const Spinner = ({ width, height, margin }) => {
   return (
@@ -16,5 +17,11 @@ const Spinner = ({ width, height, margin }) => {
       />
     </div>
   );
+};
+
+Spinner.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
+  margin: PropTypes.string,
 };
 export default Spinner;

@@ -8,6 +8,8 @@ import { errorFactory } from "lib/utils/errorHandlers";
 import axios from "axios";
 import Select from "components/molecules/Select/Select";
 import MarketDetails from "components/organisms/MarketDetails/MarketDetails";
+import PropTypes from "prop-types";
+import { userShape, errorShape } from "lib/proptypes/proptypes";
 
 export async function getServerSideProps({ req, params: { market } }) {
   const error = { isError: false, error: null };
@@ -91,3 +93,11 @@ export default function Market({ user, market, error }) {
     </>
   );
 }
+
+Market.propTypes = {
+  user: userShape,
+  error: PropTypes.shape({
+    isError: PropTypes.bool.isRequired,
+    error: errorShape,
+  }),
+};

@@ -1,5 +1,6 @@
 import { StyledCard } from "styles/components";
 import Link from "next/link";
+import PropTypes from "prop-types";
 
 const List = ({
   Component,
@@ -43,6 +44,15 @@ const List = ({
       </ul>
     </div>
   );
+};
+
+List.propTypes = {
+  Component: PropTypes.func.isRequired,
+  data: PropTypes.array.isRequired,
+  params: PropTypes.object,
+  listTitle: PropTypes.string,
+  emptyInfo: PropTypes.string,
+  linkEachTo: PropTypes.func,
 };
 
 export default List;

@@ -1,9 +1,9 @@
 import axios from "axios";
 import UpdatedWallet from "components/molecules/UpdatedWallet/UpdatedWallet";
-import Wallet from "components/molecules/Wallet/Wallet";
 import PageError from "components/templates/PageError/PageError";
 import { errorMessages } from "lib/consts/consts";
 import { getIdFromServerCookie } from "lib/cookies/cookies";
+import { assetsShape, transactionDetailsShape } from "lib/proptypes/proptypes";
 import { errorFactory } from "lib/utils/errorHandlers";
 
 export async function getServerSideProps({ req, query }) {
@@ -38,6 +38,7 @@ export async function getServerSideProps({ req, query }) {
 }
 
 const Success = ({ walletAssets, transactionDetails, error }) => {
+  console.log(transactionDetails);
   if (error.isError) return <PageError error={error.error} />;
   return (
     <>
@@ -45,6 +46,11 @@ const Success = ({ walletAssets, transactionDetails, error }) => {
       <UpdatedWallet assets={walletAssets} update={transactionDetails} />
     </>
   );
+};
+
+Success.propTypes = {
+  walletAssets: assetsShape,
+  transactionDetails: transactionDetailsShape,
 };
 
 export default Success;

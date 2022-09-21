@@ -5,4 +5,6 @@ const ConfirmSellLabel = ({ amountOfCoin, coinName, coinPrice }) => (
   </p>
 );
 
+ConfirmSellLabel.prototype = confirmLabelsProps;
+
 export default ConfirmSellLabel;

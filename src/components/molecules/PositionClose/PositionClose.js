@@ -8,10 +8,12 @@ import axios from "axios";
 import FormError from "../FormError/FormError";
 import Router from "next/router";
 import { StyledButton } from "styles/components";
+import PropTypes from "prop-types";
+import Spinner from "components/templates/Spinner/Spinner";
 
 const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
   const { data: coinData, error: coinError } = usePricesState();
-  if (!coinData) return "Loading...";
+  if (!coinData) return <Spinner width={"40"} />;
   if (coinError.isError) return <PageError error={coinError.error} />;
 
   const priceOnExit = coinData[coin];
@@ -66,6 +68,13 @@ const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
       {attachCustomConfirm()}
     </StyledPositionClose>
   );
+};
+
+PositionClose.propTypes = {
+  coin: PropTypes.string.isRequired,
+  amountOfCoin: PropTypes.number.isRequired,
+  positionId: PropTypes.number.isRequired,
+  walletId: PropTypes.number.isRequired,
 };
 
 export default PositionClose;

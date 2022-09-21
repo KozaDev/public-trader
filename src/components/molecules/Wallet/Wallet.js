@@ -2,6 +2,7 @@ import StyledWallet from "./StyledWallet";
 import { decimalPlaces } from "lib/consts/consts";
 import DisplayCurrency from "components/atoms/DisplayCurrency/DisplayCurrency";
 import WalletValue from "components/atoms/WalletValue/WalletValue";
+import { assetsShape } from "lib/proptypes/proptypes";
 
 const Wallet = ({ assets }) => {
   const currentAssets = assets.reduce((acc, item) => {
@@ -31,6 +32,10 @@ const Wallet = ({ assets }) => {
       </ul>
     </StyledWallet>
   );
+};
+
+Wallet.propTypes = {
+  assets: assetsShape.isRequired,
 };
 
 export default Wallet;

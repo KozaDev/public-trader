@@ -13,6 +13,7 @@ import {
 import { theme } from "styles/theme";
 import { arbitraryLine, pluginsConfig } from "./chartConfig";
 import moment from "moment";
+import PropTypes from "prop-types";
 
 ChartJS.register(
   CategoryScale,
@@ -100,6 +101,11 @@ const LineChart = ({ data, width }) => {
       }}
     />
   );
+};
+
+LineChart.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.array),
+  width: PropTypes.number,
 };
 
 export default LineChart;

@@ -1,4 +1,6 @@
 import { StyledError } from "../../../styles/StyledError";
+import PropTypes from "prop-types";
+import { errorShape } from "lib/proptypes/proptypes";
 
 const FormError = ({ error }) => {
   return (
@@ -16,6 +18,13 @@ const FormError = ({ error }) => {
       )}
     </StyledError>
   );
+};
+
+FormError.propTypes = {
+  error: {
+    details: PropTypes.any,
+    ...errorShape,
+  },
 };
 
 export default FormError;

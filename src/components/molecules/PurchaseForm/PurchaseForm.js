@@ -2,8 +2,10 @@ import Dollar from "components/atoms/Dollar/Dollar";
 import InputSubmit from "components/atoms/InputSubmit/InputSubmit";
 import { errorMessages } from "lib/consts/consts";
 import { useCartContext } from "lib/contexts/cartContext";
+import { cartFormDataShape } from "lib/proptypes/proptypes";
 import FormError from "../FormError/FormError";
 import StyledPurchaseForm from "./StyledPurchaseForm";
+import PropTypes from "prop-types";
 
 const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
   const { pending, error, action, isAuthenticated, usersDollars } =
@@ -82,6 +84,12 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
       </div>
     </StyledPurchaseForm>
   );
+};
+
+PurchaseForm.propTypes = {
+  formData: cartFormDataShape,
+  handleChange: PropTypes.func.isRequired,
+  preventKeyDown: PropTypes.func.isRequired,
 };
 
 export default PurchaseForm;

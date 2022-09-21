@@ -8,6 +8,7 @@ import Select from "components/molecules/Select/Select";
 import StyledChart from "./StyledChart";
 import ComponentError from "../ComponentError/ComponentError";
 import Spinner from "components/templates/Spinner/Spinner";
+import PropTypes from "prop-types";
 
 const LineChart = dynamic(() => import("./LineChart"), {
   suspense: true,
@@ -78,6 +79,13 @@ const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
       )}
     </StyledChart>
   );
+};
+
+Chart.propTypes = {
+  startDate: PropTypes.string.isRequired,
+  exitDate: PropTypes.string,
+  coin: PropTypes.string.isRequired,
+  changeGranulation: PropTypes.bool,
 };
 
 export default Chart;

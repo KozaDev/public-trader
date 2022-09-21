@@ -1,5 +1,6 @@
 import { usePricesState } from "lib/contexts/pricesProvider";
 import Dollar from "../Dollar/Dollar";
+import PropTypes from "prop-types";
 
 const PositionExitPrice = ({ priceOnExit, coin }) => {
   if (priceOnExit) return <Dollar amount={priceOnExit} />;
@@ -12,4 +13,8 @@ const PositionExitPrice = ({ priceOnExit, coin }) => {
   return <Dollar amount={data[coin]} />;
 };
 
+PositionExitPrice.prototype = {
+  priceOnExit: PropTypes.number.isRequired,
+  coin: PropTypes.string.isRequired,
+};
 export default PositionExitPrice;
