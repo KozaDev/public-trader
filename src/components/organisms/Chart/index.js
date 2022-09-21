@@ -52,7 +52,7 @@ const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
   const granulationOptions = granulation.map(({ title, value }) => ({
     title,
     value,
-    attributes: { selected: value === dataGranulation },
+    attributes: { selected: value == dataGranulation },
   }));
 
   const handleGranulationChange = ({ target: { value } }) => {
