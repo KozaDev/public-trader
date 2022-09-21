@@ -10,7 +10,7 @@ import { StyledLink, StyledLinkList, StyledNav } from "./StyledNav";
 
 const Nav = () => {
   const { user, signout } = useAuth();
-  const { expanded } = useNavState();
+  const { expanded, toggle } = useNavState();
   const router = useRouter();
 
   const marketFromUrl = router.query?.market;
@@ -39,15 +39,17 @@ const Nav = () => {
     ]
   );
 
-  const handleSelectChange = ({ target: { value } }) =>
+  const handleSelectChange = ({ target: { value } }) => {
     Router.push(`/markets/${value}`);
+    toggle(false);
+  };
 
   const displayLinksList = () => {
     const staticRoutes = [
-      <li>
+      <li onClick={toggle.bind(null, false)}>
         <StyledLink href="/">Home</StyledLink>
       </li>,
-      <li>
+      <li onClick={toggle.bind(null, false)}>
         <StyledLink href="/users">Traders</StyledLink>
       </li>,
       <li>
@@ -55,10 +57,10 @@ const Nav = () => {
       </li>,
     ];
     const unauthorizedRoutes = [
-      <li>
+      <li onClick={toggle.bind(null, false)}>
         <StyledLink href="/login">Login</StyledLink>
       </li>,
-      <li>
+      <li onClick={toggle.bind(null, false)}>
         <StyledLink href="/register">Register</StyledLink>
       </li>,
     ];
@@ -71,10 +73,10 @@ const Nav = () => {
       );
 
     const authorizedRoutes = [
-      <li>
+      <li onClick={toggle.bind(null, false)}>
         <StyledLink href={`/users/${user.id}`}>Profile</StyledLink>
       </li>,
-      <li>
+      <li onClick={toggle.bind(null, false)}>
         <a onClick={signout}>Signout</a>
       </li>,
     ];
