@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { StyledButton } from "styles/components";
 import StyledPageNav from "./StyledPageNav";
 import PropTypes from "prop-types";
+import uuid from "react-uuid";
 
 const PageNav = ({
   currentPage,
@@ -42,8 +43,9 @@ const PageNav = ({
   for (let index = start + 1; index <= range; index++) {
     pages.push(
       <span
+        key={uuid()}
         onClick={goToPage.bind(null, index, currentPage)}
-        className={index == currentPage && "current-page"}
+        className={index == currentPage ? "current-page" : undefined}
       >
         {index}
       </span>

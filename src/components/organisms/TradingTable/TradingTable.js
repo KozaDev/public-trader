@@ -6,6 +6,7 @@ import StyledTable from "./StyledTable";
 import Link from "next/link";
 import ComponentError from "../ComponentError/ComponentError";
 import Spinner from "components/templates/Spinner/Spinner";
+import uuid from "react-uuid";
 
 const TradingTable = () => {
   const currency = walletSchema.reduce((acc, item) => {
@@ -31,15 +32,15 @@ const TradingTable = () => {
 
   const displayChangeInPercent = (currentPrice, pastPrice) => {
     const change = ((currentPrice / pastPrice) * 100 - 100).toFixed(1);
-    if (change > 0) return <snap className="green">{change}%</snap>;
-    return <snap className="red">{change}%</snap>;
+    if (change > 0) return <span className="green">{change}%</span>;
+    return <span className="red">{change}%</span>;
   };
   return (
     <StyledTable>
       <thead>
         <tr>
           {["#", "", "Price", ...periods].map((period) => (
-            <th>{period}</th>
+            <th key={uuid()}>{period}</th>
           ))}
         </tr>
       </thead>
@@ -47,7 +48,7 @@ const TradingTable = () => {
         {tradingTableData.map((item, index) => {
           const { coin, pricesFromPeriods } = item;
           return (
-            <tr>
+            <tr key={uuid()}>
               <th>{index + 1}</th>
               <th>
                 <Link href={`markets/${coin}`}>{coin}</Link>
@@ -56,7 +57,7 @@ const TradingTable = () => {
                 <Dollar amount={currentPricesData[coin].toFixed(2)} />
               </td>
               {periods.map((period) => (
-                <td>
+                <td key={uuid()}>
                   {displayChangeInPercent(
                     currentPricesData[coin],
                     pricesFromPeriods[period]

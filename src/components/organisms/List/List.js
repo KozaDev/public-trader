@@ -1,6 +1,7 @@
 import { StyledCard } from "styles/components";
 import Link from "next/link";
 import PropTypes from "prop-types";
+import uuid from "react-uuid";
 
 const List = ({
   Component,
@@ -18,7 +19,7 @@ const List = ({
         <h2>{listTitle}</h2>
         <ul>
           {data.map((item) => (
-            <li>
+            <li key={uuid()}>
               <Link href={linkEachTo({ ...item, ...params })}>
                 <StyledCard>
                   <Component {...item} {...params} />

@@ -59,7 +59,7 @@ const Register = () => {
         <h1>Register</h1>
         <StyledFrom onSubmit={submit}>
           <div>
-            <label for={"username"}>Name</label>
+            <label htmlFor={"username"}>Name</label>
             <input
               id={"username"}
               type={"text"}
@@ -71,7 +71,7 @@ const Register = () => {
           </div>
 
           <div>
-            <label for={"email"}>Email</label>
+            <label htmlFor={"email"}>Email</label>
             <input
               id={"email"}
               type={"email"}
@@ -83,7 +83,7 @@ const Register = () => {
           </div>
 
           <div>
-            <label for={"password"}>Password</label>
+            <label htmlFor={"password"}>Password</label>
             <input
               id={"password"}
               type={"password"}
@@ -96,7 +96,7 @@ const Register = () => {
 
           {error.isError && <FormError error={error.error} />}
           <div>
-            <label for={"button"} />
+            <label htmlFor={"button"} />
             <InputSubmit id={"button"} value={"Register"} disabled={pending} />
           </div>
         </StyledFrom>

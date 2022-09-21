@@ -1,6 +1,7 @@
 import NumberFormat from "react-number-format";
 import { ListElement } from "styles/components";
 import PropTypes from "prop-types";
+
 const TopTradersLabel = ({ username, allAssetsInDollars }) => {
   return (
     <ListElement>
@@ -17,7 +18,8 @@ const TopTradersLabel = ({ username, allAssetsInDollars }) => {
 
 TopTradersLabel.propTypes = {
   username: PropTypes.string.isRequired,
-  allAssetsInDollars: PropTypes.number.isRequired,
+  allAssetsInDollars: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
 };
 
 export default TopTradersLabel;

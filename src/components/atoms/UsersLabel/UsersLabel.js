@@ -6,7 +6,7 @@ const UserLabel = ({ username }) => {
 };
 
 UserLabel.propTypes = {
-  username: PropTypes.string.func,
+  username: PropTypes.string.isRequired,
 };
 
 export default UserLabel;

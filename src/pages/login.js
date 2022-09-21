@@ -58,7 +58,7 @@ const Login = () => {
         <h1>Login</h1>
         <StyledFrom onSubmit={submit}>
           <div>
-            <label for={"text"}>Name/email</label>
+            <label htmlFor={"text"}>Name/email</label>
             <input
               id={"text"}
               type={"text"}
@@ -70,7 +70,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label for={"password"}>Password</label>
+            <label htmlFor={"password"}>Password</label>
             <input
               id={"password"}
               type={"password"}
@@ -84,7 +84,7 @@ const Login = () => {
           {error.isError && <FormError error={error.error} />}
 
           <div>
-            <label for={"button"} />
+            <label htmlFor={"button"} />
             <InputSubmit
               id={"button"}
               type={"submit"}

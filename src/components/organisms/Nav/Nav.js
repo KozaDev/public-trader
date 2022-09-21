@@ -1,4 +1,5 @@
 import Router, { useRouter } from "next/router";
+import uuid from "react-uuid";
 import { useAuth } from "lib/contexts/authContext";
 import { useNavState } from "lib/contexts/navContext";
 import Burger from "components/atoms/Burger/Burger";
@@ -46,21 +47,21 @@ const Nav = () => {
 
   const displayLinksList = () => {
     const staticRoutes = [
-      <li onClick={toggle.bind(null, false)}>
+      <li key={uuid()} onClick={toggle.bind(null, false)}>
         <StyledLink href="/">Home</StyledLink>
       </li>,
-      <li onClick={toggle.bind(null, false)}>
+      <li key={uuid()} onClick={toggle.bind(null, false)}>
         <StyledLink href="/users">Traders</StyledLink>
       </li>,
-      <li>
+      <li key={uuid()}>
         <Select options={selectOptions} handleChange={handleSelectChange} />
       </li>,
     ];
     const unauthorizedRoutes = [
-      <li onClick={toggle.bind(null, false)}>
+      <li key={uuid()} onClick={toggle.bind(null, false)}>
         <StyledLink href="/login">Login</StyledLink>
       </li>,
-      <li onClick={toggle.bind(null, false)}>
+      <li key={uuid()} onClick={toggle.bind(null, false)}>
         <StyledLink href="/register">Register</StyledLink>
       </li>,
     ];
@@ -73,10 +74,10 @@ const Nav = () => {
       );
 
     const authorizedRoutes = [
-      <li onClick={toggle.bind(null, false)}>
+      <li key={uuid()} onClick={toggle.bind(null, false)}>
         <StyledLink href={`/users/${user.id}`}>Profile</StyledLink>
       </li>,
-      <li onClick={toggle.bind(null, false)}>
+      <li key={uuid()} onClick={toggle.bind(null, false)}>
         <a onClick={signout}>Signout</a>
       </li>,
     ];

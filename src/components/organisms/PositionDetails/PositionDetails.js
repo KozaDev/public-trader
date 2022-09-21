@@ -20,16 +20,6 @@ const PositionDetails = ({
 }) => {
   const isPositionOpen = createdAt === updatedAt;
 
-  console.log({
-    coin,
-    createdAt,
-    updatedAt,
-    priceOnEntry,
-    priceOnExit,
-    amountOfCoin,
-    description,
-    owner,
-  });
   return (
     <StyledPositionDetails>
       <PositionDescription
@@ -92,6 +82,6 @@ const PositionDetails = ({
   );
 };
 
-PositionDetails.propTypes = positionShape;
+PositionDetails.propTypes = { positionShape };
 
 export default PositionDetails;

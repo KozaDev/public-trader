@@ -16,7 +16,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
   return (
     <StyledPurchaseForm onSubmit={action}>
       <div>
-        <label for={"amountOfCoin"}>Amount of coin</label>
+        <label htmlFor={"amountOfCoin"}>Amount of coin</label>
         <input
           id={"amountOfCoin"}
           type={"number"}
@@ -29,7 +29,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
         ></input>
       </div>
       <div>
-        <label for={"expenseInDollars"}>Expense in dolars</label>
+        <label htmlFor={"expenseInDollars"}>Expense in dolars</label>
         <input
           id={"expenseInDollars"}
           type={"number"}
@@ -54,7 +54,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
       )}
 
       <div>
-        <label for={"description"}>Description</label>
+        <label htmlFor={"description"}>Description</label>
         <textarea
           id={"description"}
           type={"text"}
@@ -75,7 +75,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
         ) : null}
       </div>
       <div>
-        <label for={"button"} />
+        <label htmlFor={"button"} />
         <InputSubmit
           id={"button"}
           disabled={pending}

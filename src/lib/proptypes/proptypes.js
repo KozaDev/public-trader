@@ -48,7 +48,7 @@ export const positionShape = PropTypes.shape({
   createdAt: PropTypes.string.isRequired,
   updatedAt: PropTypes.string,
   description: PropTypes.string.isRequired,
-  owner: userShape.isRequired,
+  owner: userShape,
   priceOnEntry: PropTypes.number.isRequired,
   priceOnExit: PropTypes.number,
   updatedAt: PropTypes.string,

@@ -1,3 +1,5 @@
+import { confirmLabelsProps } from "lib/proptypes/proptypes";
+
 const ConfirmSellLabel = ({ amountOfCoin, coinName, coinPrice }) => (
   <p>
     <>{`Do you want to sell ${amountOfCoin} of ${coinName} for 

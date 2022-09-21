@@ -8,7 +8,7 @@ import PositionClose from "components/molecules/PositionClose/PositionClose";
 import { StyledCard } from "styles/components";
 import { useAuth } from "lib/contexts/authContext";
 import PropTypes from "prop-types";
-import { positionShape, userShape } from "lib/proptypes/proptypes";
+import { positionShape, userShape, errorShape } from "lib/proptypes/proptypes";
 
 export async function getServerSideProps({ params }) {
   const { user: id, positionId } = params;
