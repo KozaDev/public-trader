@@ -5,6 +5,8 @@ import useTradingTableData from "lib/hooks/useTradingTableData";
 import StyledTable from "./StyledTable";
 import Link from "next/link";
 import ComponentError from "../ComponentError/ComponentError";
+import { TailSpin } from "react-loader-spinner";
+import Spinner from "components/templates/Spinner/Spinner";
 
 const TradingTable = () => {
   const currency = walletSchema.reduce((acc, item) => {
@@ -25,7 +27,8 @@ const TradingTable = () => {
   if (currentPricesError.isError)
     return <ComponentError error={currentPricesError.error} />;
 
-  if (tradingTablePending || !currentPricesData) return "Loading...";
+  if (tradingTablePending || !currentPricesData)
+    return <Spinner margin={"100px 0"} />;
 
   const displayChangeInPercent = (currentPrice, pastPrice) => {
     const change = ((currentPrice / pastPrice) * 100 - 100).toFixed(1);

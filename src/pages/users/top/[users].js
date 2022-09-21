@@ -7,6 +7,7 @@ import { errorMessages } from "lib/consts/consts";
 import List from "components/organisms/List/List";
 import TopTradersLabel from "components/atoms/TopTradersLabel/TopTradersLabel";
 import { prepareTemplate } from "lib/utils/utils";
+import Spinner from "components/templates/Spinner/Spinner";
 
 const TopTraders = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const TopTraders = () => {
   const title = users == 1 ? "Best trader" : `Top ${users} traders`;
 
   if (error.isError) return <PageError error={error.error} />;
-  if (pending || isQueryUndefined) return "loading";
+  if (pending || isQueryUndefined) return <Spinner margin={"50px 0"} />;
 
   return (
     <List

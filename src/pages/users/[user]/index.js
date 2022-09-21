@@ -144,18 +144,20 @@ const User = ({ user, positions, error }) => {
   return (
     <>
       <div>{userDetails}</div>
-      <List
-        Component={PositionLabel}
-        data={data.data}
-        params={{ userId: id }}
-        listTitle={"Users positions"}
-        emptyInfo={
-          id
-            ? "You don't have any positions"
-            : "This user dosen't have any positions"
-        }
-        linkEachTo={prepareTemplate`/users/${"userId"}/position/${"id"}`}
-      />
+      {
+        <List
+          Component={PositionLabel}
+          data={data.data}
+          params={{ userId: id }}
+          listTitle={"Users positions"}
+          emptyInfo={
+            id
+              ? "You don't have any positions"
+              : "This user dosen't have any positions"
+          }
+          linkEachTo={prepareTemplate`/users/${"userId"}/position/${"id"}`}
+        />
+      }
       {paginationData.pageCount > 1 && (
         <PageNav
           currentPage={pageIndex}

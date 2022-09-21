@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import Select from "components/molecules/Select/Select";
 import StyledChart from "./StyledChart";
 import ComponentError from "../ComponentError/ComponentError";
+import Spinner from "components/templates/Spinner/Spinner";
 
 const LineChart = dynamic(() => import("./LineChart"), {
   suspense: true,
@@ -59,11 +60,11 @@ const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
   };
 
   if (error.isError) return <ComponentError error={error.error} />;
-  if (pending) return "Loading...";
+  if (pending) return <Spinner margin={"50px 0"} />;
 
   return (
     <StyledChart>
-      <Suspense fallback={`Loading...`}>
+      <Suspense fallback={<Spinner margin={"50px 0"} />}>
         <LineChart data={data} width={width} />
       </Suspense>
       {changeGranulation && (
