@@ -17,6 +17,11 @@ export default async function handler(req, res) {
       if (!authorization)
         return res.status(401).send({ message: "User unauthorized" });
 
+      if (description.trim().length < 30)
+        return res.status(403).send({
+          message: "Description should contain at least 30 characters",
+        });
+
       const requierdDollars = amountOfCoin * priceOnEntry;
 
       if (

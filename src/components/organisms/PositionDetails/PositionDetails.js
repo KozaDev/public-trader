@@ -21,7 +21,6 @@ const PositionDetails = ({
 
   return (
     <StyledPositionDetails>
-      <h2>{"Description"}</h2>
       <PositionDescription
         description={description}
         ownerName={owner.username}
