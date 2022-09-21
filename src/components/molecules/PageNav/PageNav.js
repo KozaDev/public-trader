@@ -2,49 +2,65 @@ import { useEffect, useState } from "react";
 import { StyledButton } from "styles/components";
 import StyledPageNav from "./StyledPageNav";
 
-const PageNav = ({ currentPage, goToNext, goToPrevious, allPages }) => {
-  const pages = [];
-  for (let index = 1; index <= allPages; index++) {
-    pages.push(
-      <span className={index == currentPage && "current-page"}>{index}</span>
-    );
-  }
-
+const PageNav = ({
+  currentPage,
+  goToNext,
+  goToPrevious,
+  allPages,
+  visibleRange,
+}) => {
   const [start, setStart] = useState(0);
 
+  const pageOnRange = Math.ceil(visibleRange / 2);
+
   useEffect(() => {
-    if (currentPage == 1 || currentPage == 2) {
+    if (currentPage - pageOnRange < 1) {
       setStart(0);
       return;
     }
-    if (allPages - 2 < currentPage) {
-      setStart(allPages - 3);
+    if (currentPage + pageOnRange > allPages) {
+      setStart(allPages - visibleRange);
       return;
     }
-    setStart(currentPage - 2);
+    setStart(currentPage - pageOnRange);
   }, [currentPage]);
 
-  const next = () => {
-    goToNext();
-    if (currentPage == 1 || start + 4 > allPages) return;
-    setStart((state) => state + 1);
+  const goToPage = (index) => {
+    if (index === currentPage || index < 1 || index > allPages) return;
+
+    const diff = Math.abs(currentPage - index);
+    const increasePage = index > currentPage;
+
+    if (increasePage) goToNext(diff);
+    else goToPrevious(diff);
   };
 
-  const prev = () => {
-    goToPrevious();
-    if (start < 1 || start < currentPage - 2) return;
-    setStart((state) => state - 1);
-  };
+  const pages = [];
+  const range = allPages > visibleRange ? visibleRange + start : allPages;
+
+  for (let index = start + 1; index <= range; index++) {
+    pages.push(
+      <span
+        onClick={goToPage.bind(null, index, currentPage)}
+        className={index == currentPage && "current-page"}
+      >
+        {index}
+      </span>
+    );
+  }
 
   return (
     <StyledPageNav>
-      <StyledButton disabled={currentPage === 1} onClick={prev}>
+      <StyledButton
+        disabled={currentPage === 1}
+        onClick={goToPrevious.bind(null, 1)}
+      >
         Prev
       </StyledButton>
-      <span className="pages">{pages.splice(start, 3)}</span>
+      <span className="pages">{pages}</span>
       <StyledButton
         disabled={currentPage === allPages || allPages === 0}
-        onClick={next}
+        onClick={goToNext.bind(null, 1)}
       >
         Next
       </StyledButton>

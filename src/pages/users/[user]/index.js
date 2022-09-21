@@ -100,16 +100,16 @@ const User = ({ user, positions, error }) => {
     setPageIndex(Number(pageFromRouter));
   }, [pageFromRouter]);
 
-  const decreasePage = () => {
-    const prevPage = pageIndex - 1;
+  const decreasePage = (diff) => {
+    const prevPage = pageIndex - diff;
     if (prevPage < 1) return;
     router.push({ query: { user: user.id, page: prevPage } }, undefined, {
       shallow: true,
     });
   };
 
-  const increasePage = () => {
-    const nextPage = pageIndex + 1;
+  const increasePage = (diff) => {
+    const nextPage = pageIndex + diff;
     if (nextPage > paginationData.pageCount) return;
     router.push({ query: { user: user.id, page: nextPage } }, undefined, {
       shallow: true,
@@ -162,6 +162,7 @@ const User = ({ user, positions, error }) => {
           goToNext={increasePage}
           goToPrevious={decreasePage}
           allPages={paginationData.pageCount}
+          visibleRange={3}
         />
       )}
     </>

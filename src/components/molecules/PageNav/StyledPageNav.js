@@ -5,31 +5,30 @@ const StyledPageNav = styled.div`
   justify-content: center;
   margin: 30px 0;
 
-  span {
+  .pages {
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 200px;
     margin: 0 15px;
     font-weight: 500;
   }
 
-  .pages {
-    display: inline-flex;
-    justify-content: space-around;
-    min-width: 250px;
-  }
-
   .pages span {
-    padding: 6px;
-    border-radius: 8px;
+    padding: 10px;
   }
 
   .current-page {
+    transition: 100ms;
     background-color: ${({ theme }) => theme.colors.whiteSmoke};
+    border-radius: 8px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
     .pages {
       display: inline-flex;
       justify-content: space-around;
-      min-width: 180px;
+      min-width: 150px;
     }
   } ;
 `;
