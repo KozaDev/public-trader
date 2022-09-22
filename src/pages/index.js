@@ -1,3 +1,4 @@
+import DummyUsers from "components/organisms/DummyUsers/DummyUsers";
 import TradingTable from "components/organisms/TradingTable/TradingTable";
 import Head from "next/head";
 
@@ -12,6 +13,7 @@ export default function Home() {
 
       <h1>Today's Cryptocurrency Prices</h1>
       <TradingTable />
+      <DummyUsers />
     </>
   );
 }

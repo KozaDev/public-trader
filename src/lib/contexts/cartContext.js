@@ -31,7 +31,7 @@ export const CartContextProvider = ({
 
   function sendData() {
     return axios({
-      url: `http://localhost:3000/api/buy-currency`,
+      url: `${window.location.origin}/api/buy-currency`,
       method: "post",
       data: {
         walletId,

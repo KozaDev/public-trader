@@ -7,6 +7,7 @@ import FormError from "components/molecules/FormError/FormError";
 import { emptyLoginForm } from "lib/consts/consts";
 import axios from "axios";
 import InputSubmit from "components/atoms/InputSubmit/InputSubmit";
+import DummyUsers from "components/organisms/DummyUsers/DummyUsers";
 
 const Login = () => {
   const [formData, setFormData] = useState(emptyLoginForm);
@@ -94,6 +95,7 @@ const Login = () => {
           </div>
         </StyledFrom>
       </div>
+      <DummyUsers />
     </StyledResponsiveTemplate>
   );
 };

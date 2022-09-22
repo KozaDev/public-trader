@@ -23,7 +23,7 @@ const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
 
   function sendData() {
     return axios({
-      url: `http://localhost:3000/api/sell-currency`,
+      url: `${window.location.origin}/api/sell-currency`,
       method: "put",
       data: {
         coin,
