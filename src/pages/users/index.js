@@ -34,8 +34,6 @@ export async function getServerSideProps() {
 }
 
 const TradersList = ({ traders, error }) => {
-  if (error.isError) return <PageError error={error.error} />;
-
   const [pageIndex, setPageIndex] = useState(0);
 
   const fetcher = (url) => axios.get(url).then((res) => res.data);
@@ -47,6 +45,8 @@ const TradersList = ({ traders, error }) => {
     fetcher,
     { fallbackData: traders }
   );
+
+  if (error.isError) return <PageError error={error.error} />;
 
   if (swrError) return <PageError error={errorFactory(swrError)} />;
 

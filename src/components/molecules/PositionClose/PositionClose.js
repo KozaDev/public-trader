@@ -14,26 +14,8 @@ import { walletSchema } from "lib/consts/consts";
 
 const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
   const { data: coinData, error: coinError } = usePricesState();
-  if (!coinData) return <Spinner width={"40"} />;
-  if (coinError.isError) return <PageError error={coinError.error} />;
-
-  const priceOnExit = coinData[coin];
-
   const { execute, error } = useHandleForm(sendData, handleSuccess);
 
-  function sendData() {
-    return axios({
-      url: `${window.location.origin}/api/sell-currency`,
-      method: "put",
-      data: {
-        coin,
-        amountOfCoin,
-        positionId,
-        walletId,
-        priceOnExit,
-      },
-    });
-  }
   const coinWithFormSchema = walletSchema.reduce((acc, item) => {
     if (item.key === acc) return { key: item.key, currency: item.currency };
     return acc;
@@ -54,6 +36,25 @@ const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
 
   const { attachCustomConfirm, displayConfirm } =
     useCustomConfirm(customConfirmOptions);
+
+  if (!coinData) return <Spinner width={"40"} />;
+  if (coinError.isError) return <PageError error={coinError.error} />;
+
+  const priceOnExit = coinData[coin];
+
+  function sendData() {
+    return axios({
+      url: `${window.location.origin}/api/sell-currency`,
+      method: "put",
+      data: {
+        coin,
+        amountOfCoin,
+        positionId,
+        walletId,
+        priceOnExit,
+      },
+    });
+  }
 
   const sellCurrency = () => {
     displayConfirm(true);

@@ -48,9 +48,9 @@ export async function getServerSideProps({ params }) {
 }
 
 const Position = ({ user, position, error }) => {
-  if (error.isError) return <PageError error={error.error} />;
-
   const { user: authUser } = useAuth();
+
+  if (error.isError) return <PageError error={error.error} />;
 
   const { coin, createdAt, updatedAt, amountOfCoin, id } = position;
   const {

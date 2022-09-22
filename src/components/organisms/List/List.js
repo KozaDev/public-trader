@@ -36,7 +36,7 @@ const List = ({
       <h2>{listTitle}</h2>
       <ul>
         {data.map((item) => (
-          <li>
+          <li key={uuid()}>
             <StyledCard>
               <Component {...item} {...params} />
             </StyledCard>

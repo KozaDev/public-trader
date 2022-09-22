@@ -30,7 +30,7 @@ const UpdatedWallet = ({ assets, update }) => {
           />
 
           {"   "}
-          <span className={`label ${isDiffPositive ? "green" : "red"}`}>
+          <span className={isDiffPositive ? "label green" : "label red"}>
             {isDiffPositive ? "(+" : "("}
             <DisplayCurrency
               amount={difference}
@@ -64,7 +64,7 @@ const UpdatedWallet = ({ assets, update }) => {
           </>
         ) : (
           <li>
-            <h3>This user dosen't have any assets in wallet</h3>
+            <h3>{"This user dosen't have any assets in wallet"}</h3>
           </li>
         )}
       </ul>

@@ -1,4 +1,5 @@
 import StyledSelect from "./StyledSelect";
+import uuid from "react-uuid";
 
 const Select = ({ options, handleChange }) => {
   return (
@@ -6,7 +7,7 @@ const Select = ({ options, handleChange }) => {
       <StyledSelect onChange={handleChange}>
         {options.map(({ title, value, attributes }) => {
           return (
-            <option {...attributes} value={value}>
+            <option {...attributes} value={value} key={uuid()}>
               {title}
             </option>
           );

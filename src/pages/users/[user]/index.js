@@ -35,7 +35,7 @@ export async function getServerSideProps({ params, query }) {
     if (!user.wallet) {
       const createWalletResponse = await axios({
         method: "post",
-        url: "http://localhost:1337/api/wallets",
+        url: `${process.env.NEXT_PUBLIC_STRAPI_URL}/wallets`,
         headers: {
           Authorization: `bearer ${process.env.API_TOKEN}`,
         },
@@ -86,19 +86,28 @@ export async function getServerSideProps({ params, query }) {
 }
 
 const User = ({ user, positions, error }) => {
-  if (error.isError) return <PageError error={error.error} />;
-
-  const router = useRouter();
-
-  const pageFromRouter = router.query?.page || 1;
-  const paginationData = positions.meta.pagination;
-
   const { username, wallet, id } = user;
   const [pageIndex, setPageIndex] = useState(Number(pageFromRouter));
+  const router = useRouter();
 
   useEffect(() => {
     setPageIndex(Number(pageFromRouter));
   }, [pageFromRouter]);
+
+  const fetcher = (url) => axios.get(url).then((res) => res.data);
+
+  const { data, error: swrError } = useSWR(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/entry-positions?${sort(
+      "desc"
+    )}&${filterById(id)}&${paginate(pageIndex)}`,
+    fetcher,
+    { fallbackData: positions }
+  );
+
+  if (error.isError) return <PageError error={error.error} />;
+
+  const pageFromRouter = router.query?.page || 1;
+  const paginationData = positions.meta.pagination;
 
   const decreasePage = (diff) => {
     const prevPage = pageIndex - diff;
@@ -115,16 +124,6 @@ const User = ({ user, positions, error }) => {
       shallow: true,
     });
   };
-
-  const fetcher = (url) => axios.get(url).then((res) => res.data);
-
-  const { data, error: swrError } = useSWR(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/entry-positions?${sort(
-      "desc"
-    )}&${filterById(id)}&${paginate(pageIndex)}`,
-    fetcher,
-    { fallbackData: positions }
-  );
 
   const userDetails = (
     <>

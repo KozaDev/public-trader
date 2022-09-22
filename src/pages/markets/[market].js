@@ -46,8 +46,6 @@ export async function getServerSideProps({ req, params: { market } }) {
 }
 
 export default function Market({ user, market, error }) {
-  if (error.isError) return <PageError error={error.error} />;
-
   const weekAgo = pastDates[2].date;
   const weekAgoAsString = pastDates[2].name;
 
@@ -55,6 +53,8 @@ export default function Market({ user, market, error }) {
     date: weekAgo,
     name: weekAgoAsString,
   });
+
+  if (error.isError) return <PageError error={error.error} />;
 
   const coin = walletSchema.find(({ key }) => key === market);
 

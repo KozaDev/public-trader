@@ -3,9 +3,9 @@ import Dollar from "../Dollar/Dollar";
 import PropTypes from "prop-types";
 
 const PositionExitPrice = ({ priceOnExit, coin }) => {
-  if (priceOnExit) return <Dollar amount={priceOnExit} />;
-
   const { data, error } = usePricesState();
+
+  if (priceOnExit) return <Dollar amount={priceOnExit} />;
 
   if (error.isError) return "?";
   if (!data) return "...";
