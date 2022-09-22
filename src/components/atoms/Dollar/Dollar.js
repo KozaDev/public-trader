@@ -16,7 +16,7 @@ const Dollar = ({ amount, displayPrefix }) => {
 };
 
 Dollar.propTypes = {
-  amount: PropTypes.number.isRequired,
+  amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   displayPrefix: PropTypes.bool,
 };
 

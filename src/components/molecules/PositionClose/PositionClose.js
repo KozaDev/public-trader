@@ -10,6 +10,7 @@ import Router from "next/router";
 import { StyledButton } from "styles/components";
 import PropTypes from "prop-types";
 import Spinner from "components/templates/Spinner/Spinner";
+import { walletSchema } from "lib/consts/consts";
 
 const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
   const { data: coinData, error: coinError } = usePricesState();
@@ -33,12 +34,16 @@ const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
       },
     });
   }
+  const coinWithFormSchema = walletSchema.reduce((acc, item) => {
+    if (item.key === acc) return { key: item.key, currency: item.currency };
+    return acc;
+  }, coin);
 
   const customConfirmOptions = {
     Component: (
       <ConfirmSellLabel
         amountOfCoin={amountOfCoin}
-        coinName={coin}
+        coin={coinWithFormSchema}
         coinPrice={priceOnExit}
       />
     ),

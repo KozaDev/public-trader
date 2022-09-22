@@ -84,3 +84,36 @@ export const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
+
+export const StyledCofirmContent = styled.div`
+  padding: 50px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .component {
+    margin: 20px 0;
+  }
+
+  .buttons {
+    margin: 10px 0;
+  }
+
+  .buttons button {
+    margin-right: 10px;
+  }
+
+  & > * {
+    width: 60%;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    padding: 20px;
+
+    & > * {
+      width: 100%;
+    }
+  } ;
+`;

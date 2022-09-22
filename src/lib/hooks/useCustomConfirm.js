@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "components/templates/Modal/Modal";
+import { StyledButton, StyledCofirmContent } from "styles/components";
 
 const useCustomConfirm = ({ Component, onConfirm, accept, refuse }) => {
   const [displayConfirm, setDisplayConfirm] = useState(false);
@@ -21,9 +22,17 @@ const useCustomConfirm = ({ Component, onConfirm, accept, refuse }) => {
     if (displayConfirm)
       return (
         <Modal>
-          {Component}
-          <button onClick={confirmAction}>{accept}</button>
-          <button onClick={() => setDisplayConfirm(false)}>{refuse}</button>
+          <StyledCofirmContent>
+            <div>
+              <div className="component">{Component}</div>
+              <div className="buttons">
+                <StyledButton onClick={confirmAction}>{accept}</StyledButton>
+                <StyledButton onClick={() => setDisplayConfirm(false)}>
+                  {refuse}
+                </StyledButton>
+              </div>
+            </div>
+          </StyledCofirmContent>
         </Modal>
       );
   };

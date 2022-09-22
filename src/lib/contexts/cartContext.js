@@ -49,7 +49,7 @@ export const CartContextProvider = ({
     Component: (
       <ConfirmPurchaseLabel
         amountOfCoin={formData.amountOfCoin}
-        coinName={coin.currency}
+        coin={coin}
         coinPrice={coinPrice}
       />
     ),
