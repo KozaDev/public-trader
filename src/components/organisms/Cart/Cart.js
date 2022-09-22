@@ -48,7 +48,8 @@ const Cart = () => {
       e.target.name === "amountOfCoin" &&
       isNumberInputValid(e.target.value, decimalPlaces[coin.key])
     ) {
-      setFormData(() => ({
+      setFormData((state) => ({
+        ...state,
         expenseInDollars: (e.target.value * coinPrice).toFixed(
           decimalPlaces["usd"]
         ),
@@ -60,7 +61,8 @@ const Cart = () => {
       e.target.name === "expenseInDollars" &&
       isNumberInputValid(e.target.value, decimalPlaces["usd"])
     ) {
-      setFormData(() => ({
+      setFormData((state) => ({
+        ...state,
         expenseInDollars: e.target.value,
         amountOfCoin: (e.target.value / coinPrice).toFixed(
           decimalPlaces[coin.key]
