@@ -3,7 +3,6 @@ import { errorMessages, pastDates, walletSchema } from "lib/consts/consts";
 import { capitalizeFirstLetter } from "lib/utils/utils";
 import { getIdFromServerCookie } from "lib/cookies/cookies";
 import Chart from "components/organisms/Chart";
-import PageError from "components/templates/PageError/PageError";
 import { errorFactory } from "lib/utils/errorHandlers";
 import axios from "axios";
 import Select from "components/molecules/Select/Select";
@@ -45,7 +44,7 @@ export async function getServerSideProps({ req, params: { market } }) {
   };
 }
 
-export default function Market({ user, market, error }) {
+export default function Market({ user, market }) {
   const weekAgo = pastDates[2].date;
   const weekAgoAsString = pastDates[2].name;
 
@@ -53,8 +52,6 @@ export default function Market({ user, market, error }) {
     date: weekAgo,
     name: weekAgoAsString,
   });
-
-  if (error.isError) return <PageError error={error.error} />;
 
   const coin = walletSchema.find(({ key }) => key === market);
 

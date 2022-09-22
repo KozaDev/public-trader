@@ -37,9 +37,7 @@ export async function getServerSideProps({ req, query }) {
   };
 }
 
-const Success = ({ walletAssets, transactionDetails, error }) => {
-  console.log(transactionDetails);
-  if (error.isError) return <PageError error={error.error} />;
+const Success = ({ walletAssets, transactionDetails }) => {
   return (
     <>
       <h2>Your wallet after transaction: </h2>

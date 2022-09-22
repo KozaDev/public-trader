@@ -33,7 +33,7 @@ export async function getServerSideProps() {
   };
 }
 
-const TradersList = ({ traders, error }) => {
+const TradersList = ({ traders }) => {
   const [pageIndex, setPageIndex] = useState(0);
 
   const fetcher = (url) => axios.get(url).then((res) => res.data);
@@ -45,8 +45,6 @@ const TradersList = ({ traders, error }) => {
     fetcher,
     { fallbackData: traders }
   );
-
-  if (error.isError) return <PageError error={error.error} />;
 
   if (swrError) return <PageError error={errorFactory(swrError)} />;
 
@@ -68,10 +66,6 @@ const TradersList = ({ traders, error }) => {
 
 TradersList.propTypes = {
   traders: PropTypes.arrayOf(userShape),
-  error: PropTypes.shape({
-    isError: PropTypes.bool.isRequired,
-    error: errorShape,
-  }),
 };
 
 export default TradersList;

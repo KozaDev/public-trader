@@ -1,6 +1,7 @@
 import { StyledError } from "../../../styles/StyledError";
 import { errorShape } from "lib/proptypes/proptypes";
 const PageError = ({ error }) => {
+  console.log(error);
   return (
     <StyledError>
       <h1>{error.message}</h1>

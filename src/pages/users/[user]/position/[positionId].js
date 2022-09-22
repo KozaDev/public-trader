@@ -1,14 +1,12 @@
 import { errorMessages } from "lib/consts/consts";
 import { errorFactory } from "lib/utils/errorHandlers";
 import axios from "axios";
-import PageError from "components/templates/PageError/PageError";
 import Chart from "components/organisms/Chart";
 import PositionDetails from "components/organisms/PositionDetails/PositionDetails";
 import PositionClose from "components/molecules/PositionClose/PositionClose";
 import { StyledCard } from "styles/components";
 import { useAuth } from "lib/contexts/authContext";
-import PropTypes from "prop-types";
-import { positionShape, userShape, errorShape } from "lib/proptypes/proptypes";
+import { positionShape, userShape } from "lib/proptypes/proptypes";
 
 export async function getServerSideProps({ params }) {
   const { user: id, positionId } = params;
@@ -47,11 +45,8 @@ export async function getServerSideProps({ params }) {
   };
 }
 
-const Position = ({ user, position, error }) => {
+const Position = ({ user, position }) => {
   const { user: authUser } = useAuth();
-
-  if (error.isError) return <PageError error={error.error} />;
-
   const { coin, createdAt, updatedAt, amountOfCoin, id } = position;
   const {
     wallet: { id: walletId },
@@ -85,10 +80,6 @@ const Position = ({ user, position, error }) => {
 Position.propTypes = {
   user: userShape,
   position: positionShape,
-  error: PropTypes.shape({
-    isError: PropTypes.bool.isRequired,
-    error: errorShape,
-  }),
 };
 
 export default Position;

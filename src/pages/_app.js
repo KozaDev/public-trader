@@ -5,6 +5,7 @@ import { AuthProvider } from "lib/contexts/authContext";
 import { NavStateProvider } from "lib/contexts/navContext";
 import { PricesStateProvider } from "lib/contexts/pricesProvider";
 import Layout from "components/templates/Layout/Layout";
+import PageError from "components/templates/PageError/PageError";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -14,7 +15,11 @@ function MyApp({ Component, pageProps }) {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <Layout>
-              <Component {...pageProps} />
+              {pageProps?.error?.isError ? (
+                <PageError error={pageProps.error.error} />
+              ) : (
+                <Component {...pageProps} />
+              )}
             </Layout>
           </ThemeProvider>
         </PricesStateProvider>

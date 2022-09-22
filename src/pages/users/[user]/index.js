@@ -8,8 +8,10 @@ import { errorMessages, walletSchema } from "lib/consts/consts";
 import PageNav from "components/molecules/PageNav/PageNav";
 import List from "components/organisms/List/List";
 import PositionLabel from "components/molecules/PositionLabel/PositionLabel";
+import PropTypes from "prop-types";
 import { prepareTemplate } from "lib/utils/utils";
 import { useRouter } from "next/router";
+import { positionShape, userShape } from "lib/proptypes/proptypes";
 
 const sort = (order) => `sort=createdAt:${order}`;
 const filterById = (id) => `filters[user][id][$eq]=${id}`;
@@ -85,10 +87,12 @@ export async function getServerSideProps({ params, query }) {
   };
 }
 
-const User = ({ user, positions, error }) => {
+const User = ({ user, positions }) => {
   const { username, wallet, id } = user;
-  const [pageIndex, setPageIndex] = useState(Number(pageFromRouter));
   const router = useRouter();
+  const pageFromRouter = router.query?.page || 1;
+  const paginationData = positions.meta.pagination;
+  const [pageIndex, setPageIndex] = useState(Number(pageFromRouter));
 
   useEffect(() => {
     setPageIndex(Number(pageFromRouter));
@@ -103,11 +107,6 @@ const User = ({ user, positions, error }) => {
     fetcher,
     { fallbackData: positions }
   );
-
-  if (error.isError) return <PageError error={error.error} />;
-
-  const pageFromRouter = router.query?.page || 1;
-  const paginationData = positions.meta.pagination;
 
   const decreasePage = (diff) => {
     const prevPage = pageIndex - diff;
@@ -170,4 +169,8 @@ const User = ({ user, positions, error }) => {
   );
 };
 
+User.propTypes = {
+  user: userShape,
+  positions: PropTypes.arrayOf(positionShape),
+};
 export default User;
