@@ -85,7 +85,7 @@ export default async function handler(req, res) {
 
       const updateWalletRes = await axios({
         method: "put",
-        url: `http://localhost:1337/api/wallets/${walletId}`,
+        url: `${process.env.NEXT_PUBLIC_STRAPI_URL}/wallets/${walletId}`,
         headers: {
           Authorization: `bearer ${process.env.API_TOKEN}`,
         },
