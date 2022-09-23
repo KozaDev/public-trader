@@ -75,6 +75,7 @@ export async function getServerSideProps({ params, query }) {
 
     positions = positionsResponse.data;
   } catch (e) {
+    console.log(e);
     error.isError = true;
     error.error = errorFactory(e);
   }
@@ -149,7 +150,7 @@ const User = ({ user, positions }) => {
         listTitle={"Users positions"}
         emptyInfo={
           id
-            ? "You don't have any positions"
+            ? "You don't have any positions. Visit markets to buy your first currency"
             : "This user dosen't have any positions"
         }
         linkEachTo={prepareTemplate`/users/${"userId"}/position/${"id"}`}

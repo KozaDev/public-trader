@@ -12,7 +12,12 @@ const List = ({
   emptyInfo,
   linkEachTo,
 }) => {
-  if (!data.length) return <StyledList>{emptyInfo}</StyledList>;
+  if (!data.length)
+    return (
+      <StyledList>
+        <h4 className="grey-header">{emptyInfo}</h4>
+      </StyledList>
+    );
 
   if (linkEachTo)
     return (
