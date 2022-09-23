@@ -22,8 +22,8 @@ const Login = () => {
       method: "post",
       url: `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local`,
       data: {
-        identifier: formData.identifier,
-        password: formData.password,
+        identifier: formData.identifier.trim(),
+        password: formData.password.trim(),
       },
     });
 

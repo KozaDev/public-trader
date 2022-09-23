@@ -38,7 +38,7 @@ export const CartContextProvider = ({
         coin: coin.key,
         amountOfCoin: formData.amountOfCoin,
         priceOnEntry: coinPrice,
-        description: formData.description,
+        description: formData.description.trim(),
       },
     });
   }

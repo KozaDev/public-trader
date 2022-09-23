@@ -21,9 +21,9 @@ const Register = () => {
       method: "post",
       url: `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local/register`,
       data: {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
+        username: formData.username.trim(),
+        email: formData.email.trim(),
+        password: formData.password.trim(),
       },
     });
 
