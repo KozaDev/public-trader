@@ -2,6 +2,7 @@ import { StyledCard } from "styles/components";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import uuid from "react-uuid";
+import StyledList from "./StyledList";
 
 const List = ({
   Component,
@@ -11,11 +12,11 @@ const List = ({
   emptyInfo,
   linkEachTo,
 }) => {
-  if (!data.length) return <h2>{emptyInfo}</h2>;
+  if (!data.length) return <StyledList>{emptyInfo}</StyledList>;
 
   if (linkEachTo)
     return (
-      <div>
+      <StyledList hover={true}>
         <h2>{listTitle}</h2>
         <ul>
           {data.map((item) => (
@@ -28,11 +29,11 @@ const List = ({
             </li>
           ))}
         </ul>
-      </div>
+      </StyledList>
     );
 
   return (
-    <div>
+    <StyledList>
       <h2>{listTitle}</h2>
       <ul>
         {data.map((item) => (
@@ -43,7 +44,7 @@ const List = ({
           </li>
         ))}
       </ul>
-    </div>
+    </StyledList>
   );
 };
 
