@@ -1,37 +1,30 @@
 import styled from "styled-components";
-import Link from "next/link";
-
-export const StyledLink = styled(Link)`
-  position: relative;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: ${({ active }) => (active ? "#000" : "")};
-  }
-
-  @media (max-width: 768px) {
-    &::after {
-      background-color: ${({ active }) => (active ? "#fff" : "")};
-    }
-  }
-`;
 
 export const StyledLinkList = styled.ul`
   display: flex;
   flex-flow: row nowrap;
   font-size: ${({ theme }) => theme.fontSize.xl};
 
+  a:hover {
+    cursor: pointer;
+  }
+
   li {
     padding: 18px 10px;
+  }
+
+  .active a {
+    position: relative;
+  }
+
+  .active a::after {
+    position: absolute;
+    content: "";
+    bottom: -5px;
+    left: 0;
+    background-color: ${({ theme }) => theme.colors.primaryBlue};
+    width: 100%;
+    height: 3px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
