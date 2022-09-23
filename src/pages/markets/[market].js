@@ -56,22 +56,20 @@ export default function Market({ user, market }) {
   const coin = walletSchema.find(({ key }) => key === market);
 
   const dateOptions = pastDates.map(({ date, name }) => {
-    if (name === "1w")
-      return {
-        value: date,
-        title: name,
-        attributes: { data: name, selected: true },
-      };
-    return { value: date, title: name, attributes: { name } };
+    return {
+      value: date,
+      title: name,
+      attributes: { selected: name === chartStart.name },
+    };
   });
 
-  const handleSelectChange = ({
-    target: {
-      value,
-      attributes: { name },
-    },
-  }) => {
-    setStart({ date: value, name });
+  const handleSelectChange = (e) => {
+    const newName = [...e.target.children].reduce((acc, item) => {
+      if (item.value == e.target.value) return item.textContent;
+      return acc;
+    });
+
+    setStart({ date: e.target.value, name: newName });
   };
 
   const header = <h1>{capitalizeFirstLetter(coin.currency)}</h1>;
