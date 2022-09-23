@@ -16,11 +16,11 @@ const LineChart = dynamic(() => import("./LineChart"), {
 
 const granulation = [
   { title: "More detailes", value: 2016 },
-  { title: "Normal", value: 300 },
+  { title: "Normal", value: 500 },
   { title: "Less detailes", value: 120 },
 ];
 
-const defaultGranulation = 300;
+const defaultGranulation = 500;
 
 const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
   const { width } = useWindowSize();
@@ -61,7 +61,12 @@ const Chart = ({ startDate, exitDate, coin, changeGranulation }) => {
   };
 
   if (error.isError) return <ComponentError error={error.error} />;
-  if (pending) return <Spinner margin={"50px 0"} />;
+  if (pending)
+    return (
+      <StyledChart>
+        <Spinner margin={"50px 0"} />
+      </StyledChart>
+    );
 
   return (
     <StyledChart>

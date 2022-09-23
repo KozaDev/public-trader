@@ -28,7 +28,11 @@ const TradingTable = () => {
     return <ComponentError error={currentPricesError.error} />;
 
   if (tradingTablePending || !currentPricesData)
-    return <Spinner margin={"100px 0"} />;
+    return (
+      <StyledTable>
+        <Spinner margin={"100px 0"} />
+      </StyledTable>
+    );
 
   const displayChangeInPercent = (currentPrice, pastPrice) => {
     const change = ((currentPrice / pastPrice) * 100 - 100).toFixed(1);

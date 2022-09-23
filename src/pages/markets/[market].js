@@ -82,7 +82,7 @@ export default function Market({ user, market }) {
       <Chart
         startDate={chartStart.date}
         coin={coin.key}
-        changeGranulation={true}
+        changeGranulation={false}
       />
       <MarketDetails coin={coin} user={user} />
     </>
