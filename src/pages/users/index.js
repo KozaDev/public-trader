@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import { errorShape, userShape } from "lib/proptypes/proptypes";
 
 export async function getServerSideProps() {
-  let traders = [];
+  let traders = null;
   const error = { isError: false, error: null };
 
   try {

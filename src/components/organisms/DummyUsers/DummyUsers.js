@@ -1,8 +1,10 @@
+import uuid from "react-uuid";
 import StyledDummyUsers from "./StyledDummyUsers";
-const DummyUsers = () => {
+
+const DummyUsers = ({ title, data }) => {
   return (
     <StyledDummyUsers>
-      <h3>{"Use this credentials to login and trade"}</h3>
+      <h3>{title}</h3>
       <table>
         <thead>
           <tr>
@@ -10,22 +12,14 @@ const DummyUsers = () => {
             <th>Password</th>
           </tr>
         </thead>
-        <tr>
-          <td>Jan Kowalski</td>
-          <td>jankowalski</td>
-        </tr>
-        <tr>
-          <td>Walter Jones</td>
-          <td>walterjones</td>
-        </tr>
-        <tr>
-          <td>Helen Rhem</td>
-          <td>helenrhem</td>
-        </tr>
-        <tr>
-          <td>Amy Nesbit</td>
-          <td>amynesbit</td>
-        </tr>
+        <tbody>
+          {data.map(({ attributes: { username, password } }) => (
+            <tr key={uuid()}>
+              <td>{username}</td>
+              <td>{password}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </StyledDummyUsers>
   );

@@ -1,21 +1,22 @@
-import { rgba } from "polished";
 import styled from "styled-components";
 
 const StyledDummyUsers = styled.div`
   margin: 80px 0;
+
   table {
     margin: 20px 0;
-    width: 50%;
-
-    tbody tr:hover {
-      background-color: ${({ theme }) => rgba(theme.colors.primaryBlue, 0.05)};
-    }
-
+    width: 60%;
     th,
     td {
       text-align: left;
     }
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    table {
+      width: 100%;
+    }
+  } ;
 `;
 
 export default StyledDummyUsers;

@@ -9,7 +9,26 @@ import axios from "axios";
 import InputSubmit from "components/atoms/InputSubmit/InputSubmit";
 import DummyUsers from "components/organisms/DummyUsers/DummyUsers";
 
-const Login = () => {
+export async function getStaticProps() {
+  let dummyUsers = null;
+  const error = { isError: false, error: null };
+
+  try {
+    const dummyUsersRes = await axios.get(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/dummy-users`
+    );
+    dummyUsers = dummyUsersRes.data;
+  } catch (e) {
+    error.isError = true;
+    error.error = errorFactory(e);
+  }
+
+  return {
+    props: { dummyUsers, error },
+  };
+}
+
+const Login = ({ dummyUsers }) => {
   const [formData, setFormData] = useState(emptyLoginForm);
   const { signin, user } = useAuth();
 
@@ -95,7 +114,10 @@ const Login = () => {
           </div>
         </StyledFrom>
       </div>
-      <DummyUsers />
+      <DummyUsers
+        data={dummyUsers.data}
+        title={"Use this credentials to login"}
+      />
     </StyledResponsiveTemplate>
   );
 };
