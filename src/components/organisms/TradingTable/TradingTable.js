@@ -1,5 +1,4 @@
 import { walletSchema } from "lib/consts/consts";
-import useTradingTableData from "lib/hooks/useTradingTableData";
 import StyledTable from "./StyledTable";
 import Link from "next/link";
 import ComponentError from "../ComponentError/ComponentError";
@@ -8,6 +7,7 @@ import uuid from "react-uuid";
 import Coin from "components/atoms/Coin/Coin";
 import useFetchData from "lib/hooks/useFetchData";
 import getAllPrices from "lib/messariApi/getAllPrices";
+import getPricesFromPast from "lib/messariApi/getPricesFromPast";
 
 const TradingTable = () => {
   const currency = walletSchema.reduce((acc, item) => {
@@ -28,8 +28,11 @@ const TradingTable = () => {
     true
   );
 
-  const { tradingTableData, tradingTableError, tradingTablePending } =
-    useTradingTableData(periods, currency);
+  const {
+    data: tradingTableData,
+    error: tradingTableError,
+    pending: tradingTablePending,
+  } = useFetchData(getPricesFromPast.bind(null, periods, currency), true);
 
   if (tradingTableError.isError)
     return <ComponentError error={tradingTableError.error} />;
