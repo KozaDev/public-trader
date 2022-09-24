@@ -3,8 +3,11 @@ import DisplayCurrency from "components/atoms/DisplayCurrency/DisplayCurrency";
 import StyledWallet from "../Wallet/StyledWallet";
 import WalletValue from "components/atoms/WalletValue/WalletValue";
 import { assetsShape, transactionDetailsShape } from "lib/proptypes/proptypes";
+import { useAuth } from "lib/contexts/authContext";
+import Link from "next/link";
 
 const UpdatedWallet = ({ assets, update }) => {
+  const { user } = useAuth();
   const { coin, differnceInCoin, differenceInDollars } = update;
 
   const assetsAfterUpdate = assets.reduce((acc, item) => {
@@ -54,19 +57,27 @@ const UpdatedWallet = ({ assets, update }) => {
     return acc;
   }, []);
 
+  const linkToProfile = user?.id && (
+    <h4>
+      <Link href={`/users/${user?.id}`}>{"Go to profile"}</Link>
+    </h4>
+  );
+
+  if (assetsAfterUpdate.length)
+    return (
+      <StyledWallet>
+        <WalletValue assets={assets} title={"Wallet value"} />
+        {assetsAfterUpdate}
+        {linkToProfile}
+      </StyledWallet>
+    );
+
   return (
     <StyledWallet>
       <ul>
-        {assetsAfterUpdate.length > 0 ? (
-          <>
-            <WalletValue assets={assets} title={"Wallet value"} />
-            {assetsAfterUpdate}
-          </>
-        ) : (
-          <li>
-            <h3>{"This user dosen't have any assets in wallet"}</h3>
-          </li>
-        )}
+        <li>
+          <h3>{"This user dosen't have any assets in wallet"}</h3>
+        </li>
       </ul>
     </StyledWallet>
   );
