@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const TopTradersLabel = ({ username, allAssetsInDollars }) => {
   return (
     <ListElement>
-      <h3>{username} </h3>
+      <div>{username} </div>
       <Coin coin="usd" amount={allAssetsInDollars} displayUsdPrefix />
     </ListElement>
   );

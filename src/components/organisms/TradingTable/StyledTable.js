@@ -21,6 +21,13 @@ const StyledTable = styled.table`
   .red {
     color: ${({ theme }) => theme.colors.error};
   }
+
+  .change-in-percents {
+    width: 150px;
+  }
+  .price-in-usd {
+    width: 200px;
+  }
 `;
 
 export default StyledTable;

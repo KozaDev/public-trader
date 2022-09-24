@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const UserLabel = ({ username }) => {
   return (
     <ListElement>
-      <h3>{username}</h3>
+      <div>{username}</div>
     </ListElement>
   );
 };

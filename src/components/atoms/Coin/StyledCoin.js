@@ -11,11 +11,6 @@ const StyledCoin = styled.span`
     align-items: center;
   }
 
-  .amount,
-  .prefix {
-    font-weight: 500;
-  }
-
   .icon,
   .prefix,
   .amount {

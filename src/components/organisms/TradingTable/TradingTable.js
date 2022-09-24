@@ -16,6 +16,12 @@ const TradingTable = () => {
 
   const periods = ["1h", "1d", "1w"];
 
+  const displayChangeInPercent = (currentPrice, pastPrice) => {
+    const change = ((currentPrice / pastPrice) * 100 - 100).toFixed(1);
+    if (change > 0) return <span className="green">{change}%</span>;
+    return <span className="red">{change}%</span>;
+  };
+
   const { data: currentPricesData, error: currentPricesError } =
     usePricesState();
 
@@ -34,11 +40,6 @@ const TradingTable = () => {
       </StyledTable>
     );
 
-  const displayChangeInPercent = (currentPrice, pastPrice) => {
-    const change = ((currentPrice / pastPrice) * 100 - 100).toFixed(1);
-    if (change > 0) return <span className="green">{change}%</span>;
-    return <span className="red">{change}%</span>;
-  };
   return (
     <StyledTable>
       <thead>
@@ -58,15 +59,16 @@ const TradingTable = () => {
                 <th>
                   <Coin coin={coin} displayIcon displayPrefix />
                 </th>
-                <td>
+
+                <td className="price-in-usd">
                   <Coin
                     coin={"usd"}
                     amount={currentPricesData[coin].toFixed(2)}
-                    displayPrefix
+                    displayUsdPrefix
                   />
                 </td>
                 {periods.map((period) => (
-                  <td key={uuid()}>
+                  <td className="change-in-percents" key={uuid()}>
                     {displayChangeInPercent(
                       currentPricesData[coin],
                       pricesFromPeriods[period]

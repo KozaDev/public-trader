@@ -12,6 +12,7 @@ const StyledWallet = styled(StyledCard)`
     display: flex;
     align-items: center;
     margin: 10px 0;
+    font-weight: 700;
     font-size: ${({ theme }) => theme.fontSize.xl};
   }
 

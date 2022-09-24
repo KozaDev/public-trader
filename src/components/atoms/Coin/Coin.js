@@ -1,8 +1,8 @@
 import { decimalPlaces } from "lib/consts/consts";
 import NumberFormat from "react-number-format";
 import PropTypes from "prop-types";
-import Image from "next/image";
 import StyledCoin from "./StyledCoin";
+import Icon from "../Icon/Icon";
 
 const Coin = ({
   amount,
@@ -20,12 +20,7 @@ const Coin = ({
     <StyledCoin>
       {displayIcon && (
         <span className="icon">
-          <Image
-            src={`/icons/${coin}.png`}
-            alt="Picture of the author"
-            width={28}
-            height={28}
-          />
+          <Icon className="icon" iconName={coin} width={28} height={28} />
         </span>
       )}
       {amount && (
