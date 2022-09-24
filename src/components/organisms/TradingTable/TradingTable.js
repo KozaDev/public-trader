@@ -1,5 +1,4 @@
 import { walletSchema } from "lib/consts/consts";
-import { usePricesState } from "lib/contexts/pricesProvider";
 import useTradingTableData from "lib/hooks/useTradingTableData";
 import StyledTable from "./StyledTable";
 import Link from "next/link";
@@ -7,6 +6,8 @@ import ComponentError from "../ComponentError/ComponentError";
 import Spinner from "components/templates/Spinner/Spinner";
 import uuid from "react-uuid";
 import Coin from "components/atoms/Coin/Coin";
+import useFetchData from "lib/hooks/useFetchData";
+import getAllPrices from "lib/messariApi/getAllPrices";
 
 const TradingTable = () => {
   const currency = walletSchema.reduce((acc, item) => {
@@ -22,8 +23,10 @@ const TradingTable = () => {
     return <span className="red">{change}%</span>;
   };
 
-  const { data: currentPricesData, error: currentPricesError } =
-    usePricesState();
+  const { data: currentPricesData, error: currentPricesError } = useFetchData(
+    getAllPrices,
+    true
+  );
 
   const { tradingTableData, tradingTableError, tradingTablePending } =
     useTradingTableData(periods, currency);
