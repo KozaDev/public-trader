@@ -1,4 +1,3 @@
-import Dollar from "components/atoms/Dollar/Dollar";
 import InputSubmit from "components/atoms/InputSubmit/InputSubmit";
 import { errorMessages } from "lib/consts/consts";
 import { useCartContext } from "lib/contexts/cartContext";
@@ -6,6 +5,7 @@ import { cartFormDataShape } from "lib/proptypes/proptypes";
 import FormError from "../FormError/FormError";
 import StyledPurchaseForm from "./StyledPurchaseForm";
 import PropTypes from "prop-types";
+import Coin from "components/atoms/Coin/Coin";
 
 const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
   const { pending, error, action, isAuthenticated, usersDollars } =
@@ -47,7 +47,7 @@ const PurchaseForm = ({ formData, handleChange, preventKeyDown }) => {
           <label>
             {"Your dollars: "}{" "}
             <span className={!hasUserEnoughMoney ? "error" : null}>
-              <Dollar amount={usersDollars} />
+              <Coin coin={"usd"} amount={usersDollars} displayUsdPrefix />
             </span>
           </label>
         </div>

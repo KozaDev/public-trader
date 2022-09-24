@@ -1,5 +1,5 @@
 import { usePricesState } from "lib/contexts/pricesProvider";
-import Dollar from "../Dollar/Dollar";
+import Coin from "../Coin/Coin";
 import PropTypes from "prop-types";
 
 const PositionValue = ({
@@ -17,7 +17,9 @@ const PositionValue = ({
   const isPositionOpen = updatedAt === createdAt;
   const ultimatePrice = isPositionOpen ? data[coin] : priceOnExit;
 
-  return <Dollar amount={ultimatePrice * amountOfCoin} />;
+  return (
+    <Coin coin={"usd"} amount={ultimatePrice * amountOfCoin} displayUsdPrefix />
+  );
 };
 
 PositionValue.propTypes = {

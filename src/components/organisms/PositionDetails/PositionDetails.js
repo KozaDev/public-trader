@@ -1,5 +1,4 @@
 import StyledPositionDetails from "./StyledPositionDetails";
-import Dollar from "components/atoms/Dollar/Dollar";
 import PositionReturn from "components/atoms/PositionReturn/PositionReturn";
 import PositionValue from "components/atoms/PositionValue/PositionValue";
 import PositionExitPrice from "components/atoms/PositionExitPrice/PositionExitPrice";
@@ -60,7 +59,7 @@ const PositionDetails = ({
         {"Purchased at "}
         <Moment date={createdAt} format="YYYY-MM-DD hh:mm:ss A" />
         {" in price "}
-        <Dollar amount={priceOnEntry} />
+        <Coin coin={"usd"} amount={priceOnEntry} displayUsdPrefix />
       </h4>
       <h4>
         {isPositionOpen ? (

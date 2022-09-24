@@ -1,10 +1,10 @@
 import { decimalPlaces } from "lib/consts/consts";
-import DisplayCurrency from "components/atoms/DisplayCurrency/DisplayCurrency";
 import StyledWallet from "../Wallet/StyledWallet";
 import WalletValue from "components/atoms/WalletValue/WalletValue";
 import { assetsShape, transactionDetailsShape } from "lib/proptypes/proptypes";
 import { useAuth } from "lib/contexts/authContext";
 import Link from "next/link";
+import Coin from "components/atoms/Coin/Coin";
 
 const UpdatedWallet = ({ assets, update }) => {
   const { user } = useAuth();
@@ -26,21 +26,21 @@ const UpdatedWallet = ({ assets, update }) => {
 
       acc.push(
         <li key={currencyName}>
-          <DisplayCurrency
+          <Coin
             amount={amountBeforeUpdate}
             coin={item.key}
             displayPrefix
+            displayIcon
           />
 
           {"   "}
           <span className={isDiffPositive ? "label green" : "label red"}>
-            {isDiffPositive ? "(+" : "("}
-            <DisplayCurrency
-              amount={difference}
-              coin={item.key}
-              displayPrefix
-            />
-            {")"}
+            <span>
+              {" "}
+              {isDiffPositive ? "(+" : "("}
+              <Coin amount={difference} coin={item.key} displayPrefix />
+              {")"}
+            </span>
           </span>
         </li>
       );
@@ -49,7 +49,12 @@ const UpdatedWallet = ({ assets, update }) => {
     if (!currencyToUpdate && item.amount > 0) {
       acc.push(
         <li key={currencyName}>
-          <DisplayCurrency amount={item.amount} coin={item.key} displayPrefix />
+          <Coin
+            amount={item.amount}
+            coin={item.key}
+            displayPrefix
+            displayIcon
+          />
         </li>
       );
     }
@@ -67,7 +72,7 @@ const UpdatedWallet = ({ assets, update }) => {
     return (
       <StyledWallet>
         <WalletValue assets={assets} title={"Wallet value"} />
-        {assetsAfterUpdate}
+        <ul>{assetsAfterUpdate}</ul>
         {linkToProfile}
       </StyledWallet>
     );

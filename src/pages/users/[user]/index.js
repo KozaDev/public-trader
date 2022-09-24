@@ -149,7 +149,7 @@ const User = ({ user, positions }) => {
         Component={PositionLabel}
         data={data.data}
         params={{ userId: id }}
-        listTitle={"Users positions"}
+        listTitle={"User's positions"}
         emptyInfo={
           id == authenticatedUser?.id
             ? "You don't have any positions. Visit markets to buy your first currency"

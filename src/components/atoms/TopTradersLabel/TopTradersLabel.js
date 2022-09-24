@@ -1,17 +1,12 @@
-import NumberFormat from "react-number-format";
 import { ListElement } from "styles/components";
+import Coin from "../Coin/Coin";
 import PropTypes from "prop-types";
 
 const TopTradersLabel = ({ username, allAssetsInDollars }) => {
   return (
     <ListElement>
-      {username}{" "}
-      <NumberFormat
-        value={allAssetsInDollars}
-        displayType={"text"}
-        thousandSeparator={true}
-        prefix={"$"}
-      />
+      <h3>{username} </h3>
+      <Coin coin="usd" amount={allAssetsInDollars} displayUsdPrefix />
     </ListElement>
   );
 };

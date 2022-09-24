@@ -1,6 +1,6 @@
 import StyledWallet from "./StyledWallet";
 import { decimalPlaces } from "lib/consts/consts";
-import DisplayCurrency from "components/atoms/DisplayCurrency/DisplayCurrency";
+import Coin from "components/atoms/Coin/Coin";
 import WalletValue from "components/atoms/WalletValue/WalletValue";
 import { assetsShape } from "lib/proptypes/proptypes";
 
@@ -11,7 +11,7 @@ const Wallet = ({ assets }) => {
       const currencyName = item.currency;
       acc.push(
         <li key={currencyName}>
-          <DisplayCurrency amount={amount} coin={item.key} displayPrefix />
+          <Coin amount={amount} coin={item.key} displayPrefix displayIcon />
         </li>
       );
     }

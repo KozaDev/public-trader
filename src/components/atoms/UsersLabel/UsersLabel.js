@@ -2,7 +2,11 @@ import { ListElement } from "styles/components";
 import PropTypes from "prop-types";
 
 const UserLabel = ({ username }) => {
-  return <ListElement>{username}</ListElement>;
+  return (
+    <ListElement>
+      <h3>{username}</h3>
+    </ListElement>
+  );
 };
 
 UserLabel.propTypes = {

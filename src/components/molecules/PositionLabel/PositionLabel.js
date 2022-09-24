@@ -29,7 +29,7 @@ const PositionLabel = ({ attributes }) => {
       <div className="flex-wrapper">
         <div>
           <h3>
-            <Coin amount={amountOfCoin} coin={coin} displayPrefix={true} />{" "}
+            <Coin amount={amountOfCoin} coin={coin} displayPrefix displayIcon />{" "}
           </h3>
 
           <h5>

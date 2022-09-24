@@ -1,4 +1,3 @@
-import Dollar from "components/atoms/Dollar/Dollar";
 import { walletSchema } from "lib/consts/consts";
 import { usePricesState } from "lib/contexts/pricesProvider";
 import useTradingTableData from "lib/hooks/useTradingTableData";
@@ -7,6 +6,7 @@ import Link from "next/link";
 import ComponentError from "../ComponentError/ComponentError";
 import Spinner from "components/templates/Spinner/Spinner";
 import uuid from "react-uuid";
+import Coin from "components/atoms/Coin/Coin";
 
 const TradingTable = () => {
   const currency = walletSchema.reduce((acc, item) => {
@@ -52,23 +52,29 @@ const TradingTable = () => {
         {tradingTableData.map((item, index) => {
           const { coin, pricesFromPeriods } = item;
           return (
-            <tr key={uuid()}>
-              <th>{index + 1}</th>
-              <th>
-                <Link href={`markets/${coin}`}>{coin}</Link>
-              </th>
-              <td>
-                <Dollar amount={currentPricesData[coin].toFixed(2)} />
-              </td>
-              {periods.map((period) => (
-                <td key={uuid()}>
-                  {displayChangeInPercent(
-                    currentPricesData[coin],
-                    pricesFromPeriods[period]
-                  )}
+            <Link href={`markets/${coin}`}>
+              <tr key={uuid()}>
+                <th>{index + 1}</th>
+                <th>
+                  <Coin coin={coin} displayIcon displayPrefix />
+                </th>
+                <td>
+                  <Coin
+                    coin={"usd"}
+                    amount={currentPricesData[coin].toFixed(2)}
+                    displayPrefix
+                  />
                 </td>
-              ))}
-            </tr>
+                {periods.map((period) => (
+                  <td key={uuid()}>
+                    {displayChangeInPercent(
+                      currentPricesData[coin],
+                      pricesFromPeriods[period]
+                    )}
+                  </td>
+                ))}
+              </tr>
+            </Link>
           );
         })}
       </tbody>

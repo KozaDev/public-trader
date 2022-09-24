@@ -1,7 +1,7 @@
 import { CartContextProvider } from "lib/contexts/cartContext";
 import Cart from "components/organisms/Cart/Cart";
+import Coin from "components/atoms/Coin/Coin";
 import { usePricesState } from "lib/contexts/pricesProvider";
-import Dollar from "components/atoms/Dollar/Dollar";
 import { StyledResponsiveTemplate } from "styles/components";
 import ComponentError from "../ComponentError/ComponentError";
 import Spinner from "components/templates/Spinner/Spinner";
@@ -29,7 +29,8 @@ const MarketDetails = ({ coin, user }) => {
     <StyledResponsiveTemplate>
       <div className="flex-wrapper">
         <h2>
-          Current {coin.currency} price: <Dollar amount={coinPrice} />
+          Current {coin.currency} price:{" "}
+          <Coin coin={"usd"} amount={coinPrice} displayUsdPrefix />
         </h2>
         <CartContextProvider
           userId={userId}

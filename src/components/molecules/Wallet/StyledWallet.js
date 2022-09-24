@@ -9,8 +9,10 @@ const StyledWallet = styled(StyledCard)`
     margin: 20px 0;
   }
   ul li {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
     font-size: ${({ theme }) => theme.fontSize.xl};
-    margin: 5px 0;
   }
 
   .label {
