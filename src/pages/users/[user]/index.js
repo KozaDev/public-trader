@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { prepareTemplate } from "lib/utils/utils";
 import { useRouter } from "next/router";
 import { positionShape, userShape } from "lib/proptypes/proptypes";
+import { useAuth } from "lib/contexts/authContext";
 
 const sort = (order) => `sort=createdAt:${order}`;
 const filterById = (id) => `filters[user][id][$eq]=${id}`;
@@ -90,6 +91,7 @@ export async function getServerSideProps({ params, query }) {
 
 const User = ({ user, positions }) => {
   const { username, wallet, id } = user;
+  const { user: authenticatedUser } = useAuth();
   const router = useRouter();
   const pageFromRouter = router.query?.page || 1;
   const paginationData = positions.meta.pagination;
@@ -149,7 +151,7 @@ const User = ({ user, positions }) => {
         params={{ userId: id }}
         listTitle={"Users positions"}
         emptyInfo={
-          id
+          id == authenticatedUser?.id
             ? "You don't have any positions. Visit markets to buy your first currency"
             : "This user dosen't have any positions"
         }
