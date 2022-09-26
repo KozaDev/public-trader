@@ -8,6 +8,7 @@ import { emptyLoginForm } from "lib/consts/consts";
 import axios from "axios";
 import InputSubmit from "components/atoms/InputSubmit/InputSubmit";
 import DummyUsers from "components/organisms/DummyUsers/DummyUsers";
+import { errorFactory } from "lib/utils/errorHandlers";
 
 export async function getStaticProps() {
   let dummyUsers = null;
