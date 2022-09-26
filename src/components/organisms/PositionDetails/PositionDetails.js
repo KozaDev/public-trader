@@ -19,6 +19,9 @@ const PositionDetails = ({
 }) => {
   const isPositionOpen = createdAt === updatedAt;
 
+  const entryAssetPrice = (amountOfCoin * priceOnEntry).toFixed(2);
+  const exitAssetPrice = (amountOfCoin * priceOnExit).toFixed(2);
+
   return (
     <StyledPositionDetails>
       <PositionDescription
@@ -30,7 +33,7 @@ const PositionDetails = ({
       <h2>{"Details"}</h2>
 
       <h4>
-        <Coin amount={amountOfCoin} coin={coin} displayPrefix={true} />
+        <Coin amount={amountOfCoin} coin={coin} displayPrefix displayIcon />
       </h4>
 
       <h4>
@@ -58,24 +61,26 @@ const PositionDetails = ({
       <h4>
         {"Purchased at "}
         <Moment date={createdAt} format="YYYY-MM-DD hh:mm:ss A" />
-        {" in price "}
+        {" for "}
         <Coin coin={"usd"} amount={priceOnEntry} displayUsdPrefix />
+        {" per coin."}
       </h4>
       <h4>
         {isPositionOpen ? (
           <>
             {"Current price "}
             <PositionExitPrice priceOnExit={priceOnExit} coin={coin} />
+            {" per coin."}
           </>
         ) : (
           <>
             {"Sold at "}
             <Moment date={updatedAt} format="YYYY-MM-DD hh:mm:ss A" />
-            {" in price "}
+            {" for "}
             <PositionExitPrice priceOnExit={priceOnExit} coin={coin} />
+            {" per coin."}
           </>
         )}
-        ;
       </h4>
     </StyledPositionDetails>
   );
