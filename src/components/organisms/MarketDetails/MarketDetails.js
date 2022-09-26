@@ -7,6 +7,8 @@ import ComponentError from "../ComponentError/ComponentError";
 import Spinner from "components/templates/Spinner/Spinner";
 import PropTypes from "prop-types";
 import { userShape } from "lib/proptypes/proptypes";
+import BlockMobile from "components/templates/BlockMobile/BlockMobile";
+import { theme } from "styles/theme";
 
 const MarketDetails = ({ coin, user }) => {
   const { data: coinPrices, error: coinError } = usePricesState();
@@ -32,15 +34,17 @@ const MarketDetails = ({ coin, user }) => {
           Current {coin.currency} price:{" "}
           <Coin coin={"usd"} amount={coinPrice} displayUsdPrefix />
         </h2>
-        <CartContextProvider
-          userId={userId}
-          walletId={walletId}
-          coin={coin}
-          coinPrice={coinPrice}
-          usersDollars={usersDollars()}
-        >
-          <Cart />
-        </CartContextProvider>
+        <BlockMobile message={"This feature is disabled on mobile view"}>
+          <CartContextProvider
+            userId={userId}
+            walletId={walletId}
+            coin={coin}
+            coinPrice={coinPrice}
+            usersDollars={usersDollars()}
+          >
+            <Cart />
+          </CartContextProvider>
+        </BlockMobile>
       </div>
     </StyledResponsiveTemplate>
   );
