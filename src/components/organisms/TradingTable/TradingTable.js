@@ -59,8 +59,8 @@ const TradingTable = () => {
         {tradingTableData.map((item, index) => {
           const { coin, pricesFromPeriods } = item;
           return (
-            <Link href={`markets/${coin}`}>
-              <tr key={uuid()}>
+            <Link key={uuid()} href={`markets/${coin}`}>
+              <tr>
                 <th>{index + 1}</th>
                 <th>
                   <Coin coin={coin} displayIcon displayPrefix />

@@ -3,9 +3,9 @@ import ReactMarkdown from "react-markdown";
 const Articles = ({ data }) => {
   return (
     <section>
-      {data.map(({ attributes: { title, ArticleContent } }) => (
+      {data.map(({ attributes: { ArticleContent } }) => (
         <>
-          <ReactMarkdown children={ArticleContent} />
+          <ReactMarkdown>{ArticleContent}</ReactMarkdown>
         </>
       ))}
     </section>
