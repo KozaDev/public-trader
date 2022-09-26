@@ -86,6 +86,8 @@ export const StyledButton = styled.button`
 `;
 
 export const StyledCofirmContent = styled.div`
+  min-width: 500px;
+  font-weight: 500;
   padding: 50px;
   margin: 20px 0;
   display: flex;
@@ -93,27 +95,15 @@ export const StyledCofirmContent = styled.div`
   justify-content: center;
   align-items: center;
 
-  .component {
-    margin: 20px 0;
-  }
-
   .buttons {
-    margin: 10px 0;
-  }
+    margin: 20px 0;
 
-  .buttons button {
-    margin-right: 10px;
-  }
-
-  & > * {
-    width: 60%;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
-    padding: 20px;
-
-    & > * {
-      width: 100%;
+    button {
+      margin-right: 10px;
     }
-  } ;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    min-width: 0;
+  }
 `;

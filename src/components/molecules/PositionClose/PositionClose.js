@@ -16,7 +16,7 @@ const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
   const { data: coinData, error: coinError } = usePricesState();
   const { execute, error } = useHandleForm(sendData, handleSuccess);
 
-  const coinWithFormSchema = walletSchema.reduce((acc, item) => {
+  const coinFromWalletSchema = walletSchema.reduce((acc, item) => {
     if (item.key === acc) return { key: item.key, currency: item.currency };
     return acc;
   }, coin);
@@ -25,8 +25,8 @@ const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
     Component: (
       <ConfirmSellLabel
         amountOfCoin={amountOfCoin}
-        coin={coinWithFormSchema}
-        coinPrice={priceOnExit}
+        coin={coinFromWalletSchema}
+        coinPrice={coinData[coinFromWalletSchema.key]}
       />
     ),
     onConfirm: execute,

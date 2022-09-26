@@ -21,7 +21,7 @@ const useCustomConfirm = ({ Component, onConfirm, accept, refuse }) => {
   const attachCustomConfirm = () => {
     if (displayConfirm)
       return (
-        <Modal>
+        <Modal ignoreDefaultSize={true}>
           <StyledCofirmContent>
             <div>
               <div className="component">{Component}</div>

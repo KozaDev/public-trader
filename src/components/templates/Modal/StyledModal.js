@@ -5,9 +5,11 @@ const StyledModal = styled.div`
   z-index: 1001;
   top: 50%;
   left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   transform: translate(-50%, -50%);
   background-color: ${({ theme }) => theme.colors.whiteSmoke};
-  padding: 20px 50px 20px 20px;
   border-radius: 20px;
   overflow: auto;
   width: ${({ ignoreDefaultSize }) => (ignoreDefaultSize ? null : "55%")};
