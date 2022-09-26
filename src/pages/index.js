@@ -1,29 +1,29 @@
 import axios from "axios";
-import DummyUsers from "components/organisms/DummyUsers/DummyUsers";
+import Articles from "components/organisms/Articles/Articles";
 import TradingTable from "components/organisms/TradingTable/TradingTable";
 import { errorFactory } from "lib/utils/errorHandlers";
 import Head from "next/head";
 
 export async function getStaticProps() {
-  let dummyUsers = null;
+  let articles = null;
   const error = { isError: false, error: null };
 
   try {
-    const dummyUsersRes = await axios.get(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/dummy-users`
+    const articleRes = await axios.get(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/articles`
     );
-    dummyUsers = dummyUsersRes.data;
+    articles = articleRes.data;
   } catch (e) {
     error.isError = true;
     error.error = errorFactory(e);
   }
 
   return {
-    props: { dummyUsers, error },
+    props: { articles, error },
   };
 }
 
-export default function Home({ dummyUsers }) {
+export default function Home({ articles }) {
   return (
     <>
       <Head>
@@ -35,12 +35,7 @@ export default function Home({ dummyUsers }) {
       <h1>{"Today's Cryptocurrency Prices"}</h1>
       <TradingTable />
 
-      <h1>About Public Trader</h1>
-      <p>{""}</p>
-      <DummyUsers
-        title={"Use this credentials to login"}
-        data={dummyUsers.data}
-      />
+      <Articles data={articles.data} />
     </>
   );
 }
