@@ -18,8 +18,7 @@ const Nav = () => {
 
   const isUsersPage = () => {
     if (router.route === "/users" && !router.query?.user) return true;
-    if (router.route === "/users" && !isUserOnHisOwnProfile) return true;
-    if (router.route === "/users/top/[users]") return true;
+    if (router.route === "/users/[user]" && !isUserOnHisOwnProfile) return true;
     return false;
   };
   const isLoginPage = router.route === "/login";
