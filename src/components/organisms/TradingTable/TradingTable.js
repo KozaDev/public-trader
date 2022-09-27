@@ -1,5 +1,5 @@
 import { walletSchema } from "lib/consts/consts";
-import StyledTable from "./StyledTable";
+import StyledTable, { StyledTradingTable } from "./StyledTable";
 import Link from "next/link";
 import ComponentError from "../ComponentError/ComponentError";
 import Spinner from "components/templates/Spinner/Spinner";
@@ -17,16 +17,11 @@ const TradingTable = () => {
 
   const periods = ["1h", "1d", "1w"];
 
-  const displayChangeInPercent = (currentPrice, pastPrice) => {
-    const change = ((currentPrice / pastPrice) * 100 - 100).toFixed(1);
-    if (change > 0) return <span className="green">{change}%</span>;
-    return <span className="red">{change}%</span>;
-  };
-
-  const { data: currentPricesData, error: currentPricesError } = useFetchData(
-    getAllPrices,
-    true
-  );
+  const {
+    data: currentPricesData,
+    error: currentPricesError,
+    pending: currentPricesPending,
+  } = useFetchData(getAllPrices, true);
 
   const {
     data: tradingTableData,
@@ -39,54 +34,62 @@ const TradingTable = () => {
   if (currentPricesError.isError)
     return <ComponentError error={currentPricesError.error} />;
 
-  if (tradingTablePending || !currentPricesData)
+  if (tradingTablePending || currentPricesPending)
     return (
-      <StyledTable>
-        <Spinner margin={"100px 0"} />
-      </StyledTable>
+      <StyledTradingTable>
+        <Spinner margin={"100px 0"} />{" "}
+      </StyledTradingTable>
     );
 
-  return (
-    <StyledTable>
-      <thead>
-        <tr>
-          {["#", "", "Price", ...periods].map((period) => (
-            <th key={uuid()}>{period}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {tradingTableData.map((item, index) => {
-          const { coin, pricesFromPeriods } = item;
-          return (
-            <Link key={uuid()} href={`markets/${coin}`}>
-              <tr>
-                <th>{index + 1}</th>
-                <th>
-                  <Coin coin={coin} displayIcon displayPrefix />
-                </th>
+  const displayChangeInPercent = (currentPrice, pastPrice) => {
+    const change = ((currentPrice / pastPrice) * 100 - 100).toFixed(1);
+    if (change > 0) return <span className="green">{change}%</span>;
+    return <span className="red">{change}%</span>;
+  };
 
-                <td className="price-in-usd">
-                  <Coin
-                    coin={"usd"}
-                    amount={currentPricesData[coin].toFixed(2)}
-                    displayUsdPrefix
-                  />
-                </td>
-                {periods.map((period) => (
-                  <td className="change-in-percents" key={uuid()}>
-                    {displayChangeInPercent(
-                      currentPricesData[coin],
-                      pricesFromPeriods[period]
-                    )}
+  return (
+    <StyledTradingTable>
+      <StyledTable>
+        <thead>
+          <tr>
+            {["#", "", "Price", ...periods].map((period) => (
+              <th key={uuid()}>{period}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {tradingTableData.map((item, index) => {
+            const { coin, pricesFromPeriods } = item;
+            return (
+              <Link key={uuid()} href={`markets/${coin}`}>
+                <tr>
+                  <th>{index + 1}</th>
+                  <th>
+                    <Coin coin={coin} displayIcon displayPrefix />
+                  </th>
+
+                  <td className="price-in-usd">
+                    <Coin
+                      coin={"usd"}
+                      amount={currentPricesData[coin].toFixed(2)}
+                      displayUsdPrefix
+                    />
                   </td>
-                ))}
-              </tr>
-            </Link>
-          );
-        })}
-      </tbody>
-    </StyledTable>
+                  {periods.map((period) => (
+                    <td className="change-in-percents" key={uuid()}>
+                      {displayChangeInPercent(
+                        currentPricesData[coin],
+                        pricesFromPeriods[period]
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              </Link>
+            );
+          })}
+        </tbody>
+      </StyledTable>
+    </StyledTradingTable>
   );
 };
 

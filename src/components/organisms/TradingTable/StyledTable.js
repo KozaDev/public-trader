@@ -30,4 +30,8 @@ const StyledTable = styled.table`
   }
 `;
 
+export const StyledTradingTable = styled.div`
+  min-height: 450px;
+`;
+
 export default StyledTable;

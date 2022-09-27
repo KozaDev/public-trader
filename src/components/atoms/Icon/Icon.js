@@ -6,6 +6,7 @@ const Icon = ({ iconName, width, height }) => {
     <Image
       src={`/icons/${iconName}.png`}
       alt="Picture of the author"
+      layout="fixed"
       width={width}
       height={height}
     />
