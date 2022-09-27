@@ -1,5 +1,5 @@
 import axios from "axios";
-import { decimalPlaces } from "lib/consts/consts";
+import { decimalPlaces, errorMessages } from "lib/consts/consts";
 import {
   getIdFromServerCookie,
   getJWTFromServerCookie,
@@ -15,11 +15,13 @@ export default async function handler(req, res) {
       const userId = getIdFromServerCookie(req);
 
       if (!authorization)
-        return res.status(401).send({ message: "User unauthorized" });
+        return res
+          .status(401)
+          .send({ message: errorMessages.unauthorizedUser });
 
-      if (description.trim().length < 30)
-        return res.status(403).send({
-          message: "Description should contain at least 30 characters",
+      if (description.trim().length < 30 || description.trim().length > 300)
+        return res.status(400).send({
+          message: errorMessages.wrongDescription,
         });
 
       const requierdDollars = amountOfCoin * priceOnEntry;
@@ -28,9 +30,8 @@ export default async function handler(req, res) {
         amountOfCoin <= 0 ||
         requierdDollars.toFixed(decimalPlaces["usd"]) <= 0
       )
-        return res.status(403).send({
-          message:
-            "You have to choose amount of coin or increase amount of coin",
+        return res.status(400).send({
+          message: errorMessages.wrongAmountOfcoin,
         });
 
       // const currentPrice = await getCurrentPrice(coin);
@@ -41,9 +42,7 @@ export default async function handler(req, res) {
       const isPriceFromUserAccurate = true;
 
       if (!isPriceFromUserAccurate)
-        return res
-          .status(403)
-          .send({ message: "The price we got from you is wrong" });
+        return res.status(400).send({ message: errorMessages.wrongCoinPrice });
 
       const walletRes = await axios.get(
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/wallets/${walletId}`
@@ -56,7 +55,7 @@ export default async function handler(req, res) {
       ).amount;
 
       if (dollarsInWallet < requierdDollars)
-        return res.status(403).send({ message: "You don't have enough money" });
+        return res.status(403).send({ message: errorMessages.noMoney });
 
       const updatedAssets = updateAssets(
         wallet.assets,
@@ -106,7 +105,7 @@ export default async function handler(req, res) {
       });
     } catch (e) {
       console.log(e);
-      return res.status(500).send(e);
+      return res.status(500).send({ message: errorMessages.serverError });
     }
   }
 }

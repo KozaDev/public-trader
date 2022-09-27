@@ -1,5 +1,5 @@
 import axios from "axios";
-import { decimalPlaces } from "lib/consts/consts";
+import { decimalPlaces, errorMessages } from "lib/consts/consts";
 import {
   getJWTFromServerCookie,
   getIdFromServerCookie,
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       const userId = getIdFromServerCookie(req);
 
       if (!authorization || !userId)
-        res.status(401).send({ message: "User unauthorized" });
+        res.status(401).send({ message: errorMessages.unauthorizedUser });
 
       const positionRes = await axios.get(
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/entry-positions/${positionId}`
@@ -31,9 +31,7 @@ export default async function handler(req, res) {
       const isPositionOpen = createdAt === updatedAt;
 
       if (!isPositionOpen)
-        return res
-          .status(403)
-          .send({ message: "Can not update this position" });
+        return res.status(403).send({ message: errorMessages.positionClose });
 
       const walletRes = await axios.get(
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/wallets/${walletId}`
@@ -86,7 +84,7 @@ export default async function handler(req, res) {
       });
     } catch (e) {
       console.log(e);
-      return res.status(500).send(e);
+      return res.status(500).send({ message: errorMessages.serverError });
     }
   }
 }

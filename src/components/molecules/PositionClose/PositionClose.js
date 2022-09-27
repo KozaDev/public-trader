@@ -21,26 +21,29 @@ const PositionClose = ({ coin, amountOfCoin, positionId, walletId }) => {
     return acc;
   }, coin);
 
-  const customConfirmOptions = {
-    Component: (
-      <ConfirmSellLabel
-        amountOfCoin={amountOfCoin}
-        coin={coinFromWalletSchema}
-        coinPrice={coinData[coinFromWalletSchema.key]}
-      />
-    ),
-    onConfirm: execute,
-    accept: "Ok",
-    refuse: "No",
-  };
-
-  const { attachCustomConfirm, displayConfirm } =
-    useCustomConfirm(customConfirmOptions);
+  const { attachCustomConfirm, displayConfirm } = useCustomConfirm(
+    customConfirmOptions()
+  );
 
   if (!coinData) return <Spinner width={"40"} />;
   if (coinError.isError) return <PageError error={coinError.error} />;
 
   const priceOnExit = coinData[coin];
+
+  function customConfirmOptions() {
+    return {
+      Component: (
+        <ConfirmSellLabel
+          amountOfCoin={amountOfCoin}
+          coin={coinFromWalletSchema}
+          coinPrice={coinData?.[coinFromWalletSchema.key]}
+        />
+      ),
+      onConfirm: execute,
+      accept: "Ok",
+      refuse: "No",
+    };
+  }
 
   function sendData() {
     return axios({

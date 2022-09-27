@@ -1,5 +1,6 @@
 import axios from "axios";
 import Articles from "components/organisms/Articles/Articles";
+import BestTrader from "components/organisms/BestTrader/BestTrader";
 import TradingTable from "components/organisms/TradingTable/TradingTable";
 import { errorFactory } from "lib/utils/errorHandlers";
 import Head from "next/head";
@@ -34,6 +35,8 @@ export default function Home({ articles }) {
 
       <h1>{"Today's Cryptocurrency Prices"}</h1>
       <TradingTable />
+
+      <BestTrader />
 
       <Articles data={articles.data} />
     </>

@@ -85,4 +85,11 @@ export const errorMessages = {
   externalAPIError: "Can not fetch data from external API",
   serverError: "Can not connect to server",
   noMoney: "You don't have enough money",
+  unauthorizedUser: "User unauthorized",
+  wrongDescription: "The description should be between 30 and 300 letters",
+  wrongAmountOfcoin:
+    "You have to choose amount of coin or increase amount of coin",
+  wrongCoinPrice: "The price we got from you is wrong",
+  serverError: "Server error",
+  positionClose: "This position is already closed",
 };

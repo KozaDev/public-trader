@@ -23,9 +23,9 @@ async function getPricesFromRangeOfDates(
       data: { values },
     },
   } = response;
-  const fourtyMinutes = 1000 * 60 * 40;
+  const oneHour = 1000 * 60 * 60;
 
-  if (!values && isTooEarly(start, end, fourtyMinutes))
+  if (!values && isTooEarly(start, end, oneHour))
     throw new Error(errorMessages.tooEearly);
   if (!values || values?.length < 2) throw new Error(errorMessages.noData);
 
