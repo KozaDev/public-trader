@@ -8,7 +8,6 @@ import Spinner from "components/templates/Spinner/Spinner";
 import PropTypes from "prop-types";
 import { userShape } from "lib/proptypes/proptypes";
 import BlockMobile from "components/templates/BlockMobile/BlockMobile";
-import { theme } from "styles/theme";
 
 const MarketDetails = ({ coin, user }) => {
   const { data: coinPrices, error: coinError } = usePricesState();
@@ -34,7 +33,9 @@ const MarketDetails = ({ coin, user }) => {
           Current {coin.currency} price:{" "}
           <Coin coin={"usd"} amount={coinPrice} displayUsdPrefix />
         </h2>
-        <BlockMobile message={"This feature is disabled on mobile view"}>
+        <BlockMobile
+          message={"In order to buy currency, view this page on desktop"}
+        >
           <CartContextProvider
             userId={userId}
             walletId={walletId}
