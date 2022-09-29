@@ -8,7 +8,7 @@ import List from "components/organisms/List/List";
 import UsersLabel from "components/atoms/UsersLabel/UsersLabel";
 import { prepareTemplate } from "lib/utils/utils";
 import PropTypes from "prop-types";
-import { errorShape, userShape } from "lib/proptypes/proptypes";
+import { userShape } from "lib/proptypes/proptypes";
 
 export async function getServerSideProps() {
   let traders = null;

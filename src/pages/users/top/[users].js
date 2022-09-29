@@ -26,7 +26,7 @@ const TopTraders = () => {
   const title = users == 1 ? "Best trader" : `Top ${users} traders`;
 
   if (error.isError) return <PageError error={error.error} />;
-  if (pending || isQueryUndefined) return <Spinner margin={"50px 0"} />;
+  if (pending || isQueryUndefined) return <Spinner margin={"200px 0"} />;
 
   return (
     <List

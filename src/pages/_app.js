@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
     const handleComplete = () => {
       setTimeout(() => {
         setLoading(false);
-      }, 0);
+      }, 500);
     };
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
