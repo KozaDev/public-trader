@@ -6,7 +6,7 @@ const ConfirmSellLabel = ({ amountOfCoin, coin, coinPrice }) => {
   return (
     <div>
       <>{"Do you want to sell "}</>
-      <Coin amount={amountOfCoin} coin={coin.key} />
+      <Coin amount={amountOfCoin} coin={coin.key} displayPrefix />
       <>{` for `}</>
       <Coin amount={coinPrice * amountOfCoin} coin={"usd"} displayPrefix />
       <>{"?"}</>

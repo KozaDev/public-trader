@@ -6,8 +6,7 @@ const StyledPositionDescription = styled.div`
   max-width: 450px;
 
   p {
-    overflow: hidden;
-    white-space: nowrap;
+    word-break: break-all;
     margin: 15px 0;
   }
 `;
