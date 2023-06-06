@@ -39,9 +39,6 @@ export async function getServerSideProps({ params, query }) {
       const createWalletResponse = await axios({
         method: "post",
         url: `${process.env.NEXT_PUBLIC_STRAPI_URL}/wallets`,
-        headers: {
-          Authorization: `bearer ${process.env.API_TOKEN}`,
-        },
         data: {
           data: {
             user: id,
